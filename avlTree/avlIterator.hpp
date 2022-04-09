@@ -27,6 +27,7 @@ namespace ft
 		bool outOfRange;
 
 		public:
+		avlIterator() : current(NULL), prev(NULL), root(NULL), outOfRange(false) {}
 		//Default constructor
 		avlIterator(node_pointer root, node_pointer current)
 		{

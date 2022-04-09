@@ -16,11 +16,12 @@ namespace ft
 	class avlTree
 	{
 	public:
-		typedef alloc									allocator_type;
-		typedef avlNode<K, V> 							node_type;
-		typedef node_type 								*node_pointer;
-		typedef ft::pair<K,V>							content_type;
-		typedef avlIterator<node_type, content_type> 	iterator;
+		typedef alloc				allocator_type;
+		typedef avlNode<K, V> 		node_type;
+		typedef node_type 			*node_pointer;
+		typedef ft::pair<K,V>		content_type;
+		typedef avlIterator<node_type, content_type> 			iterator;
+		typedef avlIterator<node_type, const content_type>		const_iterator;
 
 		allocator_type	m_alloc;
 		node_pointer	m_root;
@@ -29,11 +30,14 @@ namespace ft
 		avlTree() : m_root(NULL) {}
 		avlTree(const avlTree & x) 
 		{ 
-			for (avlTree::iterator it = x.begin(); it < x.end(); it++)
+			m_root = NULL;
+			const_iterator it = x.begin();
+			while(it != x.end())
 			{
-				std::cout << it->first << std::endl;
-				create_node(*it);
-			}	
+				content_type pair = *it;
+				insert(pair);
+				it++;
+			}
 		}
 		~avlTree()
 		{
@@ -55,6 +59,7 @@ namespace ft
 			m_alloc.destroy(node);
 			m_alloc.deallocate(node, 1);
 		}
+		
 		void delete_branch(node_pointer node)
 		{
 			if (node == NULL)
@@ -64,10 +69,15 @@ namespace ft
 			delete_node(node);
 		}
 
-		bool insert(content_type pair)
+		ft::pair<node_pointer, bool> insert(content_type pair)
 		{
+			ft::pair<node_pointer, bool> res;
 			if (m_root == NULL)
+			{
 				m_root = create_node(pair);
+				res.first = m_root;
+				res.second = true;
+			}
 			else
 			{
 				node_pointer added_node = NULL;
@@ -77,19 +87,31 @@ namespace ft
 					if (pair.first < temp->content.first)
 					{
 						if (temp->left == NULL)
+						{
 							added_node = temp->setLeft(create_node(pair));
+							res.first = added_node;					
+							res.second = true;
+						}
 						else
 							temp = temp->left;
 					}
 					else if (pair.first > temp->content.first)
 					{
 						if (temp->right == NULL)
+						{
 							added_node = temp->setRight(create_node(pair));
+							res.first = added_node;
+							res.second = true;
+						}
 						else
 							temp = temp->right;
 					}
 					else
-						return false;
+					{
+						res.first = temp;
+						res.second = false;
+						return res;
+					}
 				}
 
 				temp = added_node;
@@ -100,9 +122,14 @@ namespace ft
 					temp = temp->parent;
 				}
 			}
-			return true;
+			return res;
 		}
-
+	
+		void remove(iterator it)
+		{
+			content_type cnt = *it;
+			remove(cnt.first);
+		}
 		bool remove(K key)
 		{
 			node_pointer toBeRemoved = findNode(key);
@@ -236,7 +263,7 @@ namespace ft
 				return 0;
 			return n->content.second;
 		}
-		node_pointer getFirst()
+		node_pointer getFirst() const
 		{
 			if (m_root == NULL)
 				return NULL;
@@ -252,7 +279,13 @@ namespace ft
 			return it;
 		}
 
-		node_pointer getLast()
+		const_iterator begin() const
+		{
+			const_iterator it(m_root, getFirst());
+			return it;
+		}
+
+		node_pointer getLast() const
 		{
 			if (m_root == NULL)
 				return NULL;
@@ -266,6 +299,12 @@ namespace ft
 			iterator it(m_root, getLast() + 1);
 			return it;
 		}
+		const_iterator end() const
+		{
+			const_iterator it(m_root, getLast() + 1);
+			return it;
+		}
+
 
 		// debug
 		void print()
@@ -302,44 +341,36 @@ namespace ft
 		}
 		void rotateLeft(node_pointer n)
 		{
-			enum
-			{
-				left,
-				right
-			} side;
+			bool isLeft;
 			node_pointer p = n->parent;
 			if (p != NULL && p->left == n)
-				side = left;
+				isLeft = true;
 			else
-				side = right;
+				isLeft = false;
 			node_pointer temp = n->right;
 			n->setRight(temp->left);
 			temp->setLeft(n);
 			if (p == NULL)
 				setRoot(temp);
-			else if (side == left)
+			else if (isLeft)
 				p->setLeft(temp);
 			else
 				p->setRight(temp);
 		}
 		void rotateRight(node_pointer n)
 		{
-			enum
-			{
-				left,
-				right
-			} side;
+			bool isLeft;
 			node_pointer p = n->parent;
 			if (p != NULL && p->left == n)
-				side = left;
+				isLeft = true;
 			else
-				side = right;
+				isLeft = false;
 			node_pointer temp = n->left;
 			n->setLeft(temp->right);
 			temp->setRight(n);
 			if (p == NULL)
 				setRoot(temp);
-			else if (side == left)
+			else if (isLeft)
 				p->setLeft(temp);
 			else
 				p->setRight(temp);
@@ -365,6 +396,7 @@ namespace ft
 			}
 			return temp;
 		}
+
 
 		// debug
 		void printSubtree(node_pointer subtree, int depth, int level, bool first)

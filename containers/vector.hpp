@@ -21,8 +21,8 @@ namespace ft
 		/*
 		 Member types -------------------------------------
 		*/
-		typedef T															value_type;
-		typedef Alloc														allocator_type;
+		typedef T										value_type;
+		typedef Alloc									allocator_type;
 		typedef typename allocator_type::size_type		size_type;
 		typedef std::ptrdiff_t							difference_type;
 		typedef typename allocator_type::reference							reference;
