@@ -171,7 +171,8 @@ namespace ft
 		const_iterator begin() const { return const_iterator(m_data); }
 		iterator end() { return iterator(m_data + m_size); }
 		const_iterator end() const { return const_iterator(m_data + m_size); }
-		reverse_iterator rbegin() {	return (this->end()); }
+		reverse_iterator rbegin() {	return (this->end()); }	//TODO: comprobar que el reverse iterator funciona realmenete al revés
+	
 		const_reverse_iterator rbegin() const {	return (this->end()); }
 		reverse_iterator rend()	{ return (this->begin()); }
 		const_reverse_iterator rend() const	{ return (this->begin()); }

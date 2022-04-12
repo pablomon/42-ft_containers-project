@@ -24,27 +24,34 @@ namespace ft
 		node_pointer current;
 		node_pointer prev;
 		node_pointer root;
-		bool outOfRange;
+		bool isBeforeBegin;
+		bool isPastLast;
+		node_pointer *tree_root;
 
 		public:
-		avlIterator() : current(NULL), prev(NULL), root(NULL), outOfRange(false) {}
+		avlIterator() : current(NULL), prev(NULL), root(NULL), isBeforeBegin(false), isPastLast(false) {}
 		//Default constructor
 		avlIterator(node_pointer root, node_pointer current)
 		{
 			this->root = root;
+			if (root)
+				tree_root = root->tree_root;
 			this->current = current;
 			prev = current;
-			outOfRange = false;
+			isBeforeBegin = false;
+			isPastLast = false;
 			if (current == getEnd() + 1)
-				outOfRange = true;
+				isPastLast = true;
 		}
 		//Copy
 		avlIterator(avlIterator<node_type, value_type> const &other)
 		{
 			root = other.root;
+			tree_root = other.tree_root;
 			current = other.current;
 			prev = other.prev;
-			outOfRange = other.outOfRange;
+			isBeforeBegin = other.isBeforeBegin;
+			isPastLast = other.isPastLast;
 		}
 		//Destructor
 		~avlIterator() {}
@@ -76,6 +83,8 @@ namespace ft
 		}
 		bool operator==(const avlIterator& other) const
 		{
+			if (other.isPastLast && isPastLast)
+				return true;
 			return (other.current == current);
 		}
 		bool operator!=(const avlIterator& other) const
@@ -83,6 +92,16 @@ namespace ft
 			return (other.current != current);
 		}
 
+		void print(std::string str)
+		{
+			std::cout << "printing iterator " << str << ":\n"
+				<< "outofrange = " << isBeforeBegin << std::endl;
+			if (!isBeforeBegin)
+			{
+				std::cout << "current = " << current->content.first << std::endl;
+				std::cout << "getEnd() = " << getEnd()->content.first << std::endl;
+			}
+		}
 		// member functions
 		private:
 		node_pointer goFullLeft(node_pointer node)
@@ -97,16 +116,34 @@ namespace ft
 				node = node->right;
 			return node;
 		}
+
+		void updateRoot()
+		{
+			root = NULL;
+			if (tree_root)
+				root = *tree_root;
+			/*node_pointer node = root;
+			while (node->parent)
+				node = node->parent;
+			root = node;*/
+		}
+
 		node_pointer getEnd()
 		{
+			updateRoot();
 			node_pointer node = root;
+			if (node == NULL)
+				return NULL;
 			while (node->right)
 				node = node->right;
 			return node;
 		}
 		node_pointer getBegin()
 		{
+			updateRoot();
 			node_pointer node = root;
+			if (node == NULL)
+				return NULL;
 			while (node->left)
 				node = node->left;
 			return node;
@@ -114,16 +151,19 @@ namespace ft
 
 		void moveForward()
 		{
-			if (outOfRange)
+			/*print();*/
+			
+			if (isPastLast)
 			{
-				current = getEnd();
+				current = getEnd() + 1;
 				prev = current;
-				outOfRange = false;
+				isBeforeBegin = false;
 				return;
 			}
 			if (current == getEnd())
 			{
-				outOfRange = true;
+				isPastLast = true;
+				isBeforeBegin = false;
 				current++;
 				return;
 			}
@@ -148,18 +188,25 @@ namespace ft
 	
 		void moveBackwards()
 		{
-			if (outOfRange)
+			if (isPastLast)
+			{
+				isPastLast = false;
+				current = getEnd();
+				isBeforeBegin = false;
+				return;
+			}
+			if (isBeforeBegin)
 			{
 				current = getEnd();
 				prev = current;
-				outOfRange = false;
+				isBeforeBegin = false;
 				return;
 			}
 			if (current == getBegin())
 			{
 				current = getEnd() + 1;
 				prev = current;
-				outOfRange = true;
+				isBeforeBegin = true;
 				return;
 			}
 			if (current->right && current->right != prev)

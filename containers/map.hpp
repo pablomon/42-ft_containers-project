@@ -62,14 +62,20 @@ namespace ft
 		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()) : 
 			m_keyCompare(comp), m_alloc(alloc), m_size(0) { }
 		// range constructor
-		
+		//template <class InputIterator> //TODO: cambiar a InputIterator
+		map(iterator first, iterator last,
+			const key_compare& comp = key_compare(),
+			const allocator_type& alloc = allocator_type()) : m_alloc(alloc), m_keyCompare(comp)
+		{
+			insert(first, last);
+		} 
+
 		// copy constructor
 		map(const map & x) : 
 			m_tree(x.m_tree),
 			m_keyCompare(x.m_keyCompare),
 			m_alloc(x.m_alloc),
-			m_size(x.m_size)
-			{ }
+			m_size(x.m_size)			{ }
 		// destructor
 		~map() {};
 
@@ -83,17 +89,51 @@ namespace ft
 		// 	reverse_iterator		rend(void);
 		// 	const_reverse_iterator	rend(void) const;
 
+		 /* Operators */
+		map& operator=(map const& rhs)
+		{
+			if (this != &rhs)
+			{
+				clear();
+				m_alloc = rhs.m_alloc;
+				m_keyCompare = rhs.m_keyCompare;
+				insert(rhs.begin(), rhs.end());
+			}
+			return *this;
+		}
+
+		/* Element access */
+		mapped_type& operator[] (const key_type& k)
+		{
+			node_pointer node = m_tree.findNode(k);
+			if (node != NULL)
+				return node->content.second;
+			
+			mapped_type const val;
+			value_type pair(k, val);
+			ft::pair<iterator, bool> res = insert(pair);
+			return res.first->second;
+		}
+
 		/* Capacity */
 		bool		empty(void) const { return m_size == 0 ? true : false; }
 		size_type	size(void) const { return m_size; }
 		size_type	max_size(void) const { }
 
 		/* Modifiers */
+		void clear()
+		{
+			iterator it1 = begin();
+			iterator it2 = end();
+			erase(it1, it2);
+		}
+
 		ft::pair<iterator, bool> insert(const value_type & val)
 		{
 			 pair<node_pointer, bool> insert_res = m_tree.insert(val);
 			 iterator it = iterator(m_tree.m_root, insert_res.first);
 			 ft::pair<iterator, bool> res(it,insert_res.second);
+			 m_size = m_tree.m_size;
 			 return res;
 		}
 		iterator	insert(iterator position, const value_type & val)
@@ -101,40 +141,55 @@ namespace ft
 			position++; //TODO: comprobar hint
 
 			ft::pair<iterator, bool> pair = insert(val);
+			m_size = m_tree.m_size;
 			return pair.first;
 		}
-		template <class InputIterator>
-		void	insert(InputIterator first, InputIterator last)
+
+		// template <class InputIterator> //TODO
+		void	insert(iterator first, iterator last) //TODO: cambiar por InputIterator
 		{
 			while (first != last)
 			{
-				value_type val = *first;
-				// insert(val.first);
+			 	value_type val = *first;
+				ft::pair<iterator, bool> res = insert(val);
 				first++;
 			}
+			m_size = m_tree.m_size;
 		}
 
-		void erase(iterator position)
-		{
-			m_tree.remove(position);
-		}
+		void erase(iterator position) { m_tree.remove(position); }
 		size_type	erase(const key_type & k)
 		{
-			if (m_tree.remove(k))
-				return 1;
-			return 0;
+			bool res = m_tree.remove(k);
+			m_size = m_tree.m_size;
+			return res == true ? 1 : 0;
 		}
-		void		erase(iterator first, iterator last)
+		void erase(iterator first, iterator last) 
 		{
 			while (first != last)
 			{
-				erase(first);
-				first++;
+				key_type key = first->first;
+				++first;
+				erase(key);
 			}
 		}
 
-
-
+		void swap(map& x)
+		{
+			map tmp = *this;
+			//*this = x;
+			if (this != &x)
+			{
+				clear();
+				m_alloc = x.m_alloc;
+				m_keyCompare = x.m_keyCompare;
+				insert(x.begin(), x.end());
+			}
+			x.clear();
+			x.m_alloc = tmp.m_alloc;
+			x.m_keyCompare = tmp.m_keyCompare;
+			x.insert(tmp.begin(), tmp.end());
+		}
 
 			// typedef typename ft::Bidirectional<value_type, Alloc, PNode<Key, T, Compare, Alloc> >		iterator;
 			// typedef typename ft::Bidirectional<const value_type, Alloc, PNode<Key, T, Compare, Alloc> >	const_iterator;

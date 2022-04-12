@@ -25,18 +25,21 @@ namespace ft
 
 		allocator_type	m_alloc;
 		node_pointer	m_root;
+		std::size_t		m_size;
 
 	public:
-		avlTree() : m_root(NULL) {}
-		avlTree(const avlTree & x) 
-		{ 
-			m_root = NULL;
-			const_iterator it = x.begin();
-			while(it != x.end())
+		avlTree() : m_root(NULL), m_size(0) {}
+		avlTree(const avlTree & x) : m_root(NULL), m_size(0)
+		{
+			if (x.m_size > 0)
 			{
-				content_type pair = *it;
-				insert(pair);
-				it++;
+				const_iterator it = x.begin();
+				while(it != x.end())
+				{
+					content_type pair = *it;
+					insert(pair);
+					it++;
+				}
 			}
 		}
 		~avlTree()
@@ -49,8 +52,8 @@ namespace ft
 		node_pointer create_node(content_type content)
 		{
 			node_pointer node = m_alloc.allocate(1);
-			m_alloc.construct(node, node_type(content));
-			node->content = content;
+			m_alloc.construct(node, node_type(content, &m_root));
+			m_size++;
 			return node;
 		}
 
@@ -58,6 +61,7 @@ namespace ft
 		{
 			m_alloc.destroy(node);
 			m_alloc.deallocate(node, 1);
+			m_size--;
 		}
 		
 		void delete_branch(node_pointer node)
@@ -135,17 +139,12 @@ namespace ft
 			node_pointer toBeRemoved = findNode(key);
 			if (toBeRemoved == NULL)
 				return false;
-			enum
-			{
-				left,
-				right
-			} side;
+			bool isLeft;
 			node_pointer p = toBeRemoved->parent;
-			if (p != NULL &&
-				p->left == toBeRemoved)
-				side = left;
+			if (p != NULL && p->left == toBeRemoved)
+				isLeft = true;
 			else
-				side = right;
+				isLeft = false;
 			if (toBeRemoved->left == NULL)
 				if (toBeRemoved->right == NULL)
 				{
@@ -156,7 +155,7 @@ namespace ft
 					}
 					else
 					{
-						if (side == left)
+						if (isLeft)
 							p->setLeft(NULL);
 						else
 							p->setRight(NULL);
@@ -174,7 +173,7 @@ namespace ft
 					}
 					else
 					{
-						if (side == left)
+						if (isLeft)
 							p->setLeft(toBeRemoved->right);
 						else
 							p->setRight(toBeRemoved->right);
@@ -192,7 +191,7 @@ namespace ft
 				}
 				else
 				{
-					if (side == left)
+					if (isLeft)
 						p->setLeft(toBeRemoved->left);
 					else
 						p->setRight(toBeRemoved->left);
@@ -247,7 +246,7 @@ namespace ft
 				}
 				if (p == NULL)
 					setRoot(replacement);
-				else if (side == left)
+				else if (isLeft)
 					p->setLeft(replacement);
 				else
 					p->setRight(replacement);
@@ -296,7 +295,10 @@ namespace ft
 		}
 		iterator end()
 		{
-			iterator it(m_root, getLast() + 1);
+			node_pointer end = getLast();
+			if (end != NULL)
+				end = end + 1;
+			iterator it(m_root, end);
 			return it;
 		}
 		const_iterator end() const
@@ -305,6 +307,20 @@ namespace ft
 			return it;
 		}
 
+		node_pointer findNode(K key)
+		{
+			node_pointer temp = m_root;
+			while (temp != NULL)
+			{
+				if (key == temp->content.first)
+					break;
+				else if (key < temp->content.first)
+					temp = temp->left;
+				else
+					temp = temp->right;
+			}
+			return temp;
+		}
 
 		// debug
 		void print()
@@ -381,22 +397,6 @@ namespace ft
 			if (m_root != NULL)
 				m_root->removeParent();
 		}
-
-		node_pointer findNode(K key)
-		{
-			node_pointer temp = m_root;
-			while (temp != NULL)
-			{
-				if (key == temp->content.first)
-					break;
-				else if (key < temp->content.first)
-					temp = temp->left;
-				else
-					temp = temp->right;
-			}
-			return temp;
-		}
-
 
 		// debug
 		void printSubtree(node_pointer subtree, int depth, int level, bool first)

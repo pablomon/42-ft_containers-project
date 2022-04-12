@@ -13,8 +13,9 @@ namespace ft
 		typedef ft::pair<K, V>	content_type;
 		typedef content_type	*pointer;
 		typedef avlNode<K, V>	node_type;
-		typedef node_type 		*node_pointer;
+		typedef node_type 		*node_pointer;		
 
+		node_pointer	*tree_root;
 		content_type 	content;
 		int 			height;	
 		node_pointer 	left;
@@ -24,8 +25,9 @@ namespace ft
 		pointer			ptr;
 
 	public:
-		avlNode(content_type pair)
+		avlNode(content_type pair, node_pointer *root)
 		{
+			tree_root = root;
 			content = pair;
 			height = 0;
 			parent = NULL;
