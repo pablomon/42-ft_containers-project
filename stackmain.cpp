@@ -10,10 +10,11 @@
 
 void printmap(NS::map<std::string, std::string> mapa, std::string name)
 {
-	std::cout << "printing " << name << ":" << std::endl;
-	std::cout << "size = " << mapa.size() << std::endl;
+	std::cout << "printing " << name << std::endl;
+	std::cout << "  size = " << mapa.size() << std::endl;
 	for (NS::map<std::string, std::string>::iterator it = mapa.begin(); it != mapa.end(); it++)
-		std::cout << it->first << std::endl;
+		std::cout << "  " << it->first << std::endl;
+	std::cout << "end of print" << std::endl;
 	std::cout << std::endl;
 }
 
@@ -45,7 +46,7 @@ int main()
 		printmap(mapa3, "mapa3");
 
 		NS::map<std::string, std::string> mapa4;
-		printmap(mapa4, "mapa4");
+		printmap(mapa4, "mapa4 hola");
 
 		NS::map<std::string, std::string>::iterator ite1 = mapa.insert(NS::pair<std::string, std::string>("e1", "e1")).first;
 		NS::map<std::string, std::string>::iterator ite2 = mapa.insert(NS::pair<std::string, std::string>("e2", "e2")).first;
@@ -114,5 +115,98 @@ int main()
 		swapmapa.swap(swapmapb);
 		printmap(swapmapa, "swapmapa");
 		printmap(swapmapb, "swapmapb");
+
+		//size and maxsize
+		std::cout << "-------" << std::endl;
+		NS::map<std::string, std::string> sizemap;
+		printmap(sizemap, "size map");
+		sizemap.insert(NS::pair<std::string, std::string>("sm1", "sm1"));
+		sizemap.insert(NS::pair<std::string, std::string>("sm2", "sm2"));
+		sizemap.insert(NS::pair<std::string, std::string>("sm3", "sm3"));
+		sizemap.insert(NS::pair<std::string, std::string>("sm4", "sm4"));
+		printmap(sizemap, "size map");
+		sizemap.erase("sm1");
+		printmap(sizemap, "size map");
+		sizemap.erase(sizemap.begin(), sizemap.end());
+		printmap(sizemap, "size map");
+		log("max size:");
+		log(sizemap.max_size());
+		std::cout << "-------" << std::endl;
+
+		//key compare
+		{
+			std::cout << "-------" << std::endl;
+			std::map<char, int> mymap;
+
+			std::map<char, int>::key_compare mycomp = mymap.key_comp();
+
+			mymap['a'] = 100;
+			mymap['b'] = 200;
+			mymap['c'] = 300;
+
+			std::cout << "mymap contains:\n";
+
+			char highest = mymap.rbegin()->first;     // key value of last element
+
+			std::map<char, int>::iterator it = mymap.begin();
+			do {
+				std::cout << it->first << " => " << it->second << '\n';
+			} while (mycomp((*it++).first, highest));
+
+			std::cout << '\n';
+			std::cout << "-------" << std::endl;
+		}
+		
+		//value compare
+		{
+			NS::map<char, int> mymap;
+
+			mymap['x'] = 1001;
+			mymap['y'] = 2002;
+			mymap['z'] = 3003;
+
+			std::cout << "mymap contains:\n";
+
+			NS::map<char, int>::iterator itend = mymap.end();
+			itend--;
+			NS::pair<char, int> highest = *itend;
+			NS::map<char, int>::iterator it = mymap.begin();
+			while (mymap.value_comp()(*it, highest))
+			{
+				std::cout << it->first << " => " << it->second << '\n';
+				it++;
+			}
+		}
+
+		//find
+		{
+			std::cout << "-------" << std::endl;
+			NS::map<std::string, std::string> map;
+			map.insert(NS::pair<std::string, std::string>("k1", "v1"));
+			map.insert(NS::pair<std::string, std::string>("k2", "v2"));
+			map.insert(NS::pair<std::string, std::string>("k3", "v3"));
+			map.insert(NS::pair<std::string, std::string>("k4", "v4"));
+			printmap(map, "map");
+			NS::map<std::string, std::string>::iterator it;
+			it = map.find("k3");
+			std::cout << it->first << " => " << it->second << std::endl;
+			it = map.find("k5");
+			if (it == map.end())
+				std::cout << "not found, iterator = end()" << std::endl;
+			std::cout << "-------" << std::endl;
+		}
+
+		//count
+		{
+			std::cout << "-------" << std::endl;
+			NS::map<std::string, std::string> map;
+			map.insert(NS::pair<std::string, std::string>("k1", "v1"));
+			map.insert(NS::pair<std::string, std::string>("k2", "v2"));
+			printmap(map, "map");
+			std::cout << "count k1 = " << map.count("k1") << std::endl;
+			std::cout << "count k666 = " << map.count("k666") << std::endl;
+			std::cout << "-------" << std::endl;
+		}
+
 	}
 }

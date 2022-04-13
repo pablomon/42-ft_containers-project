@@ -38,7 +38,7 @@ namespace ft
 					typedef value_type second_argument_type;
 					bool operator() (const value_type & x, const value_type & y) const	{ return comp(x.first, y.first); }
 			};
-			typedef Alloc	allocator_type;
+			typedef Alloc								allocator_type;
 			typedef typename Alloc::reference &			reference;
 			typedef typename Alloc::const_reference &	const_reference;
 			typedef typename Alloc::pointer &			pointer;
@@ -109,7 +109,7 @@ namespace ft
 			if (node != NULL)
 				return node->content.second;
 			
-			mapped_type const val;
+			mapped_type val;
 			value_type pair(k, val);
 			ft::pair<iterator, bool> res = insert(pair);
 			return res.first->second;
@@ -118,16 +118,9 @@ namespace ft
 		/* Capacity */
 		bool		empty(void) const { return m_size == 0 ? true : false; }
 		size_type	size(void) const { return m_size; }
-		size_type	max_size(void) const { }
+		size_type	max_size(void) const { return m_alloc.max_size(); }
 
 		/* Modifiers */
-		void clear()
-		{
-			iterator it1 = begin();
-			iterator it2 = end();
-			erase(it1, it2);
-		}
-
 		ft::pair<iterator, bool> insert(const value_type & val)
 		{
 			 pair<node_pointer, bool> insert_res = m_tree.insert(val);
@@ -190,6 +183,51 @@ namespace ft
 			x.m_keyCompare = tmp.m_keyCompare;
 			x.insert(tmp.begin(), tmp.end());
 		}
+
+		void clear()
+		{
+			iterator it1 = begin();
+			iterator it2 = end();
+			erase(it1, it2);
+		}
+
+		/* Observers */
+		key_compare		key_comp(void) const { return m_keyCompare; }
+		value_compare	value_comp(void) const { return value_compare(m_keyCompare); }
+
+		 /* Operations */
+		iterator		find(const key_type& k)
+		{
+			node_pointer node = m_tree.findNode(k);
+			if (node)
+				return iterator(m_tree.m_root, node);
+			else
+				return m_tree.end();
+		}
+		const_iterator	find(const key_type& k) const
+		{
+			node_pointer node = m_tree.findNode(k);
+			if (node)
+				return const_iterator(m_tree.m_root, node);
+			else
+				return m_tree.cend();
+		}
+
+		size_type		count(const key_type& k) const
+		{
+			node_pointer node = m_tree.findNode(k);
+			std::cout << "after findnode\n";
+			return node == NULL ? 0 : 1;
+		}
+
+		iterator		lower_bound(const key_type & k);
+		const_iterator	lower_bound(const key_type & k) const;
+
+		iterator 		upper_bound(const key_type & k);
+		const_iterator	upper_bound(const key_type & k) const;
+
+		ft::pair<const_iterator, const_iterator>	equal_range (const key_type & k) const;
+		ft::pair<iterator, iterator>				equal_range (const key_type & k);
 
 			// typedef typename ft::Bidirectional<value_type, Alloc, PNode<Key, T, Compare, Alloc> >		iterator;
 			// typedef typename ft::Bidirectional<const value_type, Alloc, PNode<Key, T, Compare, Alloc> >	const_iterator;

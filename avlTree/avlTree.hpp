@@ -307,7 +307,7 @@ namespace ft
 			return it;
 		}
 
-		node_pointer findNode(K key)
+		node_pointer findNode(K key) const
 		{
 			node_pointer temp = m_root;
 			while (temp != NULL)

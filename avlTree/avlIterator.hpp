@@ -23,7 +23,7 @@ namespace ft
 		private:
 		node_pointer current;
 		node_pointer prev;
-		node_pointer root;
+		node_pointer root; //TODO refactor to remove root
 		bool isBeforeBegin;
 		bool isPastLast;
 		node_pointer *tree_root;
