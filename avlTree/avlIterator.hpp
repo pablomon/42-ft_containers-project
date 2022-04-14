@@ -33,6 +33,7 @@ namespace ft
 		//Default constructor
 		avlIterator(node_pointer root, node_pointer current)
 		{
+			tree_root = NULL;
 			this->root = root;
 			if (root)
 				tree_root = root->tree_root;

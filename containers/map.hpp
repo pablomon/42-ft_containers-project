@@ -36,7 +36,11 @@ namespace ft
 					typedef bool result_type;
 					typedef value_type first_argument_type;
 					typedef value_type second_argument_type;
-					bool operator() (const value_type & x, const value_type & y) const	{ return comp(x.first, y.first); }
+					bool operator() (const value_type & x, const value_type & y) const	
+					{
+						std::cout << "Calling operator() in value_compare" << std::endl;
+						return comp(x.first, y.first); 
+					}
 			};
 			typedef Alloc								allocator_type;
 			typedef typename Alloc::reference &			reference;
@@ -59,13 +63,16 @@ namespace ft
  		/* --- Member functions --- */
 		public:
 		// empty constructor
-		explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type()) : 
+		explicit map(const key_compare &comp = key_compare(),
+			const allocator_type &alloc = allocator_type()) : 
 			m_keyCompare(comp), m_alloc(alloc), m_size(0) { }
 		// range constructor
 		//template <class InputIterator> //TODO: cambiar a InputIterator
-		map(iterator first, iterator last,
-			const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : m_alloc(alloc), m_keyCompare(comp)
+		map(iterator first, 
+			iterator last,
+			const key_compare& comp = key_compare(), 
+			const allocator_type& alloc = allocator_type())
+			 : m_alloc(alloc), m_keyCompare(comp)
 		{
 			insert(first, last);
 		} 
@@ -220,7 +227,20 @@ namespace ft
 			return node == NULL ? 0 : 1;
 		}
 
-		iterator		lower_bound(const key_type & k);
+		iterator		lower_bound(const key_type& k)
+		{
+			iterator it = begin();			
+
+			std::less<key_type> less;
+			while (it != end())
+			{
+				bool res = m_keyCompare(it->first, k);
+				if (!res)
+					break;
+				it++;
+			}
+			return it;
+		}
 		const_iterator	lower_bound(const key_type & k) const;
 
 		iterator 		upper_bound(const key_type & k);

@@ -8,6 +8,7 @@
 #define log(x) std::cout << x << std::endl
 #define NS ft
 
+
 void printmap(NS::map<std::string, std::string> mapa, std::string name)
 {
 	std::cout << "printing " << name << std::endl;
@@ -22,6 +23,12 @@ void printmap(NS::map<std::string, std::string> mapa, std::string name)
 int main()
 {
 	{
+		std::cout << "Running...." << std::endl;
+
+		std::less<std::string> less;
+		std::cout << "less k1,k1 = " << less("k1", "k2") << std::endl;
+
+
 		NS::map<std::string, std::string> mapa;
 		NS::map<std::string, std::string>::iterator it1 = mapa.insert(NS::pair<std::string, std::string>("k1", "v1")).first;
 		mapa.insert(it1, NS::pair<std::string, std::string>("k3", "v3"));
@@ -208,5 +215,24 @@ int main()
 			std::cout << "-------" << std::endl;
 		}
 
+		//lower bound
+		{
+			std::cout << "-------" << std::endl;
+			NS::map<std::string, std::string> map;
+			map.insert(NS::pair<std::string, std::string>("k1", "v1"));
+			map.insert(NS::pair<std::string, std::string>("k2", "v2"));
+			map.insert(NS::pair<std::string, std::string>("k6", "v6"));
+			map.insert(NS::pair<std::string, std::string>("k7", "v7"));
+			// printmap(map, "map");
+
+			NS::map<std::string, std::string>::iterator it;
+			it = map.lower_bound("k1");
+			std::cout << "lowerbound(k1) = " << it->first << std::endl;
+			it = map.lower_bound("k0");
+			std::cout << "lowerbound(k0) = " << it->first << std::endl;
+			it = map.lower_bound("k4");
+			std::cout << "lowerbound(k4) = " << it->first << std::endl;
+			std::cout << "-------" << std::endl;
+		}
 	}
 }
