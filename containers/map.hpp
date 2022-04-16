@@ -50,6 +50,8 @@ namespace ft
 
 			typedef typename tree::iterator				iterator;
 			typedef typename tree::const_iterator		const_iterator;
+			// reverse
+			// reverse const
 
 			typedef std::size_t							size_type;
 			typedef std::ptrdiff_t						difference_type;
@@ -88,9 +90,9 @@ namespace ft
 
 		/* Iterators */
 		iterator				begin(void) { return m_tree.begin(); }
-		const_iterator			begin(void) const {return m_tree.begin(); }
+		const_iterator			cbegin(void) const {return m_tree.cbegin(); }
 		iterator				end(void) { return m_tree.end(); }
-		const_iterator			end(void) const { return m_tree.end(); }
+		const_iterator			cend(void) const { return m_tree.cend(); }
 		// 	reverse_iterator		rbegin(void);
 		// 	const_reverse_iterator	rbegin(void) const;
 		// 	reverse_iterator		rend(void);
@@ -223,15 +225,12 @@ namespace ft
 		size_type		count(const key_type& k) const
 		{
 			node_pointer node = m_tree.findNode(k);
-			std::cout << "after findnode\n";
 			return node == NULL ? 0 : 1;
 		}
 
 		iterator		lower_bound(const key_type& k)
 		{
 			iterator it = begin();			
-
-			std::less<key_type> less;
 			while (it != end())
 			{
 				bool res = m_keyCompare(it->first, k);
@@ -243,105 +242,38 @@ namespace ft
 		}
 		const_iterator	lower_bound(const key_type & k) const;
 
-		iterator 		upper_bound(const key_type & k);
+		iterator 		upper_bound(const key_type & k)
+		{
+			iterator it = begin();			
+			while (it != end())
+			{
+				bool isless = m_keyCompare(it->first, k);
+				bool isgreater = m_keyCompare(k, it->first);
+				if (!isless && !isgreater) // is equal
+				{
+					it++;
+					continue;
+				}
+				bool res = m_keyCompare(k, it->first);
+				if (res)
+					break;
+				it++;
+			}
+			return it;				
+		}
 		const_iterator	upper_bound(const key_type & k) const;
 
+		ft::pair<iterator, iterator>				equal_range (const key_type & k)
+		{
+			iterator lower = lower_bound(k);
+			iterator upper = upper_bound(k);
+			ft::pair<iterator, iterator> pair;
+			pair.first = lower;
+			pair.second = upper;			
+			return pair;
+		}
 		ft::pair<const_iterator, const_iterator>	equal_range (const key_type & k) const;
-		ft::pair<iterator, iterator>				equal_range (const key_type & k);
 
-			// typedef typename ft::Bidirectional<value_type, Alloc, PNode<Key, T, Compare, Alloc> >		iterator;
-			// typedef typename ft::Bidirectional<const value_type, Alloc, PNode<Key, T, Compare, Alloc> >	const_iterator;
-			// typedef typename ft::Reverse_Iterator<iterator>												reverse_iterator;
-			// typedef typename ft::Reverse_Iterator<const_iterator>										const_reverse_iterator;
-
-		// 	typedef std::ptrdiff_t	difference_type;
-		// 	typedef std::size_t		size_type;
-
-		// private:
-		// 	// typedef typename allocator_type::template rebind<PNode<Key, T, Compare, Alloc> >::other	node_allocator;
-		// 	// typedef	PNode<Key, T, Compare, Alloc>	node;
-
-		// /* --- Member attributes --- */
-		// private:
-		// 	key_compare		m_keyCompare;
-		// 	allocator_type	m_alloc;
-		// 	node_allocator	m_node_alloc;
-		// 	size_type		m_size;
-		// 	node *			m_root;
-		
-		// /* --- Member functions --- */
-		// public:
-		// /* Constructor */
-		// 	/* empty	(1)	*/	explicit map(const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type());
-		// 	/* range	(2)	*/	template <class InputIterator>
-		// 						map(InputIterator first, InputIterator last, const key_compare & comp = key_compare(), const allocator_type & alloc = allocator_type());
-		// 	/* copy		(3)	*/	map(const map & x);
-
-		// /* Destructor */
-		// 	~map();
-
-		// /* Operators */
-		// 	/* assignation	(1)	*/	map &	operator=(map const & rhs);
-
-		// /* Iterators */
-		// 	iterator				begin(void);
-		// 	const_iterator			begin(void) const;
-		// 	iterator				end(void);
-		// 	const_iterator			end(void) const;
-		// 	reverse_iterator		rbegin(void);
-		// 	const_reverse_iterator	rbegin(void) const;
-		// 	reverse_iterator		rend(void);
-		// 	const_reverse_iterator	rend(void) const;
-
-		// /* Capacity */
-		// 	bool		empty(void) const;
-		// 	size_type	size(void) const;
-		// 	size_type	max_size(void) const;
-
-		// /* Element access */
-		// 	mapped_type &	operator[] (const key_type & k);
-
-		// /* Modifiers */
-		// 	/* single element	(1)	*/	ft::pair<iterator, bool>	insert(const value_type & val);
-		// 	/* with hint		(2)	*/	iterator	insert(iterator position, const value_type & val);
-		// 	/* range			(3)	*/	template <class InputIterator>
-		// 								void	insert(InputIterator first, InputIterator last);
-
-		// 	/* (1)	*/	void		erase(iterator position);
-		// 	/* (2)	*/	size_type	erase(const key_type & k);
-		// 	/* (3)	*/	void		erase(iterator first, iterator last);
-
-		// 	void	swap(map & x);
-
-		// 	void	clear(void);
-
-		// /* Observers */
-		// 	key_compare		key_comp(void) const;
-
-		// 	value_compare	value_comp(void) const;
-			
-		// /* Operations */
-		// 	iterator		find (const key_type & k);
-		// 	const_iterator	find (const key_type & k) const;
-
-		// 	size_type	count(const key_type & k) const;
-
-		// 	iterator		lower_bound(const key_type & k);
-		// 	const_iterator	lower_bound(const key_type & k) const;
-
- 		// 	iterator 		upper_bound(const key_type & k);
-		// 	const_iterator	upper_bound(const key_type & k) const;
-			
-		// 	ft::pair<const_iterator, const_iterator>	equal_range (const key_type & k) const;
-		// 	ft::pair<iterator, iterator>				equal_range (const key_type & k);
-
-		// /* --- Private functions --- */
-		// private:
-		// 	value_type *	_try_add_node(value_type pair);
-		// 	node *			_create_node(value_type pair, bool is_end, node * parent = NULL, node * left = NULL, node * right = NULL);
-		// 	node *			_find_node(const value_type & pair) const;
-		// 	void			_reinsert_branch(PNode<Key, T, Compare, Alloc> * node);
-		// 	void			_destroy_branch(PNode<Key, T, Compare, Alloc> * node);
 	};
 }
 

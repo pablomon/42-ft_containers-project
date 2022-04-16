@@ -25,9 +25,11 @@ int main()
 	{
 		std::cout << "Running...." << std::endl;
 
-		std::less<std::string> less;
-		std::cout << "less k1,k1 = " << less("k1", "k2") << std::endl;
-
+		NS::map<std::string, std::string> mapaend;
+		mapaend.insert(NS::pair<std::string, std::string>("k1", "v1"));
+		NS::map<std::string, std::string>::iterator itmapaend = mapaend.end();
+		std::cout << "Printing end() : " << itmapaend->first << std::endl;
+	
 
 		NS::map<std::string, std::string> mapa;
 		NS::map<std::string, std::string>::iterator it1 = mapa.insert(NS::pair<std::string, std::string>("k1", "v1")).first;
@@ -215,7 +217,7 @@ int main()
 			std::cout << "-------" << std::endl;
 		}
 
-		//lower bound
+		//bounds and equal_range
 		{
 			std::cout << "-------" << std::endl;
 			NS::map<std::string, std::string> map;
@@ -223,16 +225,51 @@ int main()
 			map.insert(NS::pair<std::string, std::string>("k2", "v2"));
 			map.insert(NS::pair<std::string, std::string>("k6", "v6"));
 			map.insert(NS::pair<std::string, std::string>("k7", "v7"));
-			// printmap(map, "map");
+			printmap(map, "map");
 
 			NS::map<std::string, std::string>::iterator it;
+
 			it = map.lower_bound("k1");
 			std::cout << "lowerbound(k1) = " << it->first << std::endl;
 			it = map.lower_bound("k0");
 			std::cout << "lowerbound(k0) = " << it->first << std::endl;
 			it = map.lower_bound("k4");
 			std::cout << "lowerbound(k4) = " << it->first << std::endl;
+			it = map.lower_bound("k7");
+			std::cout << "lowerbound(k7) = " << it->first << std::endl;
 			std::cout << "-------" << std::endl;
+
+			it = map.upper_bound("k1");
+			std::cout << "upperbound(k1) = " << it->first << std::endl;
+			it = map.upper_bound("k0");
+			std::cout << "upperbound(k0) = " << it->first << std::endl;
+			it = map.upper_bound("k4");
+			std::cout << "upperbound(k4) = " << it->first << std::endl;
+			it = map.upper_bound("k7");
+
+			if (it == map.end())
+				std::cout << "equal" << std::endl;
+			else
+				std::cout << "upperbound(k7) = " << it->first << std::endl;
+			// cit = map.lower_bound("k1");
+			// std::cout << "const lowerbound(k1) = " << cit->first << std::endl;
+			// cit = map.lower_bound("k0");
+			// std::cout << "const lowerbound(k0) = " << cit->first << std::endl;
+			// cit = map.lower_bound("k4");
+			// std::cout << "const lowerbound(k4) = " << cit->first << std::endl;
+			std::cout << "-------" << std::endl;
+
+			NS::pair<NS::map<std::string, std::string>::iterator,NS::map<std::string, std::string>::iterator> range;
+			range = map.equal_range("k2");
+			std::cout << "equal_range(k2) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+			range = map.equal_range("k0");
+			std::cout << "equal_range(k0) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+			range = map.equal_range("k5");
+			std::cout << "equal_range(k5) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+			range = map.equal_range("k10");
+			std::cout << "equal_range(k10) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
 		}
 	}
+
+	return 0;
 }

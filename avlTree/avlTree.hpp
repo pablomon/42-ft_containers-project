@@ -33,7 +33,7 @@ namespace ft
 		{
 			if (x.m_size > 0)
 			{
-				const_iterator it = x.begin();
+				iterator it = x.begin();
 				while(it != x.end())
 				{
 					content_type pair = *it;
@@ -272,13 +272,13 @@ namespace ft
 			return node;
 		}
 
-		iterator begin()
+		iterator begin() const
 		{
 			iterator it(m_root, getFirst());
 			return it;
 		}
 
-		const_iterator begin() const
+		const_iterator cbegin() const
 		{
 			const_iterator it(m_root, getFirst());
 			return it;
@@ -293,7 +293,7 @@ namespace ft
 				node = node->right;
 			return node;
 		}
-		iterator end()
+		iterator end() const
 		{
 			node_pointer end = getLast();
 			if (end != NULL)
@@ -301,7 +301,7 @@ namespace ft
 			iterator it(m_root, end);
 			return it;
 		}
-		const_iterator end() const
+		const_iterator cend() const
 		{
 			const_iterator it(m_root, getLast() + 1);
 			return it;
