@@ -29,10 +29,24 @@ namespace ft
 		node_pointer *tree_root;
 
 		public:
-		avlIterator() : current(NULL), prev(NULL), root(NULL), isBeforeBegin(false), isPastLast(false) {}
+		void print()
+		{
+			std::cout << "iterator:" << std::endl;
+			if (current!=NULL && current->content!=NULL)
+				std::cout << "  current content = " << current->content.first << std::endl;
+			std::cout << "  left = " << current->left << std::endl;
+			std::cout << "  right = " << current->right << std::endl;
+			std::cout << "  beforeBegin: " << isBeforeBegin << std::endl;
+			std::cout << "  pastLast: " << isPastLast << std::endl;
+		}
+		avlIterator() : current(NULL), prev(NULL), root(NULL), isBeforeBegin(false), isPastLast(false), tree_root(NULL) 
+		{
+			std::cout << "default constructor" << std::endl;
+		}
 		//Default constructor
 		avlIterator(node_pointer root, node_pointer current)
 		{
+			std::cout << "constructor node node" << std::endl;
 			tree_root = NULL;
 			this->root = root;
 			if (root)
@@ -43,16 +57,19 @@ namespace ft
 			isPastLast = false;
 			if (current == getEnd() + 1)
 				isPastLast = true;
+			print();
 		}
 		//Copy
 		avlIterator(avlIterator<node_type, value_type> const &other)
 		{
+			std::cout << "constructor copy" << std::endl;
 			root = other.root;
 			tree_root = other.tree_root;
 			current = other.current;
 			prev = other.prev;
 			isBeforeBegin = other.isBeforeBegin;
 			isPastLast = other.isPastLast;
+			print();
 		}
 		//Destructor
 		~avlIterator() {}
