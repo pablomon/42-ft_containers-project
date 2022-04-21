@@ -5,7 +5,6 @@
 #include "../utils/pair.hpp"
 #include "../avlTree/avlTree.hpp"
 #include "../avlTree/avlIterator.hpp"
-#include "../utils/reverse_iterator.hpp"
 
 #include <iostream> // TODO remove
 namespace ft
@@ -49,11 +48,10 @@ namespace ft
 			typedef typename Alloc::pointer &			pointer;
 			typedef typename Alloc::const_pointer &		const_pointer;
 
-			typedef typename tree::iterator					iterator;
-			typedef typename tree::const_iterator			const_iterator;
-			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-			typedef std::bidirectional_iterator_tag			iterator_category;
+			typedef typename tree::iterator				iterator;
+			typedef typename tree::const_iterator		const_iterator;
+			// reverse
+			// reverse const
 
 			typedef std::size_t							size_type;
 			typedef std::ptrdiff_t						difference_type;
@@ -92,9 +90,13 @@ namespace ft
 
 		/* Iterators */
 		iterator				begin(void) { return m_tree.begin(); }
+		const_iterator			cbegin(void) const {return m_tree.cbegin(); }
 		iterator				end(void) { return m_tree.end(); }
-		reverse_iterator		rbegin(void) { return m_tree.end(); }
-		reverse_iterator		rend(void) { return m_tree.begin(); }
+		const_iterator			cend(void) const { return m_tree.cend(); }
+		// 	reverse_iterator		rbegin(void);
+		// 	const_reverse_iterator	rbegin(void) const;
+		// 	reverse_iterator		rend(void);
+		// 	const_reverse_iterator	rend(void) const;
 
 		 /* Operators */
 		map& operator=(map const& rhs)
