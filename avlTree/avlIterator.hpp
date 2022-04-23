@@ -20,7 +20,7 @@ namespace ft
 		typedef std::ptrdiff_t 			difference_type;
 		typedef std::bidirectional_iterator_tag 	iterator_category;
 
-		public:
+		public: //TODO refactor into one struct
 		node_pointer current;
 		node_pointer prev;
 		node_pointer root; //TODO refactor to remove root

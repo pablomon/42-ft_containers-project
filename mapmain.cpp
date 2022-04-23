@@ -26,7 +26,7 @@ int main()
 
 	// iterators
 	{
-		std::cout << "-------" << std::endl;
+		std::cout << "Iterators" << std::endl;
 		NS::map<std::string, std::string> map;
 		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
 		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
@@ -48,7 +48,7 @@ int main()
 
 	// const iterators
 	{
-		std::cout << "-------" << std::endl;
+		std::cout << "Const iterators" << std::endl;
 		NS::map<std::string, std::string> map;
 		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
 		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
@@ -68,55 +68,54 @@ int main()
 		std::cout << "----" << std::endl;
 	}
 
-	//
+	// reverse iterators
+	{
+		std::cout << "Reverse iterators" << std::endl;
+		NS::map<std::string, std::string> map;
+		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
+		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
+		map.insert(NS::pair<std::string, std::string>("k6", "v6"));
+		map.insert(NS::pair<std::string, std::string>("k7", "v7"));
+		printmap(map, "map");
+
+		// map.m_tree.print();
+		std::cout << "----" << std::endl;
+		NS::map<std::string, std::string>::reverse_iterator rbeg = map.rbegin();
+		NS::map<std::string, std::string>::reverse_iterator rend = map.rend();
+		while (rbeg != rend)
+		{
+			std::cout << rbeg->first << '\n';
+			++rbeg;
+		}
+		std::cout << "----" << std::endl;
+	}
+
+
+	// const reverse iterators
+	{
+		std::cout << "Reverse const iterators" << std::endl;
+		NS::map<std::string, std::string> map;
+		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
+		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
+		map.insert(NS::pair<std::string, std::string>("k3", "v3"));
+		printmap(map, "map");
+
+		// map.m_tree.print();
+		std::cout << "----" << std::endl;
+		NS::map<std::string, std::string>::const_reverse_iterator rbeg = map.rbegin();
+		NS::map<std::string, std::string>::const_reverse_iterator rend = map.rend();
+		while (rbeg != rend)
+		{
+			std::cout << rbeg->first << '\n';
+			++rbeg;
+		}
+		std::cout << "----" << std::endl;
+	}
+
 
 	return 0;
 
 
-
-
-	//// reverse iterators
-	//{
-	//	std::cout << "-------" << std::endl;
-	//	NS::map<std::string, std::string> map;
-	//	map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-	//	map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-	//	map.insert(NS::pair<std::string, std::string>("k6", "v6"));
-	//	map.insert(NS::pair<std::string, std::string>("k7", "v7"));
-	//	printmap(map, "map");
-
-	//	// map.m_tree.print();
-	//	std::cout << "----" << std::endl;
-	//	NS::map<std::string, std::string>::reverse_iterator rbeg = map.rbegin();
-	//	NS::map<std::string, std::string>::reverse_iterator rend = map.rend();
-	//	while (rbeg != rend)
-	//	{
-	//		std::cout << rbeg->first << '\n';
-	//		++rbeg;
-	//	}
-	//	std::cout << "----" << std::endl;
-	//}
-
-	// // const reverse iterators
-	// {
-	// 	std::cout << "-------" << std::endl;
-	// 	NS::map<std::string, std::string> map;
-	// 	map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-	// 	map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-	// 	map.insert(NS::pair<std::string, std::string>("k3", "v3"));
-	// 	printmap(map, "map");
-
-	// 	// map.m_tree.print();
-	// 	std::cout << "----" << std::endl;
-	// 	NS::map<std::string, std::string>::const_reverse_iterator rbeg = map.rbegin();
-	// 	//NS::map<std::string, std::string>::const_reverse_iterator rend = map.rend();
-	// 	//while (rbeg != rend)
-	// 	//{
-	// 	//	std::cout << rbeg->first << '\n';
-	// 	//	++rbeg;
-	// 	//}
-	// 	//std::cout << "----" << std::endl;
-	// }
 
 	// {
 	// 	NS::map<std::string, std::string> mapaend;
