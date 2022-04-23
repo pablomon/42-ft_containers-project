@@ -169,8 +169,13 @@ namespace ft
 		*/
 		iterator begin() { return iterator(m_data); }
 		iterator end() { return iterator(m_data + m_size); }
+		const_iterator begin() const { return const_iterator(m_data); }
+		const_iterator end() const { return const_iterator(m_data + m_size); }
+		
 		reverse_iterator rbegin() {	return end(); }
 		reverse_iterator rend()	{ return begin(); }
+		const_reverse_iterator rbegin() const { return end(); }
+		const_reverse_iterator rend() const { return begin(); }
 
 		/*
 		 Capacity ------------------------------------------

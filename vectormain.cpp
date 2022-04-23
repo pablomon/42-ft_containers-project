@@ -2,7 +2,6 @@
 #include <iostream>
 #include "containers/vector.hpp"
 
-#define log(x) std::cout << x << std::endl
 #define NS ft
 
 template <typename T>
@@ -37,6 +36,22 @@ int main(void)
 		{
 			std::cout << *rit << std::endl;
 			rit++;
+		}
+	}
+	{
+		NS::vector<std::string>::const_iterator cit = v.begin();
+		while (cit != v.end())
+		{
+			std::cout << *cit << std::endl;
+			cit++;
+		}
+	}
+	{
+		NS::vector<std::string>::const_reverse_iterator cit = v.rbegin();
+		while (cit != v.rend())
+		{
+			std::cout << *cit << std::endl;
+			cit++;
 		}
 	}
 
