@@ -20,7 +20,7 @@ namespace ft
 		typedef std::ptrdiff_t 			difference_type;
 		typedef std::bidirectional_iterator_tag 	iterator_category;
 
-		private:
+		public:
 		node_pointer current;
 		node_pointer prev;
 		node_pointer root; //TODO refactor to remove root
@@ -45,7 +45,8 @@ namespace ft
 			isPastLast = current == getEnd() + 1 ? true : false;
 		}
 		//Copy
-		avlIterator(avlIterator<node_type, value_type> const &other)
+		template <typename U, typename V>
+		avlIterator(avlIterator<U, V> const &other)
 		{
 			root = other.root;
 			tree_root = other.tree_root;
@@ -123,10 +124,6 @@ namespace ft
 			root = NULL;
 			if (tree_root)
 				root = *tree_root;
-			/*node_pointer node = root;
-			while (node->parent)
-				node = node->parent;
-			root = node;*/
 		}
 
 		node_pointer getEnd()
