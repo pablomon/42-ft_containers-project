@@ -25,6 +25,7 @@ namespace ft
 		node_pointer prev;
 		node_pointer root; //TODO refactor to remove root
 		bool isBeforeBegin;
+		bool isLast;
 		bool isPastLast;
 		node_pointer *tree_root;
 
@@ -40,9 +41,8 @@ namespace ft
 			this->current = current;
 			prev = current;
 			isBeforeBegin = false;
-			isPastLast = false;
-			if (current == getEnd() + 1)
-				isPastLast = true;
+			isLast = false;
+			isPastLast = current == getEnd() + 1 ? true : false;
 		}
 		//Copy
 		avlIterator(avlIterator<node_type, value_type> const &other)
@@ -152,8 +152,6 @@ namespace ft
 
 		void moveForward()
 		{
-			/*print();*/
-			
 			if (isPastLast)
 			{
 				current = getEnd() + 1;
@@ -194,6 +192,7 @@ namespace ft
 				isPastLast = false;
 				current = getEnd();
 				isBeforeBegin = false;
+				prev = NULL;
 				return;
 			}
 			if (isBeforeBegin)
@@ -228,8 +227,20 @@ namespace ft
 				current = current->left;
 				return;
 			}
+			if (current->parent && prev == NULL)
+			{
+				prev = current;
+				current = current->parent;
+				return;
+			}
 			while (current->parent)
 			{
+				if (prev == NULL)
+				{
+					prev = current;
+					current = current->parent;
+					return;
+				}
 				if (current->parent->content.first < prev->content.first)
 				{
 					prev = current;

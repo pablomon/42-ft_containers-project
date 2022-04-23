@@ -5,6 +5,7 @@
 #include "../utils/pair.hpp"
 #include "../avlTree/avlTree.hpp"
 #include "../avlTree/avlIterator.hpp"
+#include "../utils/reverse_iterator.hpp"
 
 #include <iostream> // TODO remove
 namespace ft
@@ -14,18 +15,18 @@ namespace ft
 	class map
 	{
 		public:
-			typedef Key 				key_type;
-			typedef T 					mapped_type;
+			typedef Key key_type;
+			typedef T 	mapped_type;
 
 		private:
-			typedef avlTree<key_type, mapped_type>		tree;
-			typedef typename tree::node_type						node_type;
-			typedef typename tree::node_pointer					node_pointer;
+			typedef avlTree<key_type, mapped_type>	tree;
+			typedef typename tree::node_type		node_type;
+			typedef typename tree::node_pointer		node_pointer;
 
 
 		public:
-			typedef	Compare				key_compare;
-			typedef ft::pair<const key_type, mapped_type> 			value_type;
+			typedef	Compare		key_compare;
+			typedef ft::pair<const key_type, mapped_type> 	value_type;
 			class value_compare
 			{
 				friend class map;
@@ -42,19 +43,20 @@ namespace ft
 						return comp(x.first, y.first); 
 					}
 			};
-			typedef Alloc								allocator_type;
-			typedef typename Alloc::reference &			reference;
-			typedef typename Alloc::const_reference &	const_reference;
-			typedef typename Alloc::pointer &			pointer;
-			typedef typename Alloc::const_pointer &		const_pointer;
+			typedef Alloc											allocator_type;
+			typedef typename Alloc::reference &						reference;
+			typedef typename Alloc::const_reference &				const_reference;
+			typedef typename Alloc::pointer &						pointer;
+			typedef typename Alloc::const_pointer &					const_pointer;
 
-			typedef typename tree::iterator				iterator;
-			typedef typename tree::const_iterator		const_iterator;
-			// reverse
+			typedef typename tree::iterator							iterator;
+			typedef typename tree::const_iterator					const_iterator;
+			typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 			// reverse const
 
-			typedef std::size_t							size_type;
-			typedef std::ptrdiff_t						difference_type;
+			typedef std::size_t			size_type;
+			typedef std::ptrdiff_t		difference_type;
 
 		/* --- Member attributes --- */
 		public : tree 			m_tree; //TODO hacer privado
@@ -90,13 +92,14 @@ namespace ft
 
 		/* Iterators */
 		iterator				begin(void) { return m_tree.begin(); }
-		const_iterator			cbegin(void) const {return m_tree.cbegin(); }
+		const_iterator			begin(void) const {return m_tree.cbegin(); }
 		iterator				end(void) { return m_tree.end(); }
-		const_iterator			cend(void) const { return m_tree.cend(); }
-		// 	reverse_iterator		rbegin(void);
-		// 	const_reverse_iterator	rbegin(void) const;
-		// 	reverse_iterator		rend(void);
-		// 	const_reverse_iterator	rend(void) const;
+		const_iterator			end(void) const { return m_tree.cend(); }
+
+		reverse_iterator		rbegin(void) { return m_tree.end(); }
+		const_reverse_iterator	rbegin(void) const { return m_tree.cend(); }
+		reverse_iterator		rend(void) { return m_tree.begin(); };
+		const_reverse_iterator	rend(void) const { return m_tree.begin(); }
 
 		 /* Operators */
 		map& operator=(map const& rhs)

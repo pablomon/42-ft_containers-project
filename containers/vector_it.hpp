@@ -15,7 +15,7 @@ namespace ft
 	template <typename T>
 	struct vectorIterator
 	{
-		public:
+	public:
 		typedef T						value_type;
 		typedef value_type				*pointer;
 		typedef value_type const 		*const_pointer;
@@ -24,8 +24,17 @@ namespace ft
 		typedef std::ptrdiff_t 			difference_type;
 		typedef std::random_access_iterator_tag 	iterator_category;
 
-		public:
+	private:
+		pointer m_ptr;
+
+	public:
+		vectorIterator() : m_ptr(NULL) {};
 		vectorIterator(pointer ptr) : m_ptr(ptr) {};
+		vectorIterator &operator=(vectorIterator const &other)
+		{
+			m_ptr = other.m_ptr;
+			return *this;
+		}
 
 		vectorIterator& operator++() {
 			m_ptr++;
@@ -95,8 +104,7 @@ namespace ft
 			return (other.m_ptr != m_ptr);
 		}
 
-		private:
-		pointer m_ptr;
+
 	};
 } // namespace ft
 
