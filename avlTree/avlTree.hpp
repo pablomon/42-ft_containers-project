@@ -278,6 +278,12 @@ namespace ft
 			return it;
 		}
 
+		const_iterator cbegin() const
+		{
+			const_iterator it(m_root, getFirst());
+			return it;
+		}
+
 		node_pointer getLast() const
 		{
 			if (m_root == NULL)
@@ -293,6 +299,11 @@ namespace ft
 			if (end != NULL)
 				end = end + 1;
 			iterator it(m_root, end);
+			return it;
+		}
+		const_iterator cend() const
+		{
+			const_iterator it(m_root, getLast() + 1);
 			return it;
 		}
 

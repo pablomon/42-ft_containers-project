@@ -3,9 +3,13 @@
 #include <map>
 #include <iomanip>
 
+#define NS ft
+
 void map_tests()
 {
 	chapter("\nT E S T I N G   M A P");
+
+	
 
 // #define NS std
 // {
@@ -26,7 +30,6 @@ void map_tests()
 // 		std::cout << it->first << std::endl;
 // 	}
 // }
-#define NS ft
 {
 	std::cout << std::endl;
 	NS::map<std::string,std::string> mapa;

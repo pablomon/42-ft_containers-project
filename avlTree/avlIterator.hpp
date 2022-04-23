@@ -25,28 +25,15 @@ namespace ft
 		node_pointer prev;
 		node_pointer root; //TODO refactor to remove root
 		bool isBeforeBegin;
+		bool isLast;
 		bool isPastLast;
 		node_pointer *tree_root;
 
 		public:
-		void print()
-		{
-			std::cout << "iterator:" << std::endl;
-			if (current!=NULL && current->content!=NULL)
-				std::cout << "  current content = " << current->content.first << std::endl;
-			std::cout << "  left = " << current->left << std::endl;
-			std::cout << "  right = " << current->right << std::endl;
-			std::cout << "  beforeBegin: " << isBeforeBegin << std::endl;
-			std::cout << "  pastLast: " << isPastLast << std::endl;
-		}
-		avlIterator() : current(NULL), prev(NULL), root(NULL), isBeforeBegin(false), isPastLast(false), tree_root(NULL) 
-		{
-			std::cout << "default constructor" << std::endl;
-		}
+		avlIterator() : current(NULL), prev(NULL), root(NULL), isBeforeBegin(false), isPastLast(false) {}
 		//Default constructor
 		avlIterator(node_pointer root, node_pointer current)
 		{
-			std::cout << "constructor node node" << std::endl;
 			tree_root = NULL;
 			this->root = root;
 			if (root)
@@ -54,22 +41,18 @@ namespace ft
 			this->current = current;
 			prev = current;
 			isBeforeBegin = false;
-			isPastLast = false;
-			if (current == getEnd() + 1)
-				isPastLast = true;
-			print();
+			isLast = false;
+			isPastLast = current == getEnd() + 1 ? true : false;
 		}
 		//Copy
 		avlIterator(avlIterator<node_type, value_type> const &other)
 		{
-			std::cout << "constructor copy" << std::endl;
 			root = other.root;
 			tree_root = other.tree_root;
 			current = other.current;
 			prev = other.prev;
 			isBeforeBegin = other.isBeforeBegin;
 			isPastLast = other.isPastLast;
-			print();
 		}
 		//Destructor
 		~avlIterator() {}
@@ -169,8 +152,6 @@ namespace ft
 
 		void moveForward()
 		{
-			/*print();*/
-			
 			if (isPastLast)
 			{
 				current = getEnd() + 1;
@@ -211,6 +192,7 @@ namespace ft
 				isPastLast = false;
 				current = getEnd();
 				isBeforeBegin = false;
+				prev = NULL;
 				return;
 			}
 			if (isBeforeBegin)
@@ -245,8 +227,20 @@ namespace ft
 				current = current->left;
 				return;
 			}
+			if (current->parent && prev == NULL)
+			{
+				prev = current;
+				current = current->parent;
+				return;
+			}
 			while (current->parent)
 			{
+				if (prev == NULL)
+				{
+					prev = current;
+					current = current->parent;
+					return;
+				}
 				if (current->parent->content.first < prev->content.first)
 				{
 					prev = current;
