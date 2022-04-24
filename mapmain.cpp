@@ -3,132 +3,266 @@
 
 #include <iostream>
 #include "containers/map.hpp"
+#include "tests/tests.hpp"
 #include <map>
 
-#define log(x) std::cout << x << std::endl
 #define NS ft
 
-template <class T>
-void printmap(NS::map<T,T> mapa, std::string name)
+#define T std::string
+std::string k[] = { "k1", "k2", "k3", "k4", "k5", "k6", "k7"};
+std::string v[] = { "v1", "v2", "v3", "v4", "v5", "v6", "v7"};
+
+template <class U>
+void printmap(NS::map<U,U> mapa, std::string name)
 {
 	std::cout << "printing " << name << std::endl;
 	std::cout << "  size = " << mapa.size() << std::endl;
-	for (typename NS::map<T, T>::iterator it = mapa.begin(); it != mapa.end(); it++)
+	for (typename NS::map<U, U>::iterator it = mapa.begin(); it != mapa.end(); it++)
 		std::cout << "  " << it->first << std::endl;
 	std::cout << "end of print" << std::endl;
 	std::cout << std::endl;
 }
 
-int main()
+void m_testConstructors()
 {
-	std::cout << "Running...." << std::endl;
-
-	// iterators
+	chapter("\nCONSTRUCTORS");
 	{
-		std::cout << "Iterators" << std::endl;
-		NS::map<std::string, std::string> map;
-		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-		map.insert(NS::pair<std::string, std::string>("k6", "v6"));
-		map.insert(NS::pair<std::string, std::string>("k7", "v7"));
+		title("Empty constructor");
+		NS::map<T,T> map;
+		map.insert(NS::pair<T, T>(k[0], v[0]));
+		map.insert(NS::pair<T, T>(k[1], v[1]));
+		printmap(map, "map");
+	}
+	{
+	 	title("Range constructor");
+		NS::map<T, T> basemap;
+		basemap.insert(NS::pair<T, T>(k[0], v[0]));
+		basemap.insert(NS::pair<T, T>(k[1], v[1]));
+		basemap.insert(NS::pair<T, T>(k[2], v[2]));
+		printmap(basemap, "source map");
+		
+		NS::map<T, T> map(basemap.begin(), basemap.end());
+		printmap(map, "destination map");
+		NS::map<T, T>::iterator it = map.begin();
+		assert(it->first == k[0]);
+		it = map.end();
+		--it;
+		assert(it->first == k[2]);
+	}
+	{
+	 	title("Copy constructor");
+		NS::map<T, T> basemap;
+		basemap.insert(NS::pair<T, T>(k[0], v[0]));
+		basemap.insert(NS::pair<T, T>(k[1], v[1]));
+		basemap.insert(NS::pair<T, T>(k[2], v[2]));
+		printmap(basemap, "source map");
+		
+		NS::map<T, T> map(basemap);
+		printmap(map, "destination map");
+		NS::map<T, T>::iterator it = map.begin();
+		assert(it->first == k[0]);
+		it = map.end();
+		--it;
+		assert(it->first == k[2]);		
+	}
+
+	chapterend("CONSTRUCTORS OK");
+}
+
+void m_testOperators()
+{
+	chapter("\nOPERATORS");
+	{
+		title("Assignment operator");
+		NS::map<T, T> basemap;
+ 		basemap.insert(NS::pair<T, T>(k[0], v[0]));
+		basemap.insert(NS::pair<T, T>(k[1], v[1]));
+		basemap.insert(NS::pair<T, T>(k[2], v[2]));
+		printmap(basemap, "source map");
+		
+		NS::map<T, T> map;
+		map.insert(NS::pair<T, T>(k[4], v[4]));
+		printmap(map, "destination map");
+		map = basemap;
+		printmap(map, "destination map after assignment");
+		NS::map<T, T>::iterator it = map.begin();
+		assert(it->first == k[0]);
+		it = map.end();
+		--it;
+		assert(it->first == k[2]);
+	}
+}
+
+void m_iterators()
+{
+	chapter("\nITERATORS");
+	{
+		title("Iterators");
+		NS::map<T, T> map;
+		map.insert(NS::pair<T, T>(k[0], v[0]));
+		map.insert(NS::pair<T, T>(k[1], v[1]));
+		map.insert(NS::pair<T, T>(k[5], v[5]));
+		map.insert(NS::pair<T, T>(k[6], v[6]));
 		printmap(map, "map");
 
 		// map.m_tree.print();
-		std::cout << "----" << std::endl;
-		NS::map<std::string, std::string>::iterator beg = map.begin();
-		NS::map<std::string, std::string>::iterator end = map.end();
+		NS::map<T, T>::iterator beg = map.begin();
+		NS::map<T, T>::iterator end = map.end();
 		while (end != beg)
 		{
 			--end;
 			std::cout << end->first << '\n';
 		}
-		std::cout << "----" << std::endl;
+		std::cout << "-------" << std::endl;
+		NS::map<T, T> map2;
+		map2.insert(NS::pair<T, T>(k[0], v[0]));
+		NS::map<T, T>::iterator itembegin = map2.begin();
+
+		std::cout << (itembegin)->first << std::endl;
+
+		itembegin--;
+		itembegin--;
+
+		std::cout << (itembegin)->first << std::endl;
+
+		NS::map<T, T>::iterator itend = map2.end();
+		map2.insert(NS::pair<T, T>(k[1], v[1]));
+
+		std::cout << (--itend)->first << std::endl;
+
+		NS::map<T, T>::iterator itend2 = map2.end();
+		std::cout << (--itend2)->first << std::endl;
+		std::cout << "-------" << std::endl;
 	}
 
 	// const iterators
 	{
-		std::cout << "Const iterators" << std::endl;
-		NS::map<std::string, std::string> map;
-		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-		map.insert(NS::pair<std::string, std::string>("k6", "v6"));
-		map.insert(NS::pair<std::string, std::string>("k7", "v7"));
+		title("Constant iterators");
+		NS::map<T, T> map;
+		map.insert(NS::pair<T, T>(k[0], v[0]));
+		map.insert(NS::pair<T, T>(k[1], v[1]));
+		map.insert(NS::pair<T, T>(k[5], v[5]));
+		map.insert(NS::pair<T, T>(k[6], v[6]));
 		printmap(map, "map");
 
 		// map.m_tree.print();
-		std::cout << "----" << std::endl;
-		NS::map<std::string, std::string>::const_iterator beg = map.begin();
-		NS::map<std::string, std::string>::const_iterator end = map.end();
+		NS::map<T, T>::const_iterator beg = map.begin();
+		NS::map<T, T>::const_iterator end = map.end();
 		while (end != beg)
 		{
 			--end;
 			std::cout << end->first << '\n';
 		}
-		std::cout << "----" << std::endl;
 	}
-
-	// reverse iterators
 	{
-		std::cout << "Reverse iterators" << std::endl;
-		NS::map<std::string, std::string> map;
-		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-		map.insert(NS::pair<std::string, std::string>("k6", "v6"));
-		map.insert(NS::pair<std::string, std::string>("k7", "v7"));
+		title("Reverse iterators");
+		NS::map<T, T> map;
+		map.insert(NS::pair<T, T>(k[0], v[0]));
+		map.insert(NS::pair<T, T>(k[1], v[1]));
+		map.insert(NS::pair<T, T>(k[5], v[5]));
+		map.insert(NS::pair<T, T>(k[6], v[6]));
 		printmap(map, "map");
 
 		// map.m_tree.print();
-		std::cout << "----" << std::endl;
-		NS::map<std::string, std::string>::reverse_iterator rbeg = map.rbegin();
-		NS::map<std::string, std::string>::reverse_iterator rend = map.rend();
+		NS::map<T, T>::reverse_iterator rbeg = map.rbegin();
+		NS::map<T, T>::reverse_iterator rend = map.rend();
 		while (rbeg != rend)
 		{
 			std::cout << rbeg->first << '\n';
 			++rbeg;
 		}
-		std::cout << "----" << std::endl;
 	}
-
-
-	// const reverse iterators
 	{
-		std::cout << "Reverse const iterators" << std::endl;
-		NS::map<std::string, std::string> map;
-		map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-		map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-		map.insert(NS::pair<std::string, std::string>("k3", "v3"));
+		title("Reverse constant iterators");
+		NS::map<T, T> map;
+		map.insert(NS::pair<T, T>(k[0], v[0]));
+		map.insert(NS::pair<T, T>(k[1], v[1]));
+		map.insert(NS::pair<T, T>(k[2], v[2]));
 		printmap(map, "map");
 
 		// map.m_tree.print();
-		std::cout << "----" << std::endl;
-		NS::map<std::string, std::string>::const_reverse_iterator rbeg = map.rbegin();
-		NS::map<std::string, std::string>::const_reverse_iterator rend = map.rend();
+		NS::map<T, T>::const_reverse_iterator rbeg = map.rbegin();
+		NS::map<T, T>::const_reverse_iterator rend = map.rend();
 		while (rbeg != rend)
 		{
 			std::cout << rbeg->first << '\n';
 			++rbeg;
 		}
-		std::cout << "----" << std::endl;
 	}
+}
 
+void m_capacity()
+{
+	chapter("\nCAPACITY");
+	title("Empty & Size");
+	NS::map<T, T> sizemap;
+	printmap(sizemap, "size map");
+	std::cout << "Is empty = " << sizemap.empty() << '\n';
+	assert(sizemap.size() == 0);
+	assert(sizemap.empty() == true);
+	sizemap.insert(NS::pair<T, T>(k[0], v[0]));
+	sizemap.insert(NS::pair<T, T>(k[1], v[1]));
+	sizemap.insert(NS::pair<T, T>(k[2], v[2]));
+	printmap(sizemap, "size map");
+	std::cout << "Is empty = " << sizemap.empty() << '\n';
+	assert(sizemap.size() == 3);
+	assert(sizemap.empty() == false);
+	sizemap.erase(k[0]);
+	printmap(sizemap, "size map");
+	assert(sizemap.size() == 2);
+	sizemap.erase(sizemap.begin(), sizemap.end());
+	printmap(sizemap, "size map");
+	assert(sizemap.size() == 0);
+
+	title("Max size");
+	std::cout << "Max size = " << sizemap.max_size() << std::endl;
+	chapterend("CAPACITY OK");
+}
+void m_access()
+{
+		chapter("\nELEMENT ACCESS: Operator[]");
+		NS::map<T, T> map;
+		map.insert(NS::pair<T, T>(k[0], v[0]));
+		printmap(map, "map");
+		map[k[0]];
+		map[k[1]];
+		printmap(map, "map");
+		assert(map.size() == 2);
+		
+		std::cout << map[k[0]] << std::endl;
+		std::cout << map[k[1]] << std::endl;
+		chapterend("ELEMENT ACCESS OK");
+}
+
+int main()
+{
+	chapter("\nT E S T I N G   M A P");
+
+	m_testConstructors();
+	m_testOperators();
+	m_iterators();
+	m_capacity();
+	m_access();
+
+	return 0;
 
 	{
-		NS::map<std::string, std::string> mapaend;
-		mapaend.insert(NS::pair<std::string, std::string>("k1", "v1"));
+		NS::map<T, T> mapaend;
+		mapaend.insert(NS::pair<T, T>(k[0], v[0]));
 		// Esto tiene que dar un segfault
-		//NS::map<std::string, std::string>::iterator itmapaend = mapaend.end();
+		//NS::map<T, T>::iterator itmapaend = mapaend.end();
 		//std::cout << "Printing end() : " << itmapaend->first << std::endl;
 
-		NS::map<std::string, std::string> mapa;
-		NS::map<std::string, std::string>::iterator it1 = mapa.insert(NS::pair<std::string, std::string>("k1", "v1")).first;
-		mapa.insert(it1, NS::pair<std::string, std::string>("k3", "v3"));
-		NS::map<std::string, std::string>::iterator it2 = mapa.insert(NS::pair<std::string, std::string>("k2", "v2")).first;
+		NS::map<T, T> mapa;
+		NS::map<T, T>::iterator it1 = mapa.insert(NS::pair<T, T>(k[0], v[0])).first;
+		mapa.insert(it1, NS::pair<T, T>(k[2], v[2]));
+		NS::map<T, T>::iterator it2 = mapa.insert(NS::pair<T, T>(k[1], v[1])).first;
 		printmap(mapa, "mapa");
-		NS::map<std::string,std::string> mapa2 = mapa;
+		NS::map<T,T> mapa2 = mapa;
 		printmap(mapa2, "mapa2");
 		log("erase k1 y k2");
-		mapa.erase("k1");
-		mapa.erase("k2");
+		mapa.erase(k[0]);
+		mapa.erase(k[1]);
 		printmap(mapa, "mapa");
 		log("insert mapa2 begin to end in mapa");
 		mapa.insert(mapa2.begin(), mapa2.end());
@@ -139,28 +273,28 @@ int main()
 		mapa2.erase(mapa2.begin(), mapa2.begin()++);
 		std::cout << mapa.size() << std::endl;
 
-		NS::map<std::string, std::string> mapa3(mapa2.begin(), mapa2.end());
+		NS::map<T, T> mapa3(mapa2.begin(), mapa2.end());
 		printmap(mapa3, "mapa3");
 
-		NS::map<std::string, std::string> mapa4;
+		NS::map<T, T> mapa4;
 		printmap(mapa4, "mapa4 hola");
 
-		NS::map<std::string, std::string>::iterator ite1 = mapa.insert(NS::pair<std::string, std::string>("e1", "e1")).first;
-		NS::map<std::string, std::string>::iterator ite2 = mapa.insert(NS::pair<std::string, std::string>("e2", "e2")).first;
+		NS::map<T, T>::iterator ite1 = mapa.insert(NS::pair<T, T>("e1", "e1")).first;
+		NS::map<T, T>::iterator ite2 = mapa.insert(NS::pair<T, T>("e2", "e2")).first;
 		mapa4.erase(ite1, ite2);
 		printmap(mapa4, "mapa4");
 
 		std::cout << "-------" << std::endl;
-		NS::map<std::string, std::string>::iterator itebegin = mapa4.begin();
-		NS::map<std::string, std::string>::iterator iteend = mapa4.end();
-		for (NS::map<std::string, std::string>::iterator it = itebegin; it != iteend; it++)
+		NS::map<T, T>::iterator itebegin = mapa4.begin();
+		NS::map<T, T>::iterator iteend = mapa4.end();
+		for (NS::map<T, T>::iterator it = itebegin; it != iteend; it++)
 			std::cout << it->first << std::endl;
 		std::cout << "-------" << std::endl;
 
 		//access
 		std::cout << "-------" << std::endl;
-		NS::map<std::string, std::string> access_map;
-		access_map.insert(NS::pair<std::string, std::string>("acc1", "acc1"));
+		NS::map<T, T> access_map;
+		access_map.insert(NS::pair<T, T>("acc1", "acc1"));
 		access_map["acc1"];
 		access_map["acc2"];
 		
@@ -168,9 +302,9 @@ int main()
 		std::cout << access_map["acc2"] << std::endl;
 		std::cout << "-------" << std::endl;
 		
-		NS::map<std::string, std::string> endmap;
-		endmap.insert(NS::pair<std::string, std::string>("em1", "em1"));
-		NS::map<std::string, std::string>::iterator itembegin = endmap.begin();
+		NS::map<T, T> endmap;
+		endmap.insert(NS::pair<T, T>("em1", "em1"));
+		NS::map<T, T>::iterator itembegin = endmap.begin();
 
 		std::cout << (itembegin)->first << std::endl;
 
@@ -179,20 +313,20 @@ int main()
 
 		std::cout << (itembegin)->first << std::endl;
 
-		NS::map<std::string, std::string>::iterator itend = endmap.end();
-		endmap.insert(NS::pair<std::string, std::string>("em2", "em2"));
+		NS::map<T, T>::iterator itend = endmap.end();
+		endmap.insert(NS::pair<T, T>("em2", "em2"));
 
 		std::cout << (--itend)->first << std::endl;
 
-		NS::map<std::string, std::string>::iterator itend2 = endmap.end();
+		NS::map<T, T>::iterator itend2 = endmap.end();
 		std::cout << (--itend2)->first << std::endl;
 		std::cout << "-------" << std::endl;
 		
 		//clear
 		std::cout << "-------" << std::endl;
-		NS::map<std::string, std::string> clearmap;
-		clearmap.insert(NS::pair<std::string, std::string>("cm1", "cm1"));
-		clearmap.insert(NS::pair<std::string, std::string>("cm2", "cm2"));
+		NS::map<T, T> clearmap;
+		clearmap.insert(NS::pair<T, T>("cm1", "cm1"));
+		clearmap.insert(NS::pair<T, T>("cm2", "cm2"));
 		printmap(clearmap, "clear map");
 
 		clearmap.clear();
@@ -201,12 +335,12 @@ int main()
 
 		//swap
 		std::cout << "-------" << std::endl;
-		NS::map<std::string, std::string> swapmapa;
-		swapmapa.insert(NS::pair<std::string, std::string>("swa1", "swa1"));
-		swapmapa.insert(NS::pair<std::string, std::string>("swa2", "swa2"));
+		NS::map<T, T> swapmapa;
+		swapmapa.insert(NS::pair<T, T>("swa1", "swa1"));
+		swapmapa.insert(NS::pair<T, T>("swa2", "swa2"));
 		printmap(swapmapa, "swapmapa");
-		NS::map<std::string, std::string> swapmapb;
-		swapmapb.insert(NS::pair<std::string, std::string>("swb1", "swb1"));
+		NS::map<T, T> swapmapb;
+		swapmapb.insert(NS::pair<T, T>("swb1", "swb1"));
 		printmap(swapmapb, "swapmapb");
 
 		swapmapa.swap(swapmapb);
@@ -215,12 +349,12 @@ int main()
 
 		//size and maxsize
 		std::cout << "-------" << std::endl;
-		NS::map<std::string, std::string> sizemap;
+		NS::map<T, T> sizemap;
 		printmap(sizemap, "size map");
-		sizemap.insert(NS::pair<std::string, std::string>("sm1", "sm1"));
-		sizemap.insert(NS::pair<std::string, std::string>("sm2", "sm2"));
-		sizemap.insert(NS::pair<std::string, std::string>("sm3", "sm3"));
-		sizemap.insert(NS::pair<std::string, std::string>("sm4", "sm4"));
+		sizemap.insert(NS::pair<T, T>("sm1", "sm1"));
+		sizemap.insert(NS::pair<T, T>("sm2", "sm2"));
+		sizemap.insert(NS::pair<T, T>("sm3", "sm3"));
+		sizemap.insert(NS::pair<T, T>("sm4", "sm4"));
 		printmap(sizemap, "size map");
 		sizemap.erase("sm1");
 		printmap(sizemap, "size map");
@@ -278,16 +412,16 @@ int main()
 		//find
 		{
 			std::cout << "-------" << std::endl;
-			NS::map<std::string, std::string> map;
-			map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-			map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-			map.insert(NS::pair<std::string, std::string>("k3", "v3"));
-			map.insert(NS::pair<std::string, std::string>("k4", "v4"));
+			NS::map<T, T> map;
+			map.insert(NS::pair<T, T>(k[0], v[0]));
+			map.insert(NS::pair<T, T>(k[1], v[1]));
+			map.insert(NS::pair<T, T>(k[2], v[2]));
+			map.insert(NS::pair<T, T>(k[3], v[3]));
 			printmap(map, "map");
-			NS::map<std::string, std::string>::iterator it;
-			it = map.find("k3");
+			NS::map<T, T>::iterator it;
+			it = map.find(k[2]);
 			std::cout << it->first << " => " << it->second << std::endl;
-			it = map.find("k5");
+			it = map.find(k[4]);
 			if (it == map.end())
 				std::cout << "not found, iterator = end()" << std::endl;
 			std::cout << "-------" << std::endl;
@@ -296,11 +430,11 @@ int main()
 		//count
 		{
 			std::cout << "-------" << std::endl;
-			NS::map<std::string, std::string> map;
-			map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-			map.insert(NS::pair<std::string, std::string>("k2", "v2"));
+			NS::map<T, T> map;
+			map.insert(NS::pair<T, T>(k[0], v[0]));
+			map.insert(NS::pair<T, T>(k[1], v[1]));
 			printmap(map, "map");
-			std::cout << "count k1 = " << map.count("k1") << std::endl;
+			std::cout << "count k1 = " << map.count(k[0]) << std::endl;
 			std::cout << "count k666 = " << map.count("k666") << std::endl;
 			std::cout << "-------" << std::endl;
 		}
@@ -308,53 +442,53 @@ int main()
 		//bounds and equal_range
 		{
 			std::cout << "-------" << std::endl;
-			NS::map<std::string, std::string> map;
-			map.insert(NS::pair<std::string, std::string>("k1", "v1"));
-			map.insert(NS::pair<std::string, std::string>("k2", "v2"));
-			map.insert(NS::pair<std::string, std::string>("k6", "v6"));
-			map.insert(NS::pair<std::string, std::string>("k7", "v7"));
+			NS::map<T, T> map;
+			map.insert(NS::pair<T, T>(k[0], v[0]));
+			map.insert(NS::pair<T, T>(k[1], v[1]));
+			map.insert(NS::pair<T, T>(k[5], v[5]));
+			map.insert(NS::pair<T, T>(k[6], v[6]));
 			printmap(map, "map");
 
-			NS::map<std::string, std::string>::iterator it;
+			NS::map<T, T>::iterator it;
 
-			it = map.lower_bound("k1");
+			it = map.lower_bound(k[0]);
 			std::cout << "lowerbound(k1) = " << it->first << std::endl;
 			it = map.lower_bound("k0");
 			std::cout << "lowerbound(k0) = " << it->first << std::endl;
-			it = map.lower_bound("k4");
+			it = map.lower_bound(k[3]);
 			std::cout << "lowerbound(k4) = " << it->first << std::endl;
-			it = map.lower_bound("k7");
+			it = map.lower_bound(k[6]);
 			std::cout << "lowerbound(k7) = " << it->first << std::endl;
 			std::cout << "-------" << std::endl;
 
-			it = map.upper_bound("k1");
+			it = map.upper_bound(k[0]);
 			std::cout << "upperbound(k1) = " << it->first << std::endl;
 			it = map.upper_bound("k0");
 			std::cout << "upperbound(k0) = " << it->first << std::endl;
-			it = map.upper_bound("k4");
+			it = map.upper_bound(k[3]);
 			std::cout << "upperbound(k4) = " << it->first << std::endl;
-			it = map.upper_bound("k7");
+			it = map.upper_bound(k[6]);
 
 			if (it == map.end())
 				std::cout << "equal" << std::endl;
 			else
 				std::cout << "upperbound(k7) = " << it->first << std::endl;
 
-			NS::map<std::string, std::string>::const_iterator cit;
-			cit = map.lower_bound("k1");
+			NS::map<T, T>::const_iterator cit;
+			cit = map.lower_bound(k[0]);
 			std::cout << "const lowerbound(k1) = " << cit->first << std::endl;
 			cit = map.lower_bound("k0");
 			std::cout << "const lowerbound(k0) = " << cit->first << std::endl;
-			cit = map.lower_bound("k4");
+			cit = map.lower_bound(k[3]);
 			std::cout << "const lowerbound(k4) = " << cit->first << std::endl;
 			std::cout << "-------" << std::endl;
 
-			NS::pair<NS::map<std::string, std::string>::iterator,NS::map<std::string, std::string>::iterator> range;
-			range = map.equal_range("k2");
+			NS::pair<NS::map<T, T>::iterator,NS::map<T, T>::iterator> range;
+			range = map.equal_range(k[1]);
 			std::cout << "equal_range(k2) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
 			range = map.equal_range("k0");
 			std::cout << "equal_range(k0) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
-			range = map.equal_range("k5");
+			range = map.equal_range(k[4]);
 			std::cout << "equal_range(k5) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
 			range = map.equal_range("k10");
 			std::cout << "equal_range(k10) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;

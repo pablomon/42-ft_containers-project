@@ -70,13 +70,11 @@ namespace ft
 		explicit map(const key_compare &comp = key_compare(),
 			const allocator_type &alloc = allocator_type()) : 
 			m_keyCompare(comp), m_alloc(alloc), m_size(0) { }
-		// range constructor
-		//template <class InputIterator> //TODO: cambiar a InputIterator
-		map(iterator first, 
-			iterator last,
-			const key_compare& comp = key_compare(), 
-			const allocator_type& alloc = allocator_type())
-			 : m_alloc(alloc), m_keyCompare(comp)
+
+		// range constructor TODO: implementar is integral???
+		template <class IT>
+		map(IT first, IT last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+			 :  m_keyCompare(comp), m_alloc(alloc)
 		{
 			insert(first, last);
 		} 
@@ -114,6 +112,11 @@ namespace ft
 			return *this;
 		}
 
+		/* Capacity */
+		bool		empty(void) const { return m_size == 0 ? true : false; }
+		size_type	size(void) const { return m_size; }
+		size_type	max_size(void) const { return m_alloc.max_size(); }
+		
 		/* Element access */
 		mapped_type& operator[] (const key_type& k)
 		{
@@ -127,10 +130,6 @@ namespace ft
 			return res.first->second;
 		}
 
-		/* Capacity */
-		bool		empty(void) const { return m_size == 0 ? true : false; }
-		size_type	size(void) const { return m_size; }
-		size_type	max_size(void) const { return m_alloc.max_size(); }
 
 		/* Modifiers */
 		ft::pair<iterator, bool> insert(const value_type & val)
@@ -150,8 +149,8 @@ namespace ft
 			return pair.first;
 		}
 
-		// template <class InputIterator> //TODO
-		void	insert(iterator first, iterator last) //TODO: cambiar por InputIterator
+		template <class IT> //TODO
+		void	insert(IT first, IT last) //TODO: cambiar por InputIterator
 		{
 			while (first != last)
 			{

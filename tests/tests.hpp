@@ -8,13 +8,9 @@
 
 // types
 #ifndef STD
-# define NAMESPACE ft
+# define NS ft
 #else
-# define NAMESPACE std
-#endif
-
-#ifndef TYPE
-# define TYPE std::string
+# define NS std
 #endif
 
 void vector_tests();

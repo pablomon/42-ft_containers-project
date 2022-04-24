@@ -26,7 +26,7 @@ int	cmp(const T_STACK &lhs, const T_STACK &rhs)
 }
 
 template <typename T>
-void PrintStack(NAMESPACE::stack<T>& stk, std::string name = "s")
+void PrintStack(NS::stack<T>& stk, std::string name = "s")
 {
 	std::cout << "  Stack " << name << ":\n";
 	std::cout << "  empty = " << std::boolalpha << stk.empty() << ", ";
@@ -35,7 +35,7 @@ void PrintStack(NAMESPACE::stack<T>& stk, std::string name = "s")
 		std::cout << ", top = " << stk.top();
 	std::cout << std::endl;
 
-	NAMESPACE::stack<T> saveStack;
+	NS::stack<T> saveStack;
 	while (stk.size() > 0)
 	{
 		saveStack.push(stk.top());
@@ -55,7 +55,7 @@ void PrintStack(NAMESPACE::stack<T>& stk, std::string name = "s")
 void s_default_copy()
 {
 	chapter("\nDefault container copy");
-	NAMESPACE::stack<TYPE>::container_type	ctnr;
+	NS::stack<std::string>::container_type	ctnr;
 
 	ctnr.push_back("21");
 	ctnr.push_back("42");
@@ -64,7 +64,7 @@ void s_default_copy()
 	ctnr.push_back("0");
 	ctnr.push_back("183792");
 
-	NAMESPACE::stack<TYPE> stk(ctnr);
+	NS::stack<std::string> stk(ctnr);
 
 	PrintStack(stk);
 
@@ -84,7 +84,7 @@ void s_default_copy()
 void s_default_container()
 {
 	chapter("\nDefault container basic operations");
-	NAMESPACE::stack<TYPE> stk;
+	NS::stack<std::string> stk;
 
 	PrintStack(stk);
 
@@ -108,14 +108,14 @@ void s_default_container()
 void s_relational_operators()
 {
 	chapter("\nRelational operators");
-	NAMESPACE::stack<TYPE>::container_type	ctnr;
+	NS::stack<std::string>::container_type	ctnr;
 
 	int res;
 	ctnr.push_back("1");
 	ctnr.push_back("2");
 	ctnr.push_back("3");
 
-	NAMESPACE::stack<TYPE> stk1(ctnr);
+	NS::stack<std::string> stk1(ctnr);
 
 	PrintStack(stk1, "stack1");
 	title("Comparison to itself");
@@ -124,7 +124,7 @@ void s_relational_operators()
 	assert(res = 74);
 
 	title("Comparison to an equal stack");
-	NAMESPACE::stack<TYPE> stk2(ctnr);
+	NS::stack<std::string> stk2(ctnr);
 	PrintStack(stk2, "stack2");
 	logn("stack1 VS stack2");
 	res = cmp(stk1, stk2);

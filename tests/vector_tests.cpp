@@ -3,7 +3,7 @@
 #include <vector>
 
 template <class T, class Alloc>
-int	cmp(const NAMESPACE::vector<T, Alloc> &lhs, const NAMESPACE::vector<T, Alloc> &rhs)
+int	cmp(const NS::vector<T, Alloc> &lhs, const NS::vector<T, Alloc> &rhs)
 {
 	int res = 0;
 	std::cout << "=============\n";
@@ -25,7 +25,7 @@ int	cmp(const NAMESPACE::vector<T, Alloc> &lhs, const NAMESPACE::vector<T, Alloc
 }
 
 template <typename T>
-void PrintVector(const NAMESPACE::vector<T>& vector, std::string name)
+void PrintVector(const NS::vector<T>& vector, std::string name)
 {
 	std::cout << "  Vector " << name << ":\n";
 	std::cout << "  size = " << vector.size() << ", ";
@@ -39,24 +39,24 @@ void v_testConstructors()
 	chapter("\nCONSTRUCTORS");
 	{
 		title("Empty constructor");
-		NAMESPACE::vector<TYPE> v = NAMESPACE::vector<TYPE>();
+		NS::vector<std::string> v = NS::vector<std::string>();
 		PrintVector(v, "v");
 	}
 	{
 		title("Fill constructor");
-		NAMESPACE::vector<TYPE> v = NAMESPACE::vector<TYPE>(4, "abc");
+		NS::vector<std::string> v = NS::vector<std::string>(4, "abc");
 		assert(v[3] == "abc");
 		PrintVector(v, "v");
 	}
 	{
 		title("Range constructor");
-		NAMESPACE::vector<TYPE> vo = NAMESPACE::vector<TYPE>();
+		NS::vector<std::string> vo = NS::vector<std::string>();
 		vo.push_back("11");
 		vo.push_back("22");
 		vo.push_back("33");
 		PrintVector(vo, "vo");
 
-		NAMESPACE::vector<TYPE> v = NAMESPACE::vector<TYPE>(vo.begin(), vo.end());
+		NS::vector<std::string> v = NS::vector<std::string>(vo.begin(), vo.end());
 		assert(v[2] == "33");
 		PrintVector(v, "v");
 	}
@@ -69,7 +69,7 @@ void v_testAccess()
 	chapter("\nELEMENT ACCESS");
 
 	log("Create vector with values 1, 2, 3");
-	NAMESPACE::vector<TYPE> v;
+	NS::vector<std::string> v;
 	v.push_back("1");
 	v.push_back("2");
 	v.push_back("3");
@@ -121,7 +121,7 @@ void v_testModifiers()
 {
 	chapter("\nMODIFIERS");
 
-	NAMESPACE::vector<TYPE> v = NAMESPACE::vector<TYPE>();
+	NS::vector<std::string> v = NS::vector<std::string>();
 	PrintVector(v, "v");
 
 	title("push_back");
@@ -133,7 +133,7 @@ void v_testModifiers()
 
 	title("range assign");
 	logn("create v2");
-	NAMESPACE::vector<TYPE> v2 = NAMESPACE::vector<TYPE>(5, "42");
+	NS::vector<std::string> v2 = NS::vector<std::string>(5, "42");
 	PrintVector(v2, "v2");
 	logn("assign v to v2");
 	v2.assign(v.begin(), v.end());
@@ -155,7 +155,7 @@ void v_testModifiers()
 	title("Insert single element");
 	PrintVector(v, "v");
 	logn("Insert 42 at the beginnig + 2");
-	NAMESPACE::vector<TYPE>::iterator it = v.insert(v.begin() + 2, "42");
+	NS::vector<std::string>::iterator it = v.insert(v.begin() + 2, "42");
 	assert(v[2] == "42");
 	logn(*it);
 	logn("Insert 42 at the end");
@@ -172,7 +172,7 @@ void v_testModifiers()
 
 	title("Insert range");
 	log("Vector3:");
-	NAMESPACE::vector<TYPE> v3;
+	NS::vector<std::string> v3;
 	v3.push_back("10");
 	v3.push_back("20");
 	v3.push_back("30");
@@ -222,7 +222,7 @@ void v_testModifiers()
 void v_testCapacity()
 {
 	chapter("\nCAPACITY");
-	NAMESPACE::vector<TYPE> v = NAMESPACE::vector<TYPE>();
+	NS::vector<std::string> v = NS::vector<std::string>();
 	logn("hola");
 	v.push_back("1");
 	v.push_back("2");
@@ -261,7 +261,7 @@ void v_testIterators()
 	log("- Non const iterators -");
 	{
 		log("Create vector v with values 1, 2, 3");
-		NAMESPACE::vector<TYPE> v;
+		NS::vector<std::string> v;
 		v.push_back("a");
 		v.push_back("b");
 		v.push_back("c");
@@ -270,7 +270,7 @@ void v_testIterators()
 
 		title("begin");
 		logn("Begin value:");
-		NAMESPACE::vector<TYPE>::iterator it = v.begin();
+		NS::vector<std::string>::iterator it = v.begin();
 		logn(*it);
 		assert(*it == "a");
 		logn("Begin + 1 value:");
@@ -305,7 +305,7 @@ void v_testIterators()
 	// log("- Const iterators -");
 	// {
 	// 	log("Create vector v with values 1, 2, 3");
-	// 	NAMESPACE::vector<TYPE> v;
+	// 	NS::vector<std::string> v;
 	// 	v.push_back("a");
 	// 	v.push_back("b");
 	// 	v.push_back("c");
@@ -314,7 +314,7 @@ void v_testIterators()
 
 	// 	title("begin");
 	// 	logn("Begin value:");
-	// 	NAMESPACE::vector<TYPE>::const_iterator it = v.begin();
+	// 	NS::vector<std::string>::const_iterator it = v.begin();
 	// 	logn(*it);
 	// 	assert(*it == "a");
 	// 	logn("Begin + 1 value:");
@@ -328,8 +328,8 @@ void v_testIterators()
 void v_relational_operators()
 {
 	chapter("\nRelational operators");
-	NAMESPACE::vector<TYPE> v1(4);
-	NAMESPACE::vector<TYPE> v2(4);
+	NS::vector<std::string> v1(4);
+	NS::vector<std::string> v2(4);
 
 	int res;
 	PrintVector(v1, "v1");
@@ -384,7 +384,7 @@ void v_speedTest()
 	chapter("\nSpeed test");
 	title("Allocation");
 	std::cout << "Create a vector with " << TEST_SIZE << " strings\n";
-	NAMESPACE::vector<std::string> v;
+	NS::vector<std::string> v;
 	Timer();
 	for (size_t i = 0; i < TEST_SIZE; i++)
 		v.push_back(ToString(i));
@@ -405,6 +405,7 @@ void vector_tests()
 {
 	chapter("\nT E S T I N G   V E C T O R");
 	v_testConstructors();
+	//TODO: v_testAssignment();
 	v_testCapacity();
 	v_testAccess();
 	v_testModifiers();
