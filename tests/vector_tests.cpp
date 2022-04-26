@@ -380,19 +380,19 @@ void v_relational_operators()
 
 void v_speedTest()	
 {
-# define TEST_SIZE 10000000
+# define VECTOR_TEST_SIZE 10000000
 	chapter("\nSpeed test");
 	title("Allocation");
-	std::cout << "Create a vector with " << TEST_SIZE << " strings\n";
+	std::cout << "Create a vector with " << VECTOR_TEST_SIZE << " strings\n";
 	NS::vector<std::string> v;
 	Timer();
-	for (size_t i = 0; i < TEST_SIZE; i++)
+	for (size_t i = 0; i < VECTOR_TEST_SIZE; i++)
 		v.push_back(ToString(i));
 	log("total s = ");
 	logn(Timer());
 
 	title("Access");
-	std::cout << "Acess " << TEST_SIZE << " strings\n";
+	std::cout << "Acess " << VECTOR_TEST_SIZE << " strings\n";
 	std::string s;
 	Timer();
 	for (size_t i = 0; i < v.size(); i++)

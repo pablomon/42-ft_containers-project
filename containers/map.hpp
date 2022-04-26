@@ -39,7 +39,6 @@ namespace ft
 					typedef value_type second_argument_type;
 					bool operator() (const value_type & x, const value_type & y) const	
 					{
-						std::cout << "Calling operator() in value_compare" << std::endl;
 						return comp(x.first, y.first); 
 					}
 			};
@@ -242,7 +241,18 @@ namespace ft
 			}
 			return it;
 		}
-		const_iterator	lower_bound(const key_type & k) const;
+		const_iterator	lower_bound(const key_type & k) const
+		{
+			const_iterator it = begin();			
+			while (it != end())
+			{
+				bool res = m_keyCompare(it->first, k);
+				if (!res)
+					break;
+				it++;
+			}
+			return it;			
+		}
 
 		iterator 		upper_bound(const key_type & k)
 		{
@@ -263,7 +273,25 @@ namespace ft
 			}
 			return it;				
 		}
-		const_iterator	upper_bound(const key_type & k) const;
+		const_iterator	upper_bound(const key_type & k) const
+		{
+			const_iterator it = begin();			
+			while (it != end())
+			{
+				bool isless = m_keyCompare(it->first, k);
+				bool isgreater = m_keyCompare(k, it->first);
+				if (!isless && !isgreater) // is equal
+				{
+					it++;
+					continue;
+				}
+				bool res = m_keyCompare(k, it->first);
+				if (res)
+					break;
+				it++;
+			}
+			return it;			
+		}
 
 		ft::pair<iterator, iterator>				equal_range (const key_type & k)
 		{
@@ -274,8 +302,17 @@ namespace ft
 			pair.second = upper;			
 			return pair;
 		}
-		ft::pair<const_iterator, const_iterator>	equal_range (const key_type & k) const;
+		ft::pair<const_iterator, const_iterator>	equal_range (const key_type & k) const
+		{
+			const_iterator lower = lower_bound(k);
+			const_iterator upper = upper_bound(k);
+			ft::pair<iterator, iterator> pair;
+			pair.first = lower;
+			pair.second = upper;			
+			return pair;
+		}
 
+		allocator_type get_allocator() const { return m_alloc; }
 	};
 }
 

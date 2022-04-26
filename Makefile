@@ -6,10 +6,13 @@
 #    By: pmontese <pmontes@student.42madrid.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/08 23:23:47 by pmontese          #+#    #+#              #
-#    Updated: 2022/04/07 18:33:23 by pmontese         ###   ########.fr        #
+#    Updated: 2022/04/26 20:40:44 by pmontese         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+# Colors
+Green	= \033[0;32m
+NoColor = \033[0m
 # Name of the program.
 NAME	:= main
 NAMESTD := std_test
@@ -50,10 +53,12 @@ $(NAME): $(OBJS) #$(HDRS)
 # Rule to run the program.
 ft:
 	$(CXX) $(CXXFLAGS) $(SANITIZEFLAGS) $(SRCS) -o $(NAME)
+	@echo "${Green} ft version built ($(NAME))\n ${NoColor}"
 
 # Rule to run with the std library
 std:
 	$(CXX) $(CXXFLAGS) $(SANITIZEFLAGS) $(STDFLAG) $(SRCS) -o $(NAMESTD)
+	@echo "${Green} std version built ($(NAMESTD))\n ${NoColor}"
 
 # Rule to remove all the object files.
 clean:

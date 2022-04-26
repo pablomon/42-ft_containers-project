@@ -4,13 +4,18 @@
 #include <iostream>
 #include "containers/map.hpp"
 #include "tests/tests.hpp"
+#include "utils/pair.hpp"
 #include <map>
 
 #define NS ft
 
-#define T std::string
-std::string k[] = { "k1", "k2", "k3", "k4", "k5", "k6", "k7"};
-std::string v[] = { "v1", "v2", "v3", "v4", "v5", "v6", "v7"};
+// #define T std::string
+// std::string k[] = { "k1", "k2", "k3", "k4", "k5", "k6", "k7", "k8"};
+// std::string v[] = { "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"};
+
+#define T int
+int k[] = { 1, 2, 3, 4 ,5 ,6 ,7 ,8 };
+int v[] = { 11,22,33,44,55,66,77,88 };
 
 template <class U>
 void printmap(NS::map<U,U> mapa, std::string name)
@@ -18,7 +23,7 @@ void printmap(NS::map<U,U> mapa, std::string name)
 	std::cout << "printing " << name << std::endl;
 	std::cout << "  size = " << mapa.size() << std::endl;
 	for (typename NS::map<U, U>::iterator it = mapa.begin(); it != mapa.end(); it++)
-		std::cout << "  " << it->first << std::endl;
+		std::cout << "  " << it->first << " => " << it->second << std::endl;
 	std::cout << "end of print" << std::endl;
 	std::cout << std::endl;
 }
@@ -68,7 +73,6 @@ void m_testConstructors()
 
 	chapterend("CONSTRUCTORS OK");
 }
-
 void m_testOperators()
 {
 	chapter("\nOPERATORS");
@@ -92,8 +96,7 @@ void m_testOperators()
 		assert(it->first == k[2]);
 	}
 }
-
-void m_iterators()
+void m_testIterators()
 {
 	chapter("\nITERATORS");
 	{
@@ -190,8 +193,7 @@ void m_iterators()
 		}
 	}
 }
-
-void m_capacity()
+void m_testCapacity()
 {
 	chapter("\nCAPACITY");
 	title("Empty & Size");
@@ -218,7 +220,7 @@ void m_capacity()
 	std::cout << "Max size = " << sizemap.max_size() << std::endl;
 	chapterend("CAPACITY OK");
 }
-void m_access()
+void m_testAccess()
 {
 		chapter("\nELEMENT ACCESS: Operator[]");
 		NS::map<T, T> map;
@@ -233,185 +235,155 @@ void m_access()
 		std::cout << map[k[1]] << std::endl;
 		chapterend("ELEMENT ACCESS OK");
 }
-
-int main()
+void m_testModifiers()
 {
-	chapter("\nT E S T I N G   M A P");
-
-	m_testConstructors();
-	m_testOperators();
-	m_iterators();
-	m_capacity();
-	m_access();
-
-	return 0;
-
+	chapter("\nMODIFIERS");
 	{
-		NS::map<T, T> mapaend;
-		mapaend.insert(NS::pair<T, T>(k[0], v[0]));
-		// Esto tiene que dar un segfault
-		//NS::map<T, T>::iterator itmapaend = mapaend.end();
-		//std::cout << "Printing end() : " << itmapaend->first << std::endl;
+		title("Insert");
+		NS::map<T, T> map;
+		std::cout << "Single element" << '\n';
+		NS::map<T, T>::iterator it1 = map.insert(NS::pair<T, T>(k[0], v[0])).first;
+		assert(it1->first == k[0]);
+		NS::map<T, T>::iterator it2 = map.insert(NS::pair<T, T>(k[1], v[1])).first;
+		assert(it2->first == k[1]);
 
-		NS::map<T, T> mapa;
-		NS::map<T, T>::iterator it1 = mapa.insert(NS::pair<T, T>(k[0], v[0])).first;
-		mapa.insert(it1, NS::pair<T, T>(k[2], v[2]));
-		NS::map<T, T>::iterator it2 = mapa.insert(NS::pair<T, T>(k[1], v[1])).first;
-		printmap(mapa, "mapa");
-		NS::map<T,T> mapa2 = mapa;
-		printmap(mapa2, "mapa2");
-		log("erase k1 y k2");
-		mapa.erase(k[0]);
-		mapa.erase(k[1]);
-		printmap(mapa, "mapa");
-		log("insert mapa2 begin to end in mapa");
-		mapa.insert(mapa2.begin(), mapa2.end());
+		std::cout << "Single element with hint" << '\n';
+		NS::map<T, T>::iterator it3 = map.insert(it1, NS::pair<T, T>(k[2], v[2]));
+		assert(it3->first == k[2]);
+		printmap(map, "map");
 
-		printmap(mapa, "mapa");
-		printmap(mapa2, "mapa2");
+		std::cout << "Range insert" << "\n";
+		NS::map<T, T> map2;
+		map2.insert(NS::pair<T, T>(k[3], v[3]));
+		map2.insert(NS::pair<T, T>(k[4], v[4]));
+		map2.insert(NS::pair<T, T>(k[5], v[5]));
+		printmap(map2, "Source map");
+		printmap(map, "Destination map");
+		std::cout << "Insert source map begin to end in destination map" << '\n';
+		map.insert(map2.begin(), map2.end());
+		printmap(map, "Destination map after copy");
+		assert(map.begin()->first == k[0]);
+		assert((--map.end())->first == k[5]);
 
-		mapa2.erase(mapa2.begin(), mapa2.begin()++);
-		std::cout << mapa.size() << std::endl;
+		// Accessing end is an undefined behaviour, possible segfault
+		// NS::map<T, T> mapaend;
+		// mapaend.insert(NS::pair<T, T>(k[0], v[0]));
+		// NS::map<T, T>::iterator itmapaend = mapaend.end();
+		// std::cout << "Printing end() : " << itmapaend->first << std::endl;
+	}
+	{
+		title("Erase");
+		NS::map<T, T> map;
+		NS::map<T, T>::iterator it1 = map.insert(NS::pair<T, T>(k[0], v[0])).first;
+		map.insert(NS::pair<T, T>(k[1], v[1]));
+		NS::map<T, T>::iterator it2 = map.insert(NS::pair<T, T>(k[2], v[2])).first;
+		map.insert(NS::pair<T, T>(k[3], v[3]));
+		NS::map<T, T>::iterator it3 = map.insert(NS::pair<T, T>(k[4], v[4])).first;
+		printmap(map, "map");
 
-		NS::map<T, T> mapa3(mapa2.begin(), mapa2.end());
-		printmap(mapa3, "mapa3");
+		std::cout << "Erase single (iterator)" << '\n';
+		map.erase(it1);
+		printmap(map, "map");
+		assert(map.begin()->first == k[1]);
 
-		NS::map<T, T> mapa4;
-		printmap(mapa4, "mapa4 hola");
+		std::cout << "Erase single (key)" << '\n';
+		map.erase(k[3]);
+		printmap(map, "map");
+		assert(map.size() == 3);
 
-		NS::map<T, T>::iterator ite1 = mapa.insert(NS::pair<T, T>("e1", "e1")).first;
-		NS::map<T, T>::iterator ite2 = mapa.insert(NS::pair<T, T>("e2", "e2")).first;
-		mapa4.erase(ite1, ite2);
-		printmap(mapa4, "mapa4");
-
-		std::cout << "-------" << std::endl;
-		NS::map<T, T>::iterator itebegin = mapa4.begin();
-		NS::map<T, T>::iterator iteend = mapa4.end();
-		for (NS::map<T, T>::iterator it = itebegin; it != iteend; it++)
-			std::cout << it->first << std::endl;
-		std::cout << "-------" << std::endl;
-
-		//access
-		std::cout << "-------" << std::endl;
-		NS::map<T, T> access_map;
-		access_map.insert(NS::pair<T, T>("acc1", "acc1"));
-		access_map["acc1"];
-		access_map["acc2"];
-		
-		std::cout << access_map["acc1"] << std::endl;
-		std::cout << access_map["acc2"] << std::endl;
-		std::cout << "-------" << std::endl;
-		
-		NS::map<T, T> endmap;
-		endmap.insert(NS::pair<T, T>("em1", "em1"));
-		NS::map<T, T>::iterator itembegin = endmap.begin();
-
-		std::cout << (itembegin)->first << std::endl;
-
-		itembegin--;
-		itembegin--;
-
-		std::cout << (itembegin)->first << std::endl;
-
-		NS::map<T, T>::iterator itend = endmap.end();
-		endmap.insert(NS::pair<T, T>("em2", "em2"));
-
-		std::cout << (--itend)->first << std::endl;
-
-		NS::map<T, T>::iterator itend2 = endmap.end();
-		std::cout << (--itend2)->first << std::endl;
-		std::cout << "-------" << std::endl;
-		
-		//clear
-		std::cout << "-------" << std::endl;
-		NS::map<T, T> clearmap;
-		clearmap.insert(NS::pair<T, T>("cm1", "cm1"));
-		clearmap.insert(NS::pair<T, T>("cm2", "cm2"));
-		printmap(clearmap, "clear map");
-
-		clearmap.clear();
-		printmap(clearmap, "clear map");
-		std::cout << "-------" << std::endl;
-
-		//swap
-		std::cout << "-------" << std::endl;
+		std::cout << "Erase range" << '\n';
+		map.erase(it2, ++it3);
+		printmap(map, "map");
+		assert(map.size() == 1);
+	}
+	{
+		title("Swap");
 		NS::map<T, T> swapmapa;
-		swapmapa.insert(NS::pair<T, T>("swa1", "swa1"));
-		swapmapa.insert(NS::pair<T, T>("swa2", "swa2"));
+		swapmapa.insert(NS::pair<T, T>(k[0], v[0]));
+		swapmapa.insert(NS::pair<T, T>(k[1], v[1]));
 		printmap(swapmapa, "swapmapa");
 		NS::map<T, T> swapmapb;
-		swapmapb.insert(NS::pair<T, T>("swb1", "swb1"));
+		swapmapb.insert(NS::pair<T, T>(k[2], v[2]));
 		printmap(swapmapb, "swapmapb");
-
+		std::cout << "Swap maps.." << '\n';
 		swapmapa.swap(swapmapb);
 		printmap(swapmapa, "swapmapa");
 		printmap(swapmapb, "swapmapb");
+	}
+	{
+		title("Clear");
+		NS::map<T, T> map;
+		map.insert(NS::pair<T, T>(k[0], v[0]));
+		map.insert(NS::pair<T, T>(k[1], v[1]));
+		map.insert(NS::pair<T, T>(k[2], v[2]));
+		printmap(map, "map");
+		assert(map.size() == 3);
 
-		//size and maxsize
-		std::cout << "-------" << std::endl;
-		NS::map<T, T> sizemap;
-		printmap(sizemap, "size map");
-		sizemap.insert(NS::pair<T, T>("sm1", "sm1"));
-		sizemap.insert(NS::pair<T, T>("sm2", "sm2"));
-		sizemap.insert(NS::pair<T, T>("sm3", "sm3"));
-		sizemap.insert(NS::pair<T, T>("sm4", "sm4"));
-		printmap(sizemap, "size map");
-		sizemap.erase("sm1");
-		printmap(sizemap, "size map");
-		sizemap.erase(sizemap.begin(), sizemap.end());
-		printmap(sizemap, "size map");
-		log("max size:");
-		log(sizemap.max_size());
-		std::cout << "-------" << std::endl;
+		std::cout << "Clearing map..." << '\n';
+		map.clear();
+		printmap(map, "map");
+		assert(map.size() == 0);
+	}
 
-		//key compare
+	chapterend("MODIFIERS OK");
+}
+void m_testObservers()
+{
+	chapter("\nOBSERVERS");
+	{
+		title("Key compare");
+		std::map<char, int> map;
+		std::map<char, int>::key_compare compare = map.key_comp();
+
+		map['a'] = 100;
+		map['b'] = 200;
+		map['c'] = 300;
+
+		std::cout << "mymap contains:\n";
+
+		char highest = map.rbegin()->first;     // key value of last element
+
+		int i = 0;
+		std::map<char, int>::iterator it = map.begin();
+		do {
+			i++;
+			std::cout << it->first << " => " << it->second << '\n';
+		} while (compare((*it++).first, highest));
+		std::cout << '\n';
+		assert(i == 3);
+	}
+	
+	{
+		title("Value compare");
+		NS::map<char, int> map;
+
+		map['x'] = 1001;
+		map['y'] = 2002;
+		map['z'] = 3003;
+
+		std::cout << "mymap contains:\n";
+
+		NS::map<char, int>::iterator itend = map.end();
+		itend--;
+		NS::pair<char, int> highest = *itend;
+		NS::map<char, int>::iterator it = map.begin();
+		int i = 0;
+		while (map.value_comp()(*it, highest))
 		{
-			std::cout << "-------" << std::endl;
-			std::map<char, int> mymap;
-
-			std::map<char, int>::key_compare mycomp = mymap.key_comp();
-
-			mymap['a'] = 100;
-			mymap['b'] = 200;
-			mymap['c'] = 300;
-
-			std::cout << "mymap contains:\n";
-
-			char highest = mymap.rbegin()->first;     // key value of last element
-
-			std::map<char, int>::iterator it = mymap.begin();
-			do {
-				std::cout << it->first << " => " << it->second << '\n';
-			} while (mycomp((*it++).first, highest));
-
-			std::cout << '\n';
-			std::cout << "-------" << std::endl;
+			std::cout << it->first << " => " << it->second << '\n';
+			it++;
+			i++;
 		}
-		
-		//value compare
+		assert(i == 2);
+	}
+
+	chapterend("OBSERVERS OK");
+}
+void m_testOperations()
+{
+	chapter("\nOPERATORS");
 		{
-			NS::map<char, int> mymap;
-
-			mymap['x'] = 1001;
-			mymap['y'] = 2002;
-			mymap['z'] = 3003;
-
-			std::cout << "mymap contains:\n";
-
-			NS::map<char, int>::iterator itend = mymap.end();
-			itend--;
-			NS::pair<char, int> highest = *itend;
-			NS::map<char, int>::iterator it = mymap.begin();
-			while (mymap.value_comp()(*it, highest))
-			{
-				std::cout << it->first << " => " << it->second << '\n';
-				it++;
-			}
-		}
-
-		//find
-		{
-			std::cout << "-------" << std::endl;
+			title("Find");
 			NS::map<T, T> map;
 			map.insert(NS::pair<T, T>(k[0], v[0]));
 			map.insert(NS::pair<T, T>(k[1], v[1]));
@@ -421,27 +393,25 @@ int main()
 			NS::map<T, T>::iterator it;
 			it = map.find(k[2]);
 			std::cout << it->first << " => " << it->second << std::endl;
+			assert(it->first == k[2]);
 			it = map.find(k[4]);
 			if (it == map.end())
 				std::cout << "not found, iterator = end()" << std::endl;
-			std::cout << "-------" << std::endl;
 		}
-
-		//count
 		{
-			std::cout << "-------" << std::endl;
+			title("Count");
 			NS::map<T, T> map;
 			map.insert(NS::pair<T, T>(k[0], v[0]));
 			map.insert(NS::pair<T, T>(k[1], v[1]));
+			map.insert(NS::pair<T, T>(k[1], v[4]));
 			printmap(map, "map");
 			std::cout << "count k1 = " << map.count(k[0]) << std::endl;
-			std::cout << "count k666 = " << map.count("k666") << std::endl;
-			std::cout << "-------" << std::endl;
+			assert(map.count(k[0]) == 1);
+			std::cout << "count k8 = " << map.count(k[7]) << std::endl;
+			assert(map.count(k[7]) == 0);
 		}
-
-		//bounds and equal_range
 		{
-			std::cout << "-------" << std::endl;
+			title("Lower Bound");
 			NS::map<T, T> map;
 			map.insert(NS::pair<T, T>(k[0], v[0]));
 			map.insert(NS::pair<T, T>(k[1], v[1]));
@@ -449,51 +419,143 @@ int main()
 			map.insert(NS::pair<T, T>(k[6], v[6]));
 			printmap(map, "map");
 
-			NS::map<T, T>::iterator it;
-
-			it = map.lower_bound(k[0]);
-			std::cout << "lowerbound(k1) = " << it->first << std::endl;
-			it = map.lower_bound("k0");
-			std::cout << "lowerbound(k0) = " << it->first << std::endl;
-			it = map.lower_bound(k[3]);
-			std::cout << "lowerbound(k4) = " << it->first << std::endl;
-			it = map.lower_bound(k[6]);
-			std::cout << "lowerbound(k7) = " << it->first << std::endl;
-			std::cout << "-------" << std::endl;
-
-			it = map.upper_bound(k[0]);
-			std::cout << "upperbound(k1) = " << it->first << std::endl;
-			it = map.upper_bound("k0");
-			std::cout << "upperbound(k0) = " << it->first << std::endl;
-			it = map.upper_bound(k[3]);
-			std::cout << "upperbound(k4) = " << it->first << std::endl;
-			it = map.upper_bound(k[6]);
-
-			if (it == map.end())
-				std::cout << "equal" << std::endl;
-			else
-				std::cout << "upperbound(k7) = " << it->first << std::endl;
-
-			NS::map<T, T>::const_iterator cit;
-			cit = map.lower_bound(k[0]);
-			std::cout << "const lowerbound(k1) = " << cit->first << std::endl;
-			cit = map.lower_bound("k0");
-			std::cout << "const lowerbound(k0) = " << cit->first << std::endl;
-			cit = map.lower_bound(k[3]);
-			std::cout << "const lowerbound(k4) = " << cit->first << std::endl;
-			std::cout << "-------" << std::endl;
-
-			NS::pair<NS::map<T, T>::iterator,NS::map<T, T>::iterator> range;
-			range = map.equal_range(k[1]);
-			std::cout << "equal_range(k2) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
-			range = map.equal_range("k0");
-			std::cout << "equal_range(k0) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
-			range = map.equal_range(k[4]);
-			std::cout << "equal_range(k5) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
-			range = map.equal_range("k10");
-			std::cout << "equal_range(k10) = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+			{
+				std::cout << "Lower bounds:" << '\n';
+				NS::map<T, T>::iterator it;
+				it = map.lower_bound(k[1]);
+				std::cout << "lowerbound(" << k[1] << ") = " << it->first << std::endl;
+				assert(it->first == k[1]);
+				it = map.lower_bound(k[0]);
+				std::cout << "lowerbound(" << k[0] << ") = " << it->first << std::endl;
+				assert(it->first == k[0]);
+				it = map.lower_bound(k[3]);
+				std::cout << "lowerbound(" << k[3] << ") = " << it->first << std::endl;
+				assert(it->first == k[5]);
+				it = map.lower_bound(k[6]);
+				std::cout << "lowerbound(" << k[6] << ") = " << it->first << std::endl;
+				assert(it->first == k[6]);
+			}
+			{
+				std::cout << "\nConst lower bounds:" << '\n';
+				NS::map<T, T>::const_iterator it;
+				it = map.lower_bound(k[1]);
+				std::cout << "lowerbound(" << k[1] << ") = " << it->first << std::endl;
+				assert(it->first == k[1]);
+				it = map.lower_bound(k[0]);
+				std::cout << "lowerbound(" << k[0] << ") = " << it->first << std::endl;
+				assert(it->first == k[0]);
+				it = map.lower_bound(k[3]);
+				std::cout << "lowerbound(" << k[3] << ") = " << it->first << std::endl;
+				assert(it->first == k[5]);
+				it = map.lower_bound(k[6]);
+				std::cout << "lowerbound(" << k[6] << ") = " << it->first << std::endl;
+				assert(it->first == k[6]);
+			}
+			title("Upper Bound");
+			{
+				std::cout << "Upper bounds:" << '\n';
+				NS::map<T, T>::iterator it;
+				it = map.upper_bound(k[0]);
+				std::cout << "upperbound(" << k[0] << ") = " << it->first << std::endl;
+				assert(it->first == k[1]);
+				it = map.upper_bound(k[1]);
+				std::cout << "upperbound(" << k[1] << ") = " << it->first << std::endl;
+				assert(it->first == k[5]);
+				it = map.upper_bound(k[3]);
+				std::cout << "upperbound(" << k[3] << ") = " << it->first << std::endl;
+				assert(it->first == k[5]);
+				it = map.upper_bound(k[6]);
+				if (it == map.end())
+					std::cout << "end()" << std::endl;
+				else
+					std::cout << "upperbound(" << k[6] << ") = " << it->first << std::endl;
+			}
+			{
+				std::cout << "\nConst upper bounds:" << '\n';
+				NS::map<T, T>::const_iterator it;
+				it = map.upper_bound(k[0]);
+				std::cout << "upperbound(" << k[0] << ") = " << it->first << std::endl;
+				assert(it->first == k[1]);
+				it = map.upper_bound(k[1]);
+				std::cout << "upperbound(" << k[1] << ") = " << it->first << std::endl;
+				assert(it->first == k[5]);
+				it = map.upper_bound(k[3]);
+				std::cout << "upperbound(" << k[3] << ") = " << it->first << std::endl;
+				assert(it->first == k[5]);
+				it = map.upper_bound(k[6]);
+				if (it == map.end())
+					std::cout << "end()" << std::endl;
+				else
+					std::cout << "upperbound(" << k[6] << ") = " << it->first << std::endl;
+			}
 		}
-	}
+		{
+			title("Equal range");
+			NS::map<T, T> map;
+			map.insert(NS::pair<T, T>(k[0], v[0]));
+			map.insert(NS::pair<T, T>(k[1], v[1]));
+			map.insert(NS::pair<T, T>(k[5], v[5]));
+			map.insert(NS::pair<T, T>(k[6], v[6]));
+			printmap(map, "map");
+			{
+				std::cout << "Equal range" << '\n';
+				NS::pair<NS::map<T, T>::iterator,NS::map<T, T>::iterator> range;
+				range = map.equal_range(k[1]);
+				std::cout << "equal_range(" << k[1] << ") = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+				assert(range.first == map.lower_bound(k[1])); assert(range.second == map.upper_bound(k[1]));
+				range = map.equal_range(k[0]);
+				std::cout << "equal_range(" << k[0] << ") = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+				assert(range.first == map.lower_bound(k[0])); assert(range.second == map.upper_bound(k[0]));
+				range = map.equal_range(k[4]);
+				std::cout << "equal_range(" << k[4] << ") = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+				assert(range.first == map.lower_bound(k[4])); assert(range.second == map.upper_bound(k[4]));
+				range = map.equal_range(k[7]);
+				if (range.first == map.end() && range.second == map.end())
+					std::cout << "equal_range(" << k[7] << ") = <" << "end()" << ", " << "end()" << ">" << std::endl;					
+			}
+			{
+				std::cout << "\nConst equal range" << '\n';
+				NS::pair<NS::map<T, T>::const_iterator,NS::map<T, T>::const_iterator> range;
+				range = map.equal_range(k[1]);
+				std::cout << "equal_range(" << k[1] << ") = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+				assert(range.first == map.lower_bound(k[1])); assert(range.second == map.upper_bound(k[1]));
+				range = map.equal_range(k[0]);
+				std::cout << "equal_range(" << k[0] << ") = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+				assert(range.first == map.lower_bound(k[0])); assert(range.second == map.upper_bound(k[0]));
+				range = map.equal_range(k[4]);
+				std::cout << "equal_range(" << k[4] << ") = <" << range.first->first << ", " << range.second->first << ">" << std::endl;
+				assert(range.first == map.lower_bound(k[4])); assert(range.second == map.upper_bound(k[4]));
+				range = map.equal_range(k[7]);
+				if (range.first == map.end() && range.second == map.end())
+					std::cout << "equal_range(" << k[7] << ") = <" << "end()" << ", " << "end()" << ">" << std::endl;	
+			}
+		}
+		{
+			title("Get_allocator");
+			NS::map<T, T> map;
+			NS::pair<T, T> pair = NS::make_pair(k[0], v[0]);
+			map.insert(pair);
+			printmap(map, "map");
+			NS::map<T, T>::allocator_type alloc = map.get_allocator();
+			std::cout << "Pair address through allocator = " << alloc.address(pair) << std::endl;
+			assert(alloc.address(pair) != 0);
+		}
+
+	chapterend("OPERATORS OK");
+}
+
+int main()
+{
+	chapter("\nT E S T I N G   M A P");
+
+	m_testConstructors();
+	m_testOperators();
+	m_testIterators();
+	m_testCapacity();
+	m_testAccess();
+	m_testModifiers();
+	m_testObservers();
+	m_testOperations();
 
 	return 0;
 }
