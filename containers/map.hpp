@@ -52,14 +52,13 @@ namespace ft
 			typedef typename tree::const_iterator					const_iterator;
 			typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-			// reverse const
 
 			typedef std::size_t			size_type;
 			typedef std::ptrdiff_t		difference_type;
 
 		/* --- Member attributes --- */
-		public : tree 			m_tree; //TODO hacer privado
 		private:
+			tree 			m_tree;
 			key_compare		m_keyCompare;
 			allocator_type	m_alloc;
 			size_type		m_size;
@@ -123,7 +122,7 @@ namespace ft
 			if (node != NULL)
 				return node->content.second;
 			
-			mapped_type val;
+			mapped_type val = mapped_type();
 			value_type pair(k, val);
 			ft::pair<iterator, bool> res = insert(pair);
 			return res.first->second;
@@ -160,7 +159,12 @@ namespace ft
 			m_size = m_tree.m_size;
 		}
 
-		void erase(iterator position) { m_tree.remove(position); }
+		void erase(iterator position) 
+		{ 
+			m_tree.remove(position); 
+			m_size = m_tree.m_size;
+		}
+
 		size_type	erase(const key_type & k)
 		{
 			bool res = m_tree.remove(k);
