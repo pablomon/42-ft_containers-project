@@ -39,7 +39,7 @@ void m_testConstructors()
 		basemap.insert(NS::pair<T, T>(k[1], v[1]));
 		basemap.insert(NS::pair<T, T>(k[2], v[2]));
 		printmap(basemap, "source map");
-		
+
 		NS::map<T, T> map(basemap.begin(), basemap.end());
 		printmap(map, "destination map");
 		NS::map<T, T>::iterator it = map.begin();
@@ -55,14 +55,14 @@ void m_testConstructors()
 		basemap.insert(NS::pair<T, T>(k[1], v[1]));
 		basemap.insert(NS::pair<T, T>(k[2], v[2]));
 		printmap(basemap, "source map");
-		
+
 		NS::map<T, T> map(basemap);
 		printmap(map, "destination map");
 		NS::map<T, T>::iterator it = map.begin();
 		assert(it->first == k[0]);
 		it = map.end();
 		--it;
-		assert(it->first == k[2]);		
+		assert(it->first == k[2]);
 	}
 
 	chapterend("CONSTRUCTORS OK");
@@ -77,7 +77,7 @@ void m_testOperators()
 		basemap.insert(NS::pair<T, T>(k[1], v[1]));
 		basemap.insert(NS::pair<T, T>(k[2], v[2]));
 		printmap(basemap, "source map");
-		
+
 		NS::map<T, T> map;
 		map.insert(NS::pair<T, T>(k[4], v[4]));
 		printmap(map, "destination map");
@@ -224,7 +224,7 @@ void m_testAccess()
 		map[k[1]];
 		printmap(map, "map");
 		assert(map.size() == 2);
-		
+
 		std::cout << map[k[0]] << std::endl;
 		std::cout << map[k[1]] << std::endl;
 		chapterend("ELEMENT ACCESS OK");
@@ -346,7 +346,7 @@ void m_testObservers()
 		std::cout << '\n';
 		assert(i == 3);
 	}
-	
+
 	{
 		title("Value compare");
 		NS::map<char, int> map;
@@ -505,7 +505,7 @@ void m_testOperations()
 				assert(range.first == map.lower_bound(k[4])); assert(range.second == map.upper_bound(k[4]));
 				range = map.equal_range(k[7]);
 				if (range.first == map.end() && range.second == map.end())
-					std::cout << "equal_range(" << k[7] << ") = <" << "end()" << ", " << "end()" << ">" << std::endl;					
+					std::cout << "equal_range(" << k[7] << ") = <" << "end()" << ", " << "end()" << ">" << std::endl;
 			}
 			{
 				std::cout << "\nConst equal range" << '\n';
@@ -521,7 +521,7 @@ void m_testOperations()
 				assert(range.first == map.lower_bound(k[4])); assert(range.second == map.upper_bound(k[4]));
 				range = map.equal_range(k[7]);
 				if (range.first == map.end() && range.second == map.end())
-					std::cout << "equal_range(" << k[7] << ") = <" << "end()" << ", " << "end()" << ">" << std::endl;	
+					std::cout << "equal_range(" << k[7] << ") = <" << "end()" << ", " << "end()" << ">" << std::endl;
 			}
 		}
 		{
@@ -548,7 +548,7 @@ void m_testSpeed()
 	std::cin >> n;
 	test_size = 1;
 	while (n-- > 0)
-		test_size *= 10;		
+		test_size *= 10;
 
 	std::cout << "Create a map with " << test_size << " random int\n";
     srand( (unsigned)time(NULL) );

@@ -25,8 +25,8 @@ int	cmp(const T_STACK &lhs, const T_STACK &rhs)
 	return res;
 }
 
-template <typename T>
-void PrintStack(NS::stack<T>& stk, std::string name = "s")
+template <typename U>
+void PrintStack(NS::stack<U>& stk, std::string name = "s")
 {
 	std::cout << "  Stack " << name << ":\n";
 	std::cout << "  empty = " << std::boolalpha << stk.empty() << ", ";
@@ -35,7 +35,7 @@ void PrintStack(NS::stack<T>& stk, std::string name = "s")
 		std::cout << ", top = " << stk.top();
 	std::cout << std::endl;
 
-	NS::stack<T> saveStack;
+	NS::stack<U> saveStack;
 	while (stk.size() > 0)
 	{
 		saveStack.push(stk.top());
@@ -140,7 +140,7 @@ void s_relational_operators()
 	assert(res = 56);
 
 	logn("stack2 VS stack1");
-	cmp(stk2, stk1); 
+	cmp(stk2, stk1);
 	assert(res = 38);
 
 	logn("Modifying stack1");
@@ -148,10 +148,10 @@ void s_relational_operators()
 	PrintStack(stk1, "stack1");
 
 	logn("stack1 VS stack2");
-	res = cmp(stk1, stk2); 
+	res = cmp(stk1, stk2);
 	assert(res = 56);
 	logn("stack2 VS stack1");
-	res = cmp(stk2, stk1); 
+	res = cmp(stk2, stk1);
 	assert(res = 38);
 
 	chapterend("RELATIONAL OPERATORS OK");

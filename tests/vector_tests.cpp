@@ -2,8 +2,14 @@
 #include "../containers/vector.hpp"
 #include <vector>
 
-template <class T, class Alloc>
-int	cmp(const NS::vector<T, Alloc> &lhs, const NS::vector<T, Alloc> &rhs)
+#define T std::string
+std::string val[] = { "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"};
+
+// #define T int
+// int val[] = { 11,22,33,42,666,66,77,88 };
+
+template <class U, class Alloc>
+int	cmp(const NS::vector<U, Alloc> &lhs, const NS::vector<U, Alloc> &rhs)
 {
 	int res = 0;
 	std::cout << "=============\n";
@@ -24,8 +30,8 @@ int	cmp(const NS::vector<T, Alloc> &lhs, const NS::vector<T, Alloc> &rhs)
 	return res;
 }
 
-template <typename T>
-void PrintVector(const NS::vector<T>& vector, std::string name)
+template <typename U>
+void PrintVector(const NS::vector<U>& vector, std::string name)
 {
 	std::cout << "  Vector " << name << ":\n";
 	std::cout << "  size = " << vector.size() << ", ";
@@ -39,25 +45,25 @@ void v_testConstructors()
 	chapter("\nCONSTRUCTORS");
 	{
 		title("Empty constructor");
-		NS::vector<std::string> v = NS::vector<std::string>();
+		NS::vector<T> v = NS::vector<T>();
 		PrintVector(v, "v");
 	}
 	{
 		title("Fill constructor");
-		NS::vector<std::string> v = NS::vector<std::string>(4, "abc");
-		assert(v[3] == "abc");
+		NS::vector<T> v = NS::vector<T>(4, val[0]);
+		assert(v[3] == val[0]);
 		PrintVector(v, "v");
 	}
 	{
 		title("Range constructor");
-		NS::vector<std::string> vo = NS::vector<std::string>();
-		vo.push_back("11");
-		vo.push_back("22");
-		vo.push_back("33");
+		NS::vector<T> vo = NS::vector<T>();
+		vo.push_back(val[0]);
+		vo.push_back(val[1]);
+		vo.push_back(val[2]);
 		PrintVector(vo, "vo");
 
-		NS::vector<std::string> v = NS::vector<std::string>(vo.begin(), vo.end());
-		assert(v[2] == "33");
+		NS::vector<T> v = NS::vector<T>(vo.begin(), vo.end());
+		assert(v[2] == val[2]);
 		PrintVector(v, "v");
 	}
 
@@ -68,50 +74,51 @@ void v_testAccess()
 {
 	chapter("\nELEMENT ACCESS");
 
-	log("Create vector with values 1, 2, 3");
-	NS::vector<std::string> v;
-	v.push_back("1");
-	v.push_back("2");
-	v.push_back("3");
-	assert(v[2] == "3");
+	NS::vector<T> v;
+	v.push_back(val[0]);
+	v.push_back(val[1]);
+	v.push_back(val[2]);
+	assert(v[2] == val[2]);
 	PrintVector(v, "v");
 
 	title("Operator []");
 	log("Value at pos 2: ");
-	assert(v[2] == "3");
+	assert(v[2] == val[2]);
 	logn(v[2]);
-	log("Value at pos 100: ");
-	logn(v[100]);
+	// The following throws a heap-overflow on mac
+	// log("Value at pos 100: ");
+	// logn(v[100]);
 
 	title("at");
 	try
 	{
 		log("Value at pos 2: ");
-		assert(v[2] == "3");
+		assert(v[2] == val[2]);
 		logn(v.at(2));
 		log("Value at pos 100: ");
 		logn(v.at(100));
 	}
 	catch(const std::exception& e)
 	{
+		std::cout << "Catch:" << std::endl;
 		std::cerr << e.what() << '\n';
 	}
 
 	title("Front & back");
 	log("Front: ");
-	assert(v.front() == "1");
+	assert(v.front() == v[0]);
 	logn(v.front());
 	log("Back: ");
-	assert(v.back() == "3");
+	assert(v.back() == v[2]);
 	logn(v.back());
 	logn("Removng elements 1 and 2");
 	v.pop_back();
 	v.pop_back();
 	log("Front: ");
-	assert(v.front() == "1");
+	assert(v.front() == v[0]);
 	logn(v.front());
 	log("Back: ");
-	assert(v.back() == "1");
+	assert(v.back() == v[0]);
 	logn(v.back());
 
 	chapterend("ACCESS OK");
@@ -121,28 +128,28 @@ void v_testModifiers()
 {
 	chapter("\nMODIFIERS");
 
-	NS::vector<std::string> v = NS::vector<std::string>();
+	NS::vector<T> v = NS::vector<T>();
 	PrintVector(v, "v");
 
 	title("push_back");
-	v.push_back("1");
-	v.push_back("2");
-	v.push_back("3");
-	assert(v[2] == "3");
+	v.push_back(val[0]);
+	v.push_back(val[1]);
+	v.push_back(val[2]);
+	assert(v[2] == val[2]);
 	PrintVector(v, "v");
 
 	title("range assign");
 	logn("create v2");
-	NS::vector<std::string> v2 = NS::vector<std::string>(5, "42");
+	NS::vector<T> v2 = NS::vector<T>(5, val[3]);
 	PrintVector(v2, "v2");
 	logn("assign v to v2");
 	v2.assign(v.begin(), v.end());
-	assert(v2[2] == "3");
+	assert(v2[2] == val[2]);
 	PrintVector(v2, "v2");
 
 	title("fill assign");
-	v2.assign(6, "42");
-	assert(v2[5] == "42");
+	v2.assign(6, val[3]);
+	assert(v2[5] == val[3]);
 	PrintVector(v2, "v2");
 
 	title("pop back");
@@ -156,38 +163,38 @@ void v_testModifiers()
 	title("Insert single element");
 	PrintVector(v, "v");
 	logn("Insert 42 at the beginnig + 2");
-	NS::vector<std::string>::iterator it = v.insert(v.begin() + 2, "42");
-	assert(v[2] == "42");
-	logn(*it);
+	NS::vector<T>::iterator it = v.insert(v.begin() + 2, val[3]);
+	assert(v[2] == val[3]);
+	PrintVector(v, "v");
 	logn("Insert 42 at the end");
-	v.insert(v.end(), "42");
-	assert(v[4] == "42");
+	v.insert(v.end(), val[3]);
+	assert(v[4] == val[3]);
 	PrintVector(v, "v");
 
 	title("Insert fill");
 	logn("Insert  3 666s at the beginnig + 1");
-	v.insert(++v.begin(), 3, "66");
-	assert(v[1] == "66");
-	assert(v[3] == "66");
+	v.insert(++v.begin(), 3, val[4]);
+	assert(v[1] == val[4]);
+	assert(v[3] == val[4]);
 	PrintVector(v, "v");
 
 	title("Insert range");
-	log("Vector3:");
-	NS::vector<std::string> v3;
-	v3.push_back("10");
-	v3.push_back("20");
-	v3.push_back("30");
-	PrintVector(v3, "v3");
+	NS::vector<T> v3;
+	v3.push_back(val[0]);
+	v3.push_back(val[1]);
+	v3.push_back(val[2]);
+	PrintVector(v, "v3");
 	logn("Insert vector3 into second position");
 	v.insert(v.begin() + 2, v3.begin(), v3.end());
-	assert(v[2] == "10");
-	assert(v[4] == "30");
+	assert(v[2] == val[0]);
+	assert(v[4] == val[2]);
 	PrintVector(v, "v");
 
 	title("Erase single");
 	logn("Erase vector v pos 2");
 	it = v.erase(v.begin() + 2);
-	assert(*it == "20");
+	std::cout << *it << std::endl;
+	assert(*it == val[1]);
 	log("return iterator value = ");
 	logn(*it);
 	PrintVector(v, "v");
@@ -195,7 +202,7 @@ void v_testModifiers()
 	title("Erase range");
 	logn("Erase everything in v except first and last");
 	it = v.erase(++v.begin(), --v.end());
-	assert(*it == "42");
+	assert(*it == val[3]);
 	log("return iterator value = ");
 	logn(*it);
 	PrintVector(v, "v");
@@ -207,8 +214,8 @@ void v_testModifiers()
 	PrintVector(v3, "v3");
 	logn("Swap vectors");
 	v.swap(v3);
-	assert(v[2] == "30");
-	assert(v3[1] == "42");
+	assert(v[2] == val[2]);
+	assert(v3[1] == val[3]);
 	PrintVector(v, "v");
 	PrintVector(v3, "v3");
 
@@ -223,12 +230,11 @@ void v_testModifiers()
 void v_testCapacity()
 {
 	chapter("\nCAPACITY");
-	NS::vector<std::string> v = NS::vector<std::string>();
-	logn("hola");
-	v.push_back("1");
-	v.push_back("2");
-	v.push_back("3");
-	assert(v[2] == "3");
+	NS::vector<T> v = NS::vector<T>();
+	v.push_back(val[0]);
+	v.push_back(val[1]);
+	v.push_back(val[2]);
+	assert(v[2] == val[2]);
 	PrintVector(v, "v");
 
 	title("size");
@@ -240,8 +246,7 @@ void v_testCapacity()
 	title("resize");
 	logn("resize to 10 elements");
 	v.resize(10);
-	logn(v[9]);
-	assert(v[9] == "");
+    assert(v[9] == T());
 	PrintVector(v, "v");
 	logn("resize to 2 elements");
 	v.resize(2);
@@ -262,99 +267,99 @@ void v_testIterators()
 	title("NON CONST ITERATORS");
 	{
 		log("Create vector v with 3 values");
-		NS::vector<std::string> v;
-		v.push_back("a");
-		v.push_back("b");
-		v.push_back("c");
-		assert(v[2] == "c");
+		NS::vector<T> v;
+		v.push_back(val[0]);
+		v.push_back(val[1]);
+		v.push_back(val[2]);
+		assert(v[2] == val[2]);
 		PrintVector(v, "v");
 
 		title("begin");
 		logn("Begin value:");
-		NS::vector<std::string>::iterator it = v.begin();
+		NS::vector<T>::iterator it = v.begin();
 		logn(*it);
-		assert(*it == "a");
+		assert(*it == val[0]);
 		logn("Begin + 1 value:");
-		assert(*(v.begin() + 1) == "b");
+		assert(*(v.begin() + 1) == val[1]);
 		logn(*(v.begin() + 1));
-		
+
 		title("end");
 		logn("End - 1 value:");
-		assert(*(v.end() - 1) == "c");
+		assert(*(v.end() - 1) == val[2]);
 		logn(*(v.end() - 1));
 		logn("End - 2 value:");
-		assert(*(v.end() - 2) == "b");
+		assert(*(v.end() - 2) == val[1]);
 		logn(*(v.end() - 2));
 	}
 
 	{
 		title("REVERSE ITERATORS");
 		log("Create vector v with 3 values");
-		NS::vector<std::string> v;
-		v.push_back("a");
-		v.push_back("b");
-		v.push_back("c");
-		assert(v[2] == "c");
+		NS::vector<T> v;
+		v.push_back(val[0]);
+		v.push_back(val[1]);
+		v.push_back(val[2]);
+		assert(v[2] == val[2]);
 		PrintVector(v, "v");
-		
+
 		title("rbegin");
 		logn("rbegin value:");
-		assert(*(v.rbegin()) == "c");
+		assert(*(v.rbegin()) == val[2]);
 		logn(*(v.rbegin()));
 		logn("rbegin + 1 value:");
 		logn(*(v.rbegin() + 1));
-		assert(*(v.rbegin() + 1) == "b");
+		assert(*(v.rbegin() + 1) == val[1]);
 
 		title("rend");
 		logn("rend - 1 value:");
-		assert(*(v.rend() - 1) == "a");
+		assert(*(v.rend() - 1) == val[0]);
 		logn(*(v.rend() - 1));
 		logn("rend - 2 value:");
-		assert(*(v.rend() - 2) == "b");
+		assert(*(v.rend() - 2) == val[1]);
 		logn(*(v.rend() - 2));
 	}
 
 	title("CONST ITERATORS");
 	{
 		log("Create vector v with 3 values");
-		NS::vector<std::string> v;
-		v.push_back("a");
-		v.push_back("b");
-		v.push_back("c");
-		assert(v[2] == "c");
+		NS::vector<T> v;
+		v.push_back(val[0]);
+		v.push_back(val[1]);
+		v.push_back(val[2]);
+		assert(v[2] == val[2]);
 		PrintVector(v, "v");
 
 		title("const begin");
 		logn("Begin value:");
-		NS::vector<std::string>::const_iterator it;
+		NS::vector<T>::const_iterator it;
 		it = v.begin();
 		logn(*it);
-		assert(*it == "a");
+		assert(*it == val[0]);
 		logn("Begin + 1 value:");
-		assert(*(it + 1) == "b");
+		assert(*(it + 1) == val[1]);
 		logn(*(it + 1));
 	}
 
 	{
 		title("CONST REVERSE ITERATORS");
 		log("Create vector v with 3 values");
-		NS::vector<std::string> v;
-		v.push_back("a");
-		v.push_back("b");
-		v.push_back("c");
-		assert(v[2] == "c");
+		NS::vector<T> v;
+		v.push_back(val[0]);
+		v.push_back(val[1]);
+		v.push_back(val[2]);
+		assert(v[2] == val[2]);
 		PrintVector(v, "v");
-		
+
 		title("rbegin");
 		logn("rbegin value:");
-		NS::vector<std::string>::const_reverse_iterator rit;
+		NS::vector<T>::const_reverse_iterator rit;
 		rit = v.rbegin();
-		assert(*(rit) == "c");
+		assert(*(rit) == val[2]);
 		logn(*(rit));
 		logn("rbegin + 1 value:");
 		rit = v.rbegin() + 1;
 		logn(*(rit));
-		assert(*(rit) == "b");
+		assert(*(rit) == val[1]);
 	}
 
 	chapterend("ITERATORS OK");
@@ -363,8 +368,8 @@ void v_testIterators()
 void v_relational_operators()
 {
 	chapter("\nRelational operators");
-	NS::vector<std::string> v1(4);
-	NS::vector<std::string> v2(4);
+	NS::vector<T> v1(4);
+	NS::vector<T> v2(4);
 
 	int res;
 	PrintVector(v1, "v1");
@@ -373,7 +378,7 @@ void v_relational_operators()
 	logn("v1 VS v1");
 	res = cmp(v1, v1);
 	assert(res = 74);
-	
+
 	title("Comparison to an equal vector");
 	logn("v1 VS v2");
 	res = cmp(v1, v2);
@@ -413,7 +418,7 @@ void v_relational_operators()
 	chapterend("RELATIONAL OPERATORS OK");
 }
 
-void v_speedTest()	
+void v_speedTest()
 {
 # define VECTOR_TEST_SIZE 10000000
 	chapter("\nSpeed test");
@@ -433,7 +438,7 @@ void v_speedTest()
 	for (size_t i = 0; i < v.size(); i++)
 		s = v[i];
 	log("total s = ");
-	logn(Timer()); 
+	logn(Timer());
 }
 
 void vector_tests()

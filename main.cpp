@@ -1,14 +1,10 @@
 #include <iostream>
-#include <cstring> // strcmp 
+#include <cstring> // strcmp
 
 #include "tests/tests.hpp"
 
 #ifndef STD
 # define STD "FT"
-#endif
-
-#ifndef INTEGRAL
-# define INTEGRAL 0
 #endif
 
 int main(int argc, char **argv)
@@ -19,7 +15,6 @@ int main(int argc, char **argv)
 		std::cout << "Use v(ector), s(tack) or m(ap)" << std::endl;
 		return 0;
 	}
-	
 
 	if (std::strcmp(argv[1], "v") == 0 )
 		vector_tests();
