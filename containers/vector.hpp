@@ -242,13 +242,14 @@ namespace ft
 			m_alloc.construct(m_data + m_size, value);
 			m_size++;
 		}
+
 		// Range assign
 		template <class InputIterator>
   		void assign
 		(
 			  InputIterator first,
-			  InputIterator last
-			  ,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = NULL
+			  InputIterator last,
+			  typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL // TODO: cambiar a *=NULL??
 		)
 		{
 			clear();
@@ -413,18 +414,11 @@ namespace ft
 
 		void clear()
 		{
-			// logn("Clear called");
-			// log("m_size = ");
-			// logn(m_size);
 			for (size_t i = 0; i < m_size; i++)
 			{
-				// log("*(m_data + i) = ");
-				// logn(*(m_data + i));
 				m_alloc.destroy(m_data + i);
-				// logn("Destroyed");
 			}
 			m_size = 0;
-			// logn("Clear finished");
 		}
 	};
 	

@@ -6,7 +6,7 @@
 #    By: pmontese <pmontes@student.42madrid.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/08 23:23:47 by pmontese          #+#    #+#              #
-#    Updated: 2022/04/26 20:40:44 by pmontese         ###   ########.fr        #
+#    Updated: 2022/06/06 15:47:52 by pmontese         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,48 +14,37 @@
 Green	= \033[0;32m
 NoColor = \033[0m
 # Name of the program.
-NAME	:= main
+NAMEFT	:= ft_test
 NAMESTD := std_test
-
-# Sources and objects.
-# HDRS	:=	utils/utils.hpp tests/tests.hpp \
-# 			containers/vector.hpp containers/vector_it.hpp \
-# 			containers/stack.hpp \
-# 			utils/iterator_traits.hpp utils/reverse_iterator.hpp \
-# 			utils/enable_if.hpp utils/is_integral.hpp \
-# 			utils/lexicographical_compare.hpp
 
 SRCS	:= 	main.cpp utils/utils.cpp \
 			tests/vector_tests.cpp \
 			tests/stack_tests.cpp \
 			tests/map_tests.cpp
+
 OBJS	:= 	$(SRCS:.cpp=.o)
 
 # Define all the compiling flags.
 CXX			:= clang++
-CXXFLAGS	:= -Wall -Wextra -std=c++98 #-Werror
+CXXFLAGS	:= -Wall -Wextra -Werror -std=c++98
 SANITIZEFLAGS	:= -g -fsanitize=address
 STDFLAG		:= -D STD='"STANDAR"'
 
 # Compile and create everything.
-all:
-	make ft
+all: $(SRCS)
 	make std
-
-# Compile the program with the objects.
-$(NAME): $(OBJS) #$(HDRS)
-		@$(CXX) $(OBJS) -o $@
+	make ft
 
 # This won't run if the source files don't exist or are not modified.
 %.o: %.cpp %.hpp
 		$(CXX) $(CXXFLAGS) $(SANITIZEFLAGS) -o $@ -c $<
 
-# Rule to run the program.
-ft:
-	$(CXX) $(CXXFLAGS) $(SANITIZEFLAGS) $(SRCS) -o $(NAME)
-	@echo "${Green} ft version built ($(NAME))\n ${NoColor}"
+# Rule to build tests using my implementation.
+ft: $(SRCS)
+	$(CXX) $(CXXFLAGS) $(SANITIZEFLAGS) $(SRCS) -o $(NAMEFT)
+	@echo "${Green} ft version built ($(NAMEFT))\n ${NoColor}"
 
-# Rule to run with the std library
+# Rule to build tests using std.
 std:
 	$(CXX) $(CXXFLAGS) $(SANITIZEFLAGS) $(STDFLAG) $(SRCS) -o $(NAMESTD)
 	@echo "${Green} std version built ($(NAMESTD))\n ${NoColor}"
@@ -68,9 +57,13 @@ clean:
 
 # Rule to remove everything that has been created by the makefile.
 fclean: clean
-		@rm -f $(NAME)
+		@rm -f $(NAMEFT)
+		@echo "[INFO] $(NAMEFT) removed!"
 		@rm -f $(NAMESTD)
-		@echo "[INFO] $(NAME) removed!"
+		@echo "[INFO] $(NAMESTD) removed!"
+		@rm -f ftlog
+		@rm -f stdlog
+		@echo "Logs removed!"
 
 # Rule to re-make everything.
 re: fclean all

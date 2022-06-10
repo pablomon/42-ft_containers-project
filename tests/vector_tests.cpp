@@ -139,6 +139,7 @@ void v_testModifiers()
 	v2.assign(v.begin(), v.end());
 	assert(v2[2] == "3");
 	PrintVector(v2, "v2");
+
 	title("fill assign");
 	v2.assign(6, "42");
 	assert(v2[5] == "42");
@@ -258,9 +259,9 @@ void v_testCapacity()
 void v_testIterators()
 {
 	chapter("\nITERATORS");
-	log("- Non const iterators -");
+	title("NON CONST ITERATORS");
 	{
-		log("Create vector v with values 1, 2, 3");
+		log("Create vector v with 3 values");
 		NS::vector<std::string> v;
 		v.push_back("a");
 		v.push_back("b");
@@ -284,7 +285,18 @@ void v_testIterators()
 		logn("End - 2 value:");
 		assert(*(v.end() - 2) == "b");
 		logn(*(v.end() - 2));
+	}
 
+	{
+		title("REVERSE ITERATORS");
+		log("Create vector v with 3 values");
+		NS::vector<std::string> v;
+		v.push_back("a");
+		v.push_back("b");
+		v.push_back("c");
+		assert(v[2] == "c");
+		PrintVector(v, "v");
+		
 		title("rbegin");
 		logn("rbegin value:");
 		assert(*(v.rbegin()) == "c");
@@ -302,25 +314,48 @@ void v_testIterators()
 		logn(*(v.rend() - 2));
 	}
 
-	// log("- Const iterators -");
-	// {
-	// 	log("Create vector v with values 1, 2, 3");
-	// 	NS::vector<std::string> v;
-	// 	v.push_back("a");
-	// 	v.push_back("b");
-	// 	v.push_back("c");
-	// 	assert(v[2] == "c");
-	// 	PrintVector(v, "v");
+	title("CONST ITERATORS");
+	{
+		log("Create vector v with 3 values");
+		NS::vector<std::string> v;
+		v.push_back("a");
+		v.push_back("b");
+		v.push_back("c");
+		assert(v[2] == "c");
+		PrintVector(v, "v");
 
-	// 	title("begin");
-	// 	logn("Begin value:");
-	// 	NS::vector<std::string>::const_iterator it = v.begin();
-	// 	logn(*it);
-	// 	assert(*it == "a");
-	// 	logn("Begin + 1 value:");
-	// 	assert(*(it + 1) == "b");
-	// 	logn(*(it + 1));
-	// }
+		title("const begin");
+		logn("Begin value:");
+		NS::vector<std::string>::const_iterator it;
+		it = v.begin();
+		logn(*it);
+		assert(*it == "a");
+		logn("Begin + 1 value:");
+		assert(*(it + 1) == "b");
+		logn(*(it + 1));
+	}
+
+	{
+		title("CONST REVERSE ITERATORS");
+		log("Create vector v with 3 values");
+		NS::vector<std::string> v;
+		v.push_back("a");
+		v.push_back("b");
+		v.push_back("c");
+		assert(v[2] == "c");
+		PrintVector(v, "v");
+		
+		title("rbegin");
+		logn("rbegin value:");
+		NS::vector<std::string>::const_reverse_iterator rit;
+		rit = v.rbegin();
+		assert(*(rit) == "c");
+		logn(*(rit));
+		logn("rbegin + 1 value:");
+		rit = v.rbegin() + 1;
+		logn(*(rit));
+		assert(*(rit) == "b");
+	}
 
 	chapterend("ITERATORS OK");
 }
@@ -405,7 +440,6 @@ void vector_tests()
 {
 	chapter("\nT E S T I N G   V E C T O R");
 	v_testConstructors();
-	//TODO: v_testAssignment();
 	v_testCapacity();
 	v_testAccess();
 	v_testModifiers();

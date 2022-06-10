@@ -6,6 +6,8 @@
 #include "../avlTree/avlTree.hpp"
 #include "../avlTree/avlIterator.hpp"
 #include "../utils/reverse_iterator.hpp"
+#include "../utils/enable_if.hpp"
+#include "../utils/is_integral.hpp"
 
 #include <iostream> // TODO remove
 namespace ft
@@ -62,6 +64,7 @@ namespace ft
 			key_compare		m_keyCompare;
 			allocator_type	m_alloc;
 			size_type		m_size;
+			
  		/* --- Member functions --- */
 		public:
 		// empty constructor
@@ -71,7 +74,11 @@ namespace ft
 
 		// range constructor TODO: implementar is integral???
 		template <class IT>
-		map(IT first, IT last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+		map(IT first, 
+			IT last, 
+			const key_compare& comp = key_compare(), 
+			const allocator_type& alloc = allocator_type(),
+			typename ft::enable_if<!ft::is_integral<IT>::value, IT>::type * = NULL)
 			 :  m_keyCompare(comp), m_alloc(alloc)
 		{
 			insert(first, last);
@@ -140,15 +147,15 @@ namespace ft
 		}
 		iterator	insert(iterator position, const value_type & val)
 		{
-			position++; //TODO: comprobar hint
+			position++; 
 
 			ft::pair<iterator, bool> pair = insert(val);
 			m_size = m_tree.m_size;
 			return pair.first;
 		}
 
-		template <class IT> //TODO
-		void	insert(IT first, IT last) //TODO: cambiar por InputIterator
+		template <class IT>
+		void	insert(IT first, IT last, typename ft::enable_if<!ft::is_integral<IT>::value, IT>::type * = NULL)
 		{
 			while (first != last)
 			{
@@ -171,6 +178,7 @@ namespace ft
 			m_size = m_tree.m_size;
 			return res == true ? 1 : 0;
 		}
+
 		void erase(iterator first, iterator last) 
 		{
 			while (first != last)
@@ -184,7 +192,6 @@ namespace ft
 		void swap(map& x)
 		{
 			map tmp = *this;
-			//*this = x;
 			if (this != &x)
 			{
 				clear();
@@ -245,6 +252,7 @@ namespace ft
 			}
 			return it;
 		}
+
 		const_iterator	lower_bound(const key_type & k) const
 		{
 			const_iterator it = begin();			
@@ -277,6 +285,7 @@ namespace ft
 			}
 			return it;				
 		}
+
 		const_iterator	upper_bound(const key_type & k) const
 		{
 			const_iterator it = begin();			
@@ -306,6 +315,7 @@ namespace ft
 			pair.second = upper;			
 			return pair;
 		}
+
 		ft::pair<const_iterator, const_iterator>	equal_range (const key_type & k) const
 		{
 			const_iterator lower = lower_bound(k);

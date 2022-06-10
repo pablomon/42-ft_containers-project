@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/mnt/d/42/ft_containers'
+make std
+make ft
+make: Leaving directory '/mnt/d/42/ft_containers'
+ 

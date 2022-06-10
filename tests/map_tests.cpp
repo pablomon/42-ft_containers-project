@@ -3,13 +3,13 @@
 #include <map>
 #include <iomanip>
 
-#define T std::string
-std::string k[] = { "k1", "k2", "k3", "k4", "k5", "k6", "k7", "k8"};
-std::string v[] = { "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"};
+// #define T std::string
+// std::string k[] = { "k1", "k2", "k3", "k4", "k5", "k6", "k7", "k8"};
+// std::string v[] = { "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"};
 
-// #define T int
-// int k[] = { 1, 2, 3, 4 ,5 ,6 ,7 ,8 };
-// int v[] = { 11,22,33,44,55,66,77,88 };
+#define T int
+int k[] = { 1, 2, 3, 4 ,5 ,6 ,7 ,8 };
+int v[] = { 11,22,33,44,55,66,77,88 };
 
 template <class U>
 void printmap(NS::map<U,U> mapa, std::string name)
@@ -94,7 +94,7 @@ void m_testIterators()
 {
 	chapter("\nITERATORS");
 	{
-		title("Iterators");
+		title("Non const Iterators");
 		NS::map<T, T> map;
 		map.insert(NS::pair<T, T>(k[0], v[0]));
 		map.insert(NS::pair<T, T>(k[1], v[1]));

@@ -11,9 +11,8 @@ int main() {
    	int c, key;
    	ft::avlTree<int, int> avl;
 
-	int size = 7;
+	size_t size = 7;
 	srand (time(NULL));
-	int keys[size];
 	std::vector<int> nonrepkeys;
 	while (nonrepkeys.size() != size)
 	{

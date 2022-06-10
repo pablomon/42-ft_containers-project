@@ -29,7 +29,7 @@ namespace ft
 
 		public:
 		pointer get_pointer() { return m_ptr; };
-		vectorIterator(pointer ptr) : m_ptr(ptr) {};
+		vectorIterator(pointer ptr = NULL) : m_ptr(ptr) {};
 
 		template<typename U>
 		vectorIterator(vectorIterator<U> other) : m_ptr(other.get_pointer()) {};
