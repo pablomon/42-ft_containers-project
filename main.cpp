@@ -1,10 +1,15 @@
 #include <iostream>
 #include <cstring> // strcmp 
 
-#ifndef STD
-#define STD "FT"
-#endif
 #include "tests/tests.hpp"
+
+#ifndef STD
+# define STD "FT"
+#endif
+
+#ifndef INTEGRAL
+# define INTEGRAL 0
+#endif
 
 int main(int argc, char **argv)
 {
@@ -15,6 +20,7 @@ int main(int argc, char **argv)
 		return 0;
 	}
 	
+
 	if (std::strcmp(argv[1], "v") == 0 )
 		vector_tests();
 	else if (std::strcmp(argv[1], "s") == 0 )
