@@ -5,9 +5,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Fri Jun 10 10:02:02 2022
+# Make data base, printed on Tue Jun 14 09:50:22 2022
 
 # Variables
 
@@ -60,15 +59,15 @@ VSCODE_CWD = /mnt/c/Users/pablomon/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/pablo/.vscode-server/bin/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5/bin/remote-cli:/home/pablo/.local/bin:/home/pablo/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/PlasticSCM5/server:/mnt/c/Program Files/PlasticSCM5/client:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Oracle/VirtualBox:/mnt/c/Program Files/Git/cmd:/mnt/c/Ruby31-x64/bin:/mnt/c/Users/pablomon/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/pablomon/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/pablomon/AppData/Local/gitkraken/bin:/snap/bin
+PATH = /home/pablo/.vscode-server/bin/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/remote-cli:/home/pablo/.local/bin:/home/pablo/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/PlasticSCM5/server:/mnt/c/Program Files/PlasticSCM5/client:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Oracle/VirtualBox:/mnt/c/Program Files/Git/cmd:/mnt/c/Ruby31-x64/bin:/mnt/c/Users/pablomon/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/pablomon/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/pablomon/AppData/Local/gitkraken/bin:/snap/bin
 # environment
 XDG_RUNTIME_DIR = /mnt/wslg/runtime-dir
 # makefile (from 'Makefile', line 30)
-SANITIZEFLAGS := -g -fsanitize=address
+SANITIZEFLAGS := 
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-6111cfe0-8ef4-44f4-ae4b-b2da69522f9d.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-3164db6b-d44d-4308-9bd5-50731a81a5f6.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -92,7 +91,7 @@ WSL_INTEROP = /run/WSL/8_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
-WT_SESSION = 2d1b9293-1045-4da2-a2de-15c64327a2f9
+WT_SESSION = bf3d7c53-7e7a-4c8a-99fe-5a6da6e5899f
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -102,7 +101,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = pablo
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -190,9 +189,9 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 66, inode 2251799813907548): 18 files, no impossibilities.
+# . (device 66, inode 2251799813907548): 12 files, no impossibilities.
 
-# 18 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -254,14 +253,14 @@ format:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-06 15:47:52.7819839
+#  Last modified 2022-06-12 17:44:24.2642681
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-06 15:43:29.8268672
+#  Last modified 2022-06-12 17:34:29.6475094
 #  File has been updated.
 #  Successfully updated.
 
@@ -283,12 +282,12 @@ fclean: clean
 		@echo "[INFO] $(NAMEFT) removed!"
 		@rm -f $(NAMESTD)
 		@echo "[INFO] $(NAMESTD) removed!"
- 
 		@rm -f ftlog
 		@rm -f stdlog
 		@echo "Logs removed!"
 
 # Not a target:
+ 
 utils/utils.cpp:
 #  Implicit rule search has been done.
 #  Last modified 2022-03-28 23:11:48.5406581
@@ -298,7 +297,7 @@ utils/utils.cpp:
 # Not a target:
 tests/stack_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-24 10:54:21.0796775
+#  Last modified 2022-06-12 17:34:29.6965929
 #  File has been updated.
 #  Successfully updated.
 
@@ -327,7 +326,7 @@ clean:
 # Not a target:
 tests/map_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-09 11:32:20.9034177
+#  Last modified 2022-06-12 17:34:29.6905925
 #  File has been updated.
 #  Successfully updated.
 
@@ -342,7 +341,7 @@ ft: main.cpp utils/utils.cpp tests/vector_tests.cpp tests/stack_tests.cpp tests/
 # Not a target:
 tests/vector_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-09 12:41:25.2816262
+#  Last modified 2022-06-12 18:33:09.4864889
 #  File has been updated.
 #  Successfully updated.
 
@@ -354,12 +353,12 @@ tests/vector_tests.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 37 / storage = 334 B / avg = 9 B
-# current buf: size = 8162 B / used = 334 B / count = 37 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 268 B / avg = 8 B
+# current buf: size = 8162 B / used = 268 B / count = 31 / avg = 8 B
 
-# strcache performance: lookups = 63 / hit rate = 41%
+# strcache performance: lookups = 57 / hit rate = 45%
 # hash-table stats:
-# Load=37/8192=0%, Rehash=0, Collisions=1/63=2%
-# Finished Make data base on Fri Jun 10 10:02:02 2022
+# Load=31/8192=0%, Rehash=0, Collisions=1/57=2%
+# Finished Make data base on Tue Jun 14 09:50:22 2022
 
  

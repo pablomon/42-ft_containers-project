@@ -72,7 +72,6 @@ namespace ft
 			const allocator_type &alloc = allocator_type()) : 
 			m_keyCompare(comp), m_alloc(alloc), m_size(0) { }
 
-		// range constructor TODO: implementar is integral???
 		template <class IT>
 		map(IT first, 
 			IT last, 
@@ -91,7 +90,7 @@ namespace ft
 			m_alloc(x.m_alloc),
 			m_size(x.m_size)			{ }
 		// destructor
-		~map() {};
+		virtual ~map() {};
 
 		/* Iterators */
 		iterator				begin(void) { return m_tree.begin(); }

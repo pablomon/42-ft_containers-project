@@ -2,11 +2,11 @@
 #include "../containers/vector.hpp"
 #include <vector>
 
-#define T std::string
-std::string val[] = { "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"};
+// #define T std::string
+// std::string val[] = { "11", "22", "33", "42", "666", "66", "77", "88"};
 
-// #define T int
-// int val[] = { 11,22,33,42,666,66,77,88 };
+#define T int
+int val[] = { 11,22,33,42,666,66,77,88 };
 
 template <class U, class Alloc>
 int	cmp(const NS::vector<U, Alloc> &lhs, const NS::vector<U, Alloc> &rhs)

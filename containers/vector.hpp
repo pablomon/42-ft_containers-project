@@ -1,8 +1,6 @@
 #if !defined(VECTOR_HPP)
 #define VECTOR_HPP
 
-// # include <iostream> // TODO remove
-// # include <stdio.h>  // TODO remove
 # include <limits>
 # include <exception>
 # include "../containers/vector_it.hpp"
@@ -73,26 +71,24 @@ namespace ft
 		// default constructor
 		explicit vector (const allocator_type& alloc = allocator_type())
 		{
-			// logn("Constructor called");
 			m_alloc = alloc;
 			m_capacity = 0;
 			m_size = 0;
 			m_data = NULL;
-			realloc(2); // empiezo con 2 siempre
+			realloc(2);
 		}
 
 		// fill constructor
 		explicit vector (size_type n, const value_type& val = value_type(),
 			const allocator_type& alloc = allocator_type())
 		{
-			// logn("Constructor called");
 			m_alloc = alloc;
 			m_capacity = 0;
 			m_size = 0;
 			m_data = NULL;
 			for (size_t i = 0; i < n; i++)
 			{
-				push_back(val); //TODO cambiar por construct
+				push_back(val);
 			}
 		}
 
@@ -100,11 +96,10 @@ namespace ft
         vector (
 			iterator first, 
 			iterator last,
-        	const allocator_type& alloc = allocator_type(),
-			typename ft::enable_if<!ft::is_integral<iterator>::value, iterator>::type = 0
+        	const allocator_type& alloc = allocator_type()
+			,typename ft::enable_if<!ft::is_integral<iterator>::value, iterator>::type = 0
 		)
 		{
-			// logn("Constructor called");
 			m_alloc = alloc;
 			m_capacity = 0;
 			m_data = NULL;
@@ -125,7 +120,6 @@ namespace ft
 		// copy constructor
 		vector (const vector& other)
 		{
-			// logn("Copy Constructor called");
 			m_alloc = other.m_alloc;
 			m_size = other.m_size;
 			m_capacity = other.m_capacity;
@@ -136,9 +130,8 @@ namespace ft
 			}
 		}
 
-		~vector()
+		virtual ~vector()
 		{
-			// logn("Destructor called");
 			clear();
 			if (m_data != 0)
 				m_alloc.deallocate(m_data, m_capacity);
@@ -147,7 +140,6 @@ namespace ft
 
 		vector &operator= (const vector& other)
 		{
-			// logn("OP = called");
 			if (this != &other)
 			{
 				vector newVector;
@@ -248,8 +240,8 @@ namespace ft
   		void assign
 		(
 			  InputIterator first,
-			  InputIterator last,
-			  typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = NULL // TODO: cambiar a *=NULL??
+			  InputIterator last
+			  ,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0
 		)
 		{
 			clear();
@@ -288,8 +280,7 @@ namespace ft
 			insert(position, 1, val);
 			return m_data + dist;
 		}
-		// TODO realloc solo si no hay capacidad
-		// TODO comprobar que no sea la última posición, y si es la última si hace falta reallocar
+
 		void insert (iterator position, size_type n, const value_type& val)
 		{
 			size_type dist = 0;
@@ -320,7 +311,6 @@ namespace ft
 		}
 		
 		template <class InputIterator>
-		// TODO comprobar que no sea la última posición, y si es la última si hace falta reallocar
     	void insert 
 		(
 			iterator position, 

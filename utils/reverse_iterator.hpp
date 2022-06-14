@@ -20,9 +20,6 @@ namespace ft
 		typedef typename ft::iterator_traits<Iterator>::iterator_category iterator_category;
 		
 		reverse_iterator() : m_baseit() { }
-		// template <typename U>
-		// reverse_iterator(reverse_iterator<U>) {};
-
 		// initialization constructor
 		reverse_iterator(iterator_type it) : m_baseit(it) { }
 		// copy constructor
@@ -120,23 +117,11 @@ namespace ft
 		return lhs.base() == rhs.base();
 	}
 
-	// template <typename Iterator>
-	// bool operator!=(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs)
-	// {
-	// 	return lhs.base() != rhs.base();
-	// }
-
 	template <typename Iterator1, typename Iterator2>
 	bool operator!= ( const ft::reverse_iterator<Iterator1>& lhs, const ft::reverse_iterator<Iterator2>&  rhs )
 	{
 		return  !(lhs.base() == rhs.base());
 	}
-
-	// template <typename Iterator>
-	// bool operator<(const reverse_iterator<Iterator> &lhs, const reverse_iterator<Iterator> &rhs)
-	// {
-	// 	return lhs.base() > rhs.base();
-	// }
 
 	template <typename Iterator1, typename Iterator2>
 	bool operator<(const reverse_iterator<Iterator1> &lhs, const reverse_iterator<Iterator2> &rhs)

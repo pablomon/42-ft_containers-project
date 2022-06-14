@@ -6,7 +6,7 @@
 #    By: pmontese <pmontes@student.42madrid.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/08 23:23:47 by pmontese          #+#    #+#              #
-#    Updated: 2022/06/06 15:47:52 by pmontese         ###   ########.fr        #
+#    Updated: 2022/06/12 17:44:24 by pmontese         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ OBJS	:= 	$(SRCS:.cpp=.o)
 # Define all the compiling flags.
 CXX			:= clang++
 CXXFLAGS	:= -Wall -Wextra -Werror -std=c++98
-SANITIZEFLAGS	:= -g -fsanitize=address
+SANITIZEFLAGS	:= #-g -fsanitize=address
 STDFLAG		:= -D STD='"STANDAR"'
 
 # Compile and create everything.

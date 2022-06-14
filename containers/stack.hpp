@@ -31,7 +31,7 @@ namespace ft
 		// Copy constructor
 		stack ( stack const& other) : m_container(other.m_container) {}
 		// Destructor
-		~stack() {} // TODO: virtual ?? 
+		virtual ~stack() {}
 		// Operator equal
 		stack& operator=( const stack& other )
 		{

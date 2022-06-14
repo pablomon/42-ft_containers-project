@@ -1,14 +1,9 @@
 #if !defined(VECTOR_ITERATOR_HPP)
 #define VECTOR_ITERATOR_HPP
 
-# include <iostream> // TODO remove
-# include <stdio.h>  // TODO remove
 # include <limits>	
 # include <exception>
 # include "../utils/iterator_traits.hpp"
-
-# define logn(x) std::cout << x << std::endl
-# define log(x) std::cout << x
 
 namespace ft
 {
