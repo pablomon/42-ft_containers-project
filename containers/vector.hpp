@@ -94,7 +94,7 @@ namespace ft
 
 		// range constructor
         vector (
-			iterator first, 
+			iterator first,
 			iterator last,
         	const allocator_type& alloc = allocator_type()
 			,typename ft::enable_if<!ft::is_integral<iterator>::value, iterator>::type = 0
@@ -144,7 +144,6 @@ namespace ft
 			{
 				vector newVector;
 				newVector.m_alloc = other.m_alloc;
-				newVector.m_alloc = other.m_alloc;
 				newVector.m_size = other.m_size;
 				newVector.m_capacity = other.m_capacity;
 				newVector.m_data = m_alloc.allocate(m_capacity);
@@ -163,7 +162,7 @@ namespace ft
 		iterator end() { return iterator(m_data + m_size); }
 		const_iterator begin() const { return const_iterator(m_data); }
 		const_iterator end() const { return const_iterator(m_data + m_size); }
-		
+
 		reverse_iterator rbegin() {	return end(); }
 		reverse_iterator rend()	{ return begin(); }
 		const_reverse_iterator rbegin() const { return end(); }
@@ -309,12 +308,12 @@ namespace ft
 			m_capacity = newCapacity;
 			m_data = newBlock;
 		}
-		
+
 		template <class InputIterator>
-    	void insert 
+    	void insert
 		(
-			iterator position, 
-			InputIterator first, 
+			iterator position,
+			InputIterator first,
 			InputIterator last
 			,typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = 0
 		)
@@ -411,7 +410,7 @@ namespace ft
 			m_size = 0;
 		}
 	};
-	
+
 	/*
 	Non member functions -------------------------------------
 	*/
@@ -425,7 +424,7 @@ namespace ft
 			if (lhs[i] != rhs[i])
 				return false;
 		}
-		
+
 		return true;
 	}
 

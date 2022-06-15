@@ -7,23 +7,38 @@
 # define STD "FT"
 #endif
 
-int main(int argc, char **argv)
+int main()
 {
 	std::cout << "Using " << STD << " containers" << std::endl;
-	if (argc == 1)
+
+	std::string input;
+	bool exit = false;
+	while (exit == false)
 	{
+		exit = true;
 		std::cout << "Use v(ector), s(tack) or m(ap)" << std::endl;
-		return 0;
+		std::cin >> input;
+		if (input == "v")
+			vector_tests();
+		else if (input == "s")
+			stack_tests();
+		else if (input == "m")
+			map_tests();
+		else
+		{
+			std::cout << "Wrong option" << std::endl;
+			exit = false;
+		}
 	}
 
-	if (std::strcmp(argv[1], "v") == 0 )
-		vector_tests();
-	else if (std::strcmp(argv[1], "s") == 0 )
-		stack_tests();
-	else if (std::strcmp(argv[1], "m") == 0)
-		map_tests();
-	else
-		std::cout << "Use v(ector), s(tack) or m(ap)" << std::endl;
-
-	return 0;
+	while (1)
+	{
+		std::cout << std::endl << "Press q to exit" << std::endl;
+		std::cin >> input;
+		if (input == "q")
+		{
+			std::cout << "Bye" << std::endl;
+			return 0;
+		}
+	}
 }
