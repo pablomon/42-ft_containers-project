@@ -212,12 +212,28 @@ void v_testModifiers()
 	PrintVector(v, "v");
 	logn("Vector v3:");
 	PrintVector(v3, "v3");
-	logn("Swap vectors");
+	NS::vector<T>::iterator it1 = v.begin() + 1;
+	T it1val = *it1;
+	std::cout << "it1 = v.begin() + 1 = " << *it1 << std::endl;
+	NS::vector<T>::iterator it2 = v3.begin() + 1;
+	T it2val = *it2;
+	std::cout << "it2 = v3.begin() + 1 = " << *it2 << std::endl;
+	 
+	logn("Swap vectors:");
 	v.swap(v3);
 	assert(v[2] == val[2]);
 	assert(v3[1] == val[3]);
 	PrintVector(v, "v");
+	std::cout << "it1 = " << *it1 << std::endl;
 	PrintVector(v3, "v3");
+	std::cout << "it2 = " << *it2 << std::endl;
+
+	assert(*it1 == it1val);
+	assert(*it2 == it2val);
+
+	logn("Using it2 with vector v ( print until it2 == v.end() ):");
+	for(; it2 != v.end(); it2++)
+		std::cout << "it2 = " << *it2 << std::endl;
 
 	title("\nClear");
 	v.clear();
@@ -429,14 +445,23 @@ void v_speedTest()
 	for (size_t i = 0; i < VECTOR_TEST_SIZE; i++)
 		v.push_back(ToString(i));
 	log("total s = ");
-	logn(Timer());
+	logn(Timer());	
 
 	title("Access");
-	std::cout << "Acess " << VECTOR_TEST_SIZE << " strings\n";
+	std::cout << "Access " << VECTOR_TEST_SIZE << " strings\n";
 	std::string s;
 	Timer();
 	for (size_t i = 0; i < v.size(); i++)
 		s = v[i];
+	log("total s = ");
+	logn(Timer());
+
+	title("Copy");
+	int copyTimes = 20;
+	std::cout << "Copy v "<< copyTimes << " times" << std::endl;
+	Timer();
+	for (size_t i = 0; i < 20; i++)
+		NS::vector<std::string> nv = v;
 	log("total s = ");
 	logn(Timer());
 }

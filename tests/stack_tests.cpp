@@ -2,6 +2,8 @@
 #include "../containers/stack.hpp"
 #include <stack>
 #include <iomanip>
+#include <deque>
+#include <list>
 
 template <class T_STACK>
 int	cmp(const T_STACK &lhs, const T_STACK &rhs)
@@ -26,7 +28,7 @@ int	cmp(const T_STACK &lhs, const T_STACK &rhs)
 }
 
 template <typename U>
-void PrintStack(NS::stack<U>& stk, std::string name = "s")
+void PrintStack(U& stk, std::string name = "s")
 {
 	std::cout << "  Stack " << name << ":\n";
 	std::cout << "  empty = " << std::boolalpha << stk.empty() << ", ";
@@ -35,7 +37,7 @@ void PrintStack(NS::stack<U>& stk, std::string name = "s")
 		std::cout << ", top = " << stk.top();
 	std::cout << std::endl;
 
-	NS::stack<U> saveStack;
+	U saveStack;
 	while (stk.size() > 0)
 	{
 		saveStack.push(stk.top());
@@ -157,10 +159,29 @@ void s_relational_operators()
 	chapterend("RELATIONAL OPERATORS OK");
 }
 
+void s_other_containers()
+{
+	chapter("\nOther underlying containers");
+	title("Using deque");
+	std::deque<int> dq1 (3,100);
+	NS::stack<int, std::deque<int> > dqstack(dq1);
+	dqstack.push(42);
+	PrintStack(dqstack, "stack with deque");
+
+	title("Using list");
+	std::list<int> l1 (3,100);
+	NS::stack<int, std::list<int> > liststack(l1);
+	liststack.push(42);
+	PrintStack(dqstack, "stack with list");
+
+	chapterend("OTHER UNDERLYING CONTAINERS OK");
+}
+
 void stack_tests()
 {
 	chapter("\nT E S T I N G   S T A C K");
 	s_default_container();
 	s_default_copy();
 	s_relational_operators();
+	s_other_containers();
 }

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun 14 09:50:22 2022
+# Make data base, printed on Thu Jun 16 22:06:59 2022
 
 # Variables
 
@@ -59,7 +59,7 @@ VSCODE_CWD = /mnt/c/Users/pablomon/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/pablo/.vscode-server/bin/4af164ea3a06f701fe3e89a2bcbb421d2026b68f/bin/remote-cli:/home/pablo/.local/bin:/home/pablo/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/PlasticSCM5/server:/mnt/c/Program Files/PlasticSCM5/client:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Oracle/VirtualBox:/mnt/c/Program Files/Git/cmd:/mnt/c/Ruby31-x64/bin:/mnt/c/Users/pablomon/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/pablomon/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/pablomon/AppData/Local/gitkraken/bin:/snap/bin
+PATH = /home/pablo/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/home/pablo/.local/bin:/home/pablo/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/PlasticSCM5/server:/mnt/c/Program Files/PlasticSCM5/client:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files/Oracle/VirtualBox:/mnt/c/Program Files/Git/cmd:/mnt/c/Ruby31-x64/bin:/mnt/c/Users/pablomon/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/pablomon/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/pablomon/AppData/Local/gitkraken/bin:/snap/bin
 # environment
 XDG_RUNTIME_DIR = /mnt/wslg/runtime-dir
 # makefile (from 'Makefile', line 30)
@@ -67,7 +67,7 @@ SANITIZEFLAGS :=
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-3164db6b-d44d-4308-9bd5-50731a81a5f6.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-44e82f0b-f634-4798-af07-37f6a45165cb.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -91,7 +91,7 @@ WSL_INTEROP = /run/WSL/8_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
-WT_SESSION = bf3d7c53-7e7a-4c8a-99fe-5a6da6e5899f
+WT_SESSION = c58eacb1-3e3f-4db6-b65a-625e10c77ab9
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -178,10 +178,8 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=5/116=4%
+# Load=84/1024=8%, Rehash=0, Collisions=5/115=4%
 
 # Pattern-specific Variable Values
 
@@ -189,9 +187,9 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 66, inode 2251799813907548): 12 files, no impossibilities.
+# . (device 66, inode 2251799813907548): 14 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 14 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -260,7 +258,7 @@ Makefile:
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-12 17:34:29.6475094
+#  Last modified 2022-06-16 14:31:43.1236899
 #  File has been updated.
 #  Successfully updated.
 
@@ -286,8 +284,8 @@ fclean: clean
 		@rm -f stdlog
 		@echo "Logs removed!"
 
-# Not a target:
  
+# Not a target:
 utils/utils.cpp:
 #  Implicit rule search has been done.
 #  Last modified 2022-03-28 23:11:48.5406581
@@ -297,7 +295,7 @@ utils/utils.cpp:
 # Not a target:
 tests/stack_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-12 17:34:29.6965929
+#  Last modified 2022-06-16 21:58:33.1733847
 #  File has been updated.
 #  Successfully updated.
 
@@ -341,7 +339,7 @@ ft: main.cpp utils/utils.cpp tests/vector_tests.cpp tests/stack_tests.cpp tests/
 # Not a target:
 tests/vector_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-12 18:33:09.4864889
+#  Last modified 2022-06-16 20:58:16.394575
 #  File has been updated.
 #  Successfully updated.
 
@@ -353,12 +351,12 @@ tests/vector_tests.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 31 / storage = 268 B / avg = 8 B
-# current buf: size = 8162 B / used = 268 B / count = 31 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 285 B / avg = 8 B
+# current buf: size = 8162 B / used = 285 B / count = 33 / avg = 8 B
 
-# strcache performance: lookups = 57 / hit rate = 45%
+# strcache performance: lookups = 59 / hit rate = 44%
 # hash-table stats:
-# Load=31/8192=0%, Rehash=0, Collisions=1/57=2%
-# Finished Make data base on Tue Jun 14 09:50:22 2022
+# Load=33/8192=0%, Rehash=0, Collisions=1/59=2%
+# Finished Make data base on Thu Jun 16 22:06:59 2022
 
  

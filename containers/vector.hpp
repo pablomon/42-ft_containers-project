@@ -125,9 +125,7 @@ namespace ft
 			m_capacity = other.m_capacity;
 			m_data = m_alloc.allocate(m_capacity);
 			for(size_t i=0; i<m_size; i++)
-			{
 				m_alloc.construct(m_data + i, other.m_data[i]);
-			}
 		}
 
 		virtual ~vector()
@@ -148,9 +146,7 @@ namespace ft
 				newVector.m_capacity = other.m_capacity;
 				newVector.m_data = m_alloc.allocate(m_capacity);
 				for(size_t i=0; i<m_size; i++)
-				{
 					newVector.m_alloc.construct(newVector.m_data + i, other.m_data[i]);
-				}
 			}
 			return *this;
 		}

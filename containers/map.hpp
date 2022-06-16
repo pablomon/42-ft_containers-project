@@ -134,7 +134,6 @@ namespace ft
 			return res.first->second;
 		}
 
-
 		/* Modifiers */
 		ft::pair<iterator, bool> insert(const value_type & val)
 		{
