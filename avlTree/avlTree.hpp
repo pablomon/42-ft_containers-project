@@ -12,18 +12,21 @@
 
 namespace ft
 {
-	template <typename K, typename V, typename alloc = std::allocator<avlNode <K,V> > >
+	template <typename K, typename V, typename pairAlloc = std::allocator<ft::pair<K, V> > >
 	class avlTree
 	{
 	public:
-		typedef alloc				allocator_type;
+		typedef std::allocator<avlNode <K,V> >					allocator_type;
+		typedef pairAlloc										pair_allocator_type;
 		typedef avlNode<K, V> 		node_type;
 		typedef node_type 			*node_pointer;
 		typedef ft::pair<K,V>		content_type;
+		typedef content_type		*content_pointer;
 		typedef avlIterator<node_type, content_type> 			iterator;
 		typedef avlIterator<node_type, const content_type>		const_iterator;
 
 		allocator_type	m_alloc;
+		pairAlloc		m_pair_alloc;
 		node_pointer	m_root;
 		std::size_t		m_size;
 
@@ -51,14 +54,20 @@ namespace ft
 
 		node_pointer create_node(content_type content)
 		{
+			content_pointer ptr = m_pair_alloc.allocate(1);
+			m_pair_alloc.construct(ptr, content_type(content.first, content.second));
+
 			node_pointer node = m_alloc.allocate(1);
-			m_alloc.construct(node, node_type(content, &m_root));
+			m_alloc.construct(node, node_type(ptr, &m_root));
+
 			m_size++;
 			return node;
 		}
 
 		void delete_node(node_pointer node)
 		{
+			m_pair_alloc.destroy(node->ptr);
+			m_pair_alloc.deallocate(node->ptr, 1);
 			m_alloc.destroy(node);
 			m_alloc.deallocate(node, 1);
 			m_size--;
@@ -88,7 +97,7 @@ namespace ft
 				node_pointer temp = m_root;
 				while (temp != NULL && added_node == NULL)
 				{
-					if (pair.first < temp->content.first)
+					if (pair.first < temp->getContent().first)
 					{
 						if (temp->left == NULL)
 						{
@@ -99,7 +108,7 @@ namespace ft
 						else
 							temp = temp->left;
 					}
-					else if (pair.first > temp->content.first)
+					else if (pair.first > temp->getContent().first)
 					{
 						if (temp->right == NULL)
 						{
@@ -260,7 +269,7 @@ namespace ft
 			node_pointer n = findNode(key);
 			if (n == NULL)
 				return 0;
-			return n->content.second;
+			return n->getContent().second;
 		}
 		node_pointer getFirst() const
 		{
@@ -312,9 +321,9 @@ namespace ft
 			node_pointer temp = m_root;
 			while (temp != NULL)
 			{
-				if (key == temp->content.first)
+				if (key == temp->getContent().first)
 					break;
-				else if (key < temp->content.first)
+				else if (key < temp->getContent().first)
 					temp = temp->left;
 				else
 					temp = temp->right;
@@ -417,7 +426,7 @@ namespace ft
 			else if (subtree == NULL)
 				std::cout << std::setw((first) ? spacing(level) / 2 : spacing(level)) << "-";
 			else
-				std::cout << std::setw((first) ? spacing(level) / 2 : spacing(level)) << subtree->content.first;
+				std::cout << std::setw((first) ? spacing(level) / 2 : spacing(level)) << subtree->getContent().first;
 		}
 		int spacing(int level)
 		{

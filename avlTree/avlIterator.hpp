@@ -59,8 +59,8 @@ namespace ft
 		~avlIterator() {}
 
 		//Operators
-		reference operator*() const { return current->content; }
-		pointer operator->() const { return &current->content; }
+		reference operator*() const { return *current->ptr; }
+		pointer operator->() const { return current->ptr; }
 		avlIterator& operator++()
 		{
 			moveForward();
@@ -100,8 +100,8 @@ namespace ft
 				<< "outofrange = " << isBeforeBegin << std::endl;
 			if (!isBeforeBegin)
 			{
-				std::cout << "current = " << current->content.first << std::endl;
-				std::cout << "getEnd() = " << getEnd()->content.first << std::endl;
+				std::cout << "current = " << current->getContent().first << std::endl;
+				std::cout << "getEnd() = " << getEnd()->getContent().first << std::endl;
 			}
 		}
 		// member functions
@@ -172,7 +172,7 @@ namespace ft
 			}
 			while (current->parent)
 			{
-				if (current->parent->content.first > prev->content.first)
+				if (current->parent->getContent().first > prev->getContent().first)
 				{
 					prev = current;
 					current = current->parent;
@@ -238,7 +238,7 @@ namespace ft
 					current = current->parent;
 					return;
 				}
-				if (current->parent->content.first < prev->content.first)
+				if (current->parent->getContent().first < prev->getContent().first)
 				{
 					prev = current;
 					current = current->parent;

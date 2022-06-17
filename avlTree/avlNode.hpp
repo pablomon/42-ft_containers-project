@@ -16,7 +16,6 @@ namespace ft
 		typedef node_type 		*node_pointer;
 
 		node_pointer	*tree_root;
-		content_type 	content;
 		int 			height;
 		node_pointer 	left;
 		node_pointer 	parent;
@@ -25,10 +24,10 @@ namespace ft
 		pointer			ptr;
 
 	public:
-		avlNode(content_type pair, node_pointer *root)
+		avlNode(pointer content, node_pointer *root)
 		{
 			tree_root = root;
-			content = pair;
+			ptr = content;
 			height = 0;
 			parent = NULL;
 			left = NULL;
@@ -89,6 +88,11 @@ namespace ft
 			else
 				height = right->height + 1;
 			return height;
+		}
+
+		content_type getContent()
+		{
+			return *ptr;
 		}
 	};
 }

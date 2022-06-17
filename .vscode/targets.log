@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 16 22:06:59 2022
+# Make data base, printed on Fri Jun 17 11:11:23 2022
 
 # Variables
 
@@ -67,7 +67,7 @@ SANITIZEFLAGS :=
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-44e82f0b-f634-4798-af07-37f6a45165cb.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-292e0074-13cf-4cf5-a538-0cee605a37a9.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -91,7 +91,7 @@ WSL_INTEROP = /run/WSL/8_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
-WT_SESSION = c58eacb1-3e3f-4db6-b65a-625e10c77ab9
+WT_SESSION = 45c96df0-2e20-4542-8a26-aca49d9692f9
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -178,8 +178,10 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
+# environment
+MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=84/1024=8%, Rehash=0, Collisions=5/115=4%
+# Load=85/1024=8%, Rehash=0, Collisions=5/116=4%
 
 # Pattern-specific Variable Values
 
@@ -273,6 +275,7 @@ std:
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
+ 
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 60):
@@ -284,7 +287,6 @@ fclean: clean
 		@rm -f stdlog
 		@echo "Logs removed!"
 
- 
 # Not a target:
 utils/utils.cpp:
 #  Implicit rule search has been done.
@@ -295,7 +297,7 @@ utils/utils.cpp:
 # Not a target:
 tests/stack_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-16 21:58:33.1733847
+#  Last modified 2022-06-16 22:24:24.6093341
 #  File has been updated.
 #  Successfully updated.
 
@@ -339,7 +341,7 @@ ft: main.cpp utils/utils.cpp tests/vector_tests.cpp tests/stack_tests.cpp tests/
 # Not a target:
 tests/vector_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-16 20:58:16.394575
+#  Last modified 2022-06-16 22:55:02.6611745
 #  File has been updated.
 #  Successfully updated.
 
@@ -357,6 +359,6 @@ tests/vector_tests.cpp:
 # strcache performance: lookups = 59 / hit rate = 44%
 # hash-table stats:
 # Load=33/8192=0%, Rehash=0, Collisions=1/59=2%
-# Finished Make data base on Thu Jun 16 22:06:59 2022
+# Finished Make data base on Fri Jun 17 11:11:23 2022
 
  

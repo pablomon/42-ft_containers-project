@@ -9,7 +9,6 @@
 #include "../utils/enable_if.hpp"
 #include "../utils/is_integral.hpp"
 
-#include <iostream> // TODO remove
 namespace ft
 {
 	/* map Container declaration */
@@ -126,7 +125,7 @@ namespace ft
 		{
 			node_pointer node = m_tree.findNode(k);
 			if (node != NULL)
-				return node->content.second;
+				return (*node->ptr).second;
 			
 			mapped_type val = mapped_type();
 			value_type pair(k, val);

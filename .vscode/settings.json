@@ -70,7 +70,8 @@
 		"bitset": "cpp",
 		"ios": "cpp",
 		"mutex": "cpp",
-		"ratio": "cpp"
+		"ratio": "cpp",
+		"list": "cpp"
 	},
 	"C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }

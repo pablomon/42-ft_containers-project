@@ -86,10 +86,9 @@ namespace ft
 			m_capacity = 0;
 			m_size = 0;
 			m_data = NULL;
+			realloc(n * 1.5);
 			for (size_t i = 0; i < n; i++)
-			{
 				push_back(val);
-			}
 		}
 
 		// range constructor

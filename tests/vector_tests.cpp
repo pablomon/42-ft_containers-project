@@ -436,7 +436,7 @@ void v_relational_operators()
 
 void v_speedTest()
 {
-# define VECTOR_TEST_SIZE 10000000
+# define VECTOR_TEST_SIZE 1000
 	chapter("\nSpeed test");
 	title("Allocation");
 	std::cout << "Create a vector with " << VECTOR_TEST_SIZE << " strings\n";
