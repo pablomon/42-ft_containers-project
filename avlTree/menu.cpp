@@ -40,7 +40,6 @@ int main() {
 		std::cout << "2.print Balanced AVL Tree" << std::endl;
 		std::cout << "3.search" << std::endl;
 		std::cout << "4.delete" << std::endl;
-		std::cout << "5.get begin" << std::endl;
 		std::cout << "Enter your Choice: ";
 		std::cin >> c;
 		switch (c) {
@@ -87,12 +86,6 @@ int main() {
 				}
 			}
 			break;
-			// case 5:
-			// {
-			// 	avlNode<int,int> *n = avl.getInOrderBegin();
-			// 	std::cout << "Begin key = " << n->getPair().first << std::endl;
-			// }
-			// break;
 			default:
 				std::cout << "Wrong Choice" << std::endl;
 		}	
