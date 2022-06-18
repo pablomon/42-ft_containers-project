@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun 18 10:48:40 2022
+# Make data base, printed on Sat Jun 18 13:18:07 2022
 
 # Variables
 
@@ -67,7 +67,7 @@ SANITIZEFLAGS :=
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-060c627b-3c26-4afe-bc8c-2a732a391a28.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-2422fd16-39c3-4e8f-a766-87bfb396d0bd.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -91,7 +91,7 @@ WSL_INTEROP = /run/WSL/8_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
-WT_SESSION = cede1daa-6533-4470-9d92-6074b9815184
+WT_SESSION = 79875a09-9acf-4f71-ac55-9004446eebc9
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -178,10 +178,8 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=5/116=4%
+# Load=84/1024=8%, Rehash=0, Collisions=5/115=4%
 
 # Pattern-specific Variable Values
 
@@ -189,9 +187,9 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 66, inode 2251799813907548): 14 files, no impossibilities.
+# . (device 66, inode 2251799813907548): 15 files, no impossibilities.
 
-# 14 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -276,7 +274,6 @@ fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 60):
 		@rm -f $(NAMEFT)
@@ -292,6 +289,7 @@ utils/utils.cpp:
 #  Implicit rule search has been done.
 #  Last modified 2022-03-28 23:11:48.5406581
 #  File has been updated.
+ 
 #  Successfully updated.
 
 # Not a target:
@@ -341,7 +339,7 @@ ft: main.cpp utils/utils.cpp tests/vector_tests.cpp tests/stack_tests.cpp tests/
 # Not a target:
 tests/vector_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-16 22:55:02.6611745
+#  Last modified 2022-06-18 13:02:16.0583295
 #  File has been updated.
 #  Successfully updated.
 
@@ -353,12 +351,12 @@ tests/vector_tests.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 285 B / avg = 8 B
-# current buf: size = 8162 B / used = 285 B / count = 33 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 34 / storage = 297 B / avg = 8 B
+# current buf: size = 8162 B / used = 297 B / count = 34 / avg = 8 B
 
-# strcache performance: lookups = 59 / hit rate = 44%
+# strcache performance: lookups = 60 / hit rate = 43%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=1/59=2%
-# Finished Make data base on Sat Jun 18 10:48:40 2022
+# Load=34/8192=0%, Rehash=0, Collisions=1/60=2%
+# Finished Make data base on Sat Jun 18 13:18:07 2022
 
  

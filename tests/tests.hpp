@@ -2,6 +2,7 @@
 #define TESTS_HPP
 
 #include <iostream>
+#include <fstream>
 #include <assert.h>
 #include <time.h>
 #include "../utils/utils.hpp"

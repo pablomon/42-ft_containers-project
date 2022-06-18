@@ -436,7 +436,7 @@ void v_relational_operators()
 
 void v_speedTest()
 {
-# define VECTOR_TEST_SIZE 1000
+# define VECTOR_TEST_SIZE 10000000
 	chapter("\nSpeed test");
 	title("Allocation");
 	std::cout << "Create a vector with " << VECTOR_TEST_SIZE << " strings\n";
@@ -457,10 +457,10 @@ void v_speedTest()
 	logn(Timer());
 
 	title("Copy");
-	int copyTimes = 20;
+	size_t copyTimes = 10;
 	std::cout << "Copy v "<< copyTimes << " times" << std::endl;
 	Timer();
-	for (size_t i = 0; i < 20; i++)
+	for (size_t i = 0; i < copyTimes; i++)
 		NS::vector<std::string> nv = v;
 	log("total s = ");
 	logn(Timer());

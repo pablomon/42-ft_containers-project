@@ -589,13 +589,13 @@ void m_testSpeed()
 
 	title("Random access");
 	size_t c = 0;
-	std::cout << "Access random elements 10^7 times\n";
+	std::cout << "Access random elements 10^6 times\n";
 	std::cout << "map[" << at10x100 << "]" << std::endl;
 	std::cout << "map[" << at20x100 << "]" << std::endl;
 	std::cout << "map[" << at50x100 << "]" << std::endl;
 	std::cout << "map[" << at80x100 << "]" << std::endl;
 	Timer();
-	while (c++ < 10000000)
+	while (c++ < 1000000)
 	{
 		int k;
 		k = map[at10x100];
