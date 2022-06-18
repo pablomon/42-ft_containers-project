@@ -20,7 +20,7 @@ namespace ft
 			typedef T 	mapped_type;
 
 		private:
-			typedef avlTree<key_type, mapped_type>	tree;
+			typedef avlTree<key_type, mapped_type, Alloc>	tree;
 			typedef typename tree::node_type		node_type;
 			typedef typename tree::node_pointer		node_pointer;
 

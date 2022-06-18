@@ -90,10 +90,7 @@ namespace ft
 			return height;
 		}
 
-		content_type getContent()
-		{
-			return *ptr;
-		}
+		content_type getContent() { return *ptr; }
 	};
 }
 #endif // AVL_NODE_HPP

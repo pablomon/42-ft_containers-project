@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun 17 11:11:23 2022
+# Make data base, printed on Sat Jun 18 10:48:40 2022
 
 # Variables
 
@@ -67,7 +67,7 @@ SANITIZEFLAGS :=
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-292e0074-13cf-4cf5-a538-0cee605a37a9.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-060c627b-3c26-4afe-bc8c-2a732a391a28.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -91,7 +91,7 @@ WSL_INTEROP = /run/WSL/8_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
-WT_SESSION = 45c96df0-2e20-4542-8a26-aca49d9692f9
+WT_SESSION = cede1daa-6533-4470-9d92-6074b9815184
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -275,8 +275,8 @@ std:
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
- 
 #  File does not exist.
+ 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 60):
 		@rm -f $(NAMEFT)
@@ -359,6 +359,6 @@ tests/vector_tests.cpp:
 # strcache performance: lookups = 59 / hit rate = 44%
 # hash-table stats:
 # Load=33/8192=0%, Rehash=0, Collisions=1/59=2%
-# Finished Make data base on Fri Jun 17 11:11:23 2022
+# Finished Make data base on Sat Jun 18 10:48:40 2022
 
  

@@ -112,6 +112,7 @@ namespace ft
 				node = node->left;
 			return node;
 		}
+
 		node_pointer goFullRight(node_pointer node)
 		{
 			while (node->right)
@@ -136,6 +137,7 @@ namespace ft
 				node = node->right;
 			return node;
 		}
+		
 		node_pointer getBegin()
 		{
 			updateRoot();

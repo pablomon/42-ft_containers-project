@@ -12,21 +12,21 @@
 
 namespace ft
 {
-	template <typename K, typename V, typename pairAlloc = std::allocator<ft::pair<K, V> > >
+	template <typename K, typename V, typename A  = std::allocator<ft::pair<const K, V> > >
 	class avlTree
 	{
 	public:
-		typedef std::allocator<avlNode <K,V> >					allocator_type;
-		typedef pairAlloc										pair_allocator_type;
-		typedef avlNode<K, V> 		node_type;
-		typedef node_type 			*node_pointer;
-		typedef ft::pair<K,V>		content_type;
-		typedef content_type		*content_pointer;
-		typedef avlIterator<node_type, content_type> 			iterator;
-		typedef avlIterator<node_type, const content_type>		const_iterator;
+		typedef A													allocator_type;
+		typedef avlNode<const K, V> 								node_type;
+		typedef node_type 											*node_pointer;
+		typedef ft::pair<const K,V>									content_type;
+		typedef content_type										*content_pointer;
+		typedef avlIterator<node_type, content_type> 				iterator;
+		typedef avlIterator<node_type, const content_type>			const_iterator;
+		typedef typename A::template rebind<node_type>::other 		node_Allocator;
 
 		allocator_type	m_alloc;
-		pairAlloc		m_pair_alloc;
+		node_Allocator  m_node_alloc;
 		node_pointer	m_root;
 		std::size_t		m_size;
 
@@ -45,20 +45,17 @@ namespace ft
 				}
 			}
 		}
-		~avlTree()
-		{
-			delete_branch(m_root);
-		}
+		~avlTree() { delete_branch(m_root);	}
 
 		int getHeight() { return m_root->getHeight(); }
 
 		node_pointer create_node(content_type content)
 		{
-			content_pointer ptr = m_pair_alloc.allocate(1);
-			m_pair_alloc.construct(ptr, content_type(content.first, content.second));
+			content_pointer ptr = m_alloc.allocate(1);
+			m_alloc.construct(ptr, content_type(content.first, content.second));
 
-			node_pointer node = m_alloc.allocate(1);
-			m_alloc.construct(node, node_type(ptr, &m_root));
+			node_pointer node = m_node_alloc.allocate(1);
+			m_node_alloc.construct(node, node_type(ptr, &m_root));
 
 			m_size++;
 			return node;
@@ -66,10 +63,10 @@ namespace ft
 
 		void delete_node(node_pointer node)
 		{
-			m_pair_alloc.destroy(node->ptr);
-			m_pair_alloc.deallocate(node->ptr, 1);
-			m_alloc.destroy(node);
-			m_alloc.deallocate(node, 1);
+			m_alloc.destroy(node->ptr);
+			m_alloc.deallocate(node->ptr, 1);
+			m_node_alloc.destroy(node);
+			m_node_alloc.deallocate(node, 1);
 			m_size--;
 		}
 		
@@ -143,6 +140,7 @@ namespace ft
 			content_type cnt = *it;
 			remove(cnt.first);
 		}
+		
 		bool remove(K key)
 		{
 			node_pointer toBeRemoved = findNode(key);
@@ -364,6 +362,7 @@ namespace ft
 				rotateLeft(n);
 			}
 		}
+
 		void rotateLeft(node_pointer n)
 		{
 			bool isLeft;
@@ -382,6 +381,7 @@ namespace ft
 			else
 				p->setRight(temp);
 		}
+
 		void rotateRight(node_pointer n)
 		{
 			bool isLeft;
@@ -400,6 +400,7 @@ namespace ft
 			else
 				p->setRight(temp);
 		}
+
 		void setRoot(node_pointer n)
 		{
 			m_root = n;
@@ -428,6 +429,7 @@ namespace ft
 			else
 				std::cout << std::setw((first) ? spacing(level) / 2 : spacing(level)) << subtree->getContent().first;
 		}
+
 		int spacing(int level)
 		{
 			int result = 2;
