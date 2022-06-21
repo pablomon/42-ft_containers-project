@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Jun 18 13:18:07 2022
+# Make data base, printed on Tue Jun 21 10:15:37 2022
 
 # Variables
 
@@ -67,7 +67,7 @@ SANITIZEFLAGS :=
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-2422fd16-39c3-4e8f-a766-87bfb396d0bd.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-55ce74de-8100-43fe-b9ef-8fa7e684de92.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -91,7 +91,7 @@ WSL_INTEROP = /run/WSL/8_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # environment
-WT_SESSION = 79875a09-9acf-4f71-ac55-9004446eebc9
+WT_SESSION = 7cee1410-4007-4848-987d-2615f3357276
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -101,7 +101,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = pablo
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -178,8 +178,10 @@ TERM = xterm-256color
 VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
+# environment
+MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=84/1024=8%, Rehash=0, Collisions=5/115=4%
+# Load=85/1024=8%, Rehash=0, Collisions=5/116=4%
 
 # Pattern-specific Variable Values
 
@@ -187,9 +189,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 66, inode 2251799813907548): 15 files, no impossibilities.
+# . (device 65, inode 2251799813907548): 14 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 14 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -258,7 +260,7 @@ Makefile:
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-16 14:31:43.1236899
+#  Last modified 2022-06-21 10:11:50.8266063
 #  File has been updated.
 #  Successfully updated.
 
@@ -289,12 +291,12 @@ utils/utils.cpp:
 #  Implicit rule search has been done.
 #  Last modified 2022-03-28 23:11:48.5406581
 #  File has been updated.
- 
 #  Successfully updated.
 
 # Not a target:
 tests/stack_tests.cpp:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-06-16 22:24:24.6093341
 #  File has been updated.
 #  Successfully updated.
@@ -324,7 +326,7 @@ clean:
 # Not a target:
 tests/map_tests.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-12 17:34:29.6905925
+#  Last modified 2022-06-18 13:23:01.4931352
 #  File has been updated.
 #  Successfully updated.
 
@@ -351,12 +353,12 @@ tests/vector_tests.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 34 / storage = 297 B / avg = 8 B
-# current buf: size = 8162 B / used = 297 B / count = 34 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 33 / storage = 285 B / avg = 8 B
+# current buf: size = 8162 B / used = 285 B / count = 33 / avg = 8 B
 
-# strcache performance: lookups = 60 / hit rate = 43%
+# strcache performance: lookups = 59 / hit rate = 44%
 # hash-table stats:
-# Load=34/8192=0%, Rehash=0, Collisions=1/60=2%
-# Finished Make data base on Sat Jun 18 13:18:07 2022
+# Load=33/8192=0%, Rehash=0, Collisions=1/59=2%
+# Finished Make data base on Tue Jun 21 10:15:37 2022
 
  

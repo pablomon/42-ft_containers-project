@@ -2,6 +2,7 @@
 #define AVLTREE_IT_HPP
 
 #include "avlTree.hpp"
+#include "../utils/iterator_traits.hpp"
 
 namespace ft
 {
@@ -18,7 +19,7 @@ namespace ft
 		typedef value_type				&reference;
 		typedef value_type const 		&const_reference;
 		typedef std::ptrdiff_t 			difference_type;
-		typedef std::bidirectional_iterator_tag 	iterator_category;
+		typedef ft::bidirectional_iterator_tag 	iterator_category;
 
 		public:
 		node_pointer current;

@@ -17,7 +17,7 @@ namespace ft
 		typedef value_type				&reference;
 		typedef value_type const 		&const_reference;
 		typedef std::ptrdiff_t 			difference_type;
-		typedef std::random_access_iterator_tag 	iterator_category;
+		typedef ft::random_access_iterator_tag 	iterator_category;
 
 		private:
 		pointer m_ptr;
