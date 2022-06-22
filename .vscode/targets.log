@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun 22 10:36:25 2022
+# Make data base, printed on Wed Jun 22 20:24:14 2022
 
 # Variables
 
@@ -15,7 +15,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = VSCODE_WSL_EXT_LOCATION/up
+WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
 # default
 .SHELLFLAGS := -c
 # environment
@@ -35,7 +35,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /home/pablo/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/node
+_ = /mnt/c/Users/pablomon/AppData/Local/Programs/Microsoft VS Code/bin/code
 # makefile (from 'Makefile', line 14)
 Green = \033[0;32m
 # makefile (from 'Makefile', line 1)
@@ -48,7 +48,6 @@ CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
 VSCODE_VERBOSE_LOGGING = true
- 
 # makefile (from 'Makefile', line 25)
 OBJS := main.o utils/utils.o tests/vector_tests.o tests/stack_tests.o tests/map_tests.o
 # makefile (from 'Makefile', line 31)
@@ -68,7 +67,7 @@ SANITIZEFLAGS :=
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-61012d53-595c-4646-9c62-a8c009f7fc20.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-42fff17b-6942-4586-88e5-ff1951e4537e.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -88,9 +87,11 @@ PWD = /mnt/d/42/ft_containers
 # environment
 GEM_HOME = /home/pablo/gems
 # environment
-WSL_INTEROP = /run/WSL/14_interop
+WSL_INTEROP = /run/WSL/8_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
+# environment
+WT_SESSION = eb8a7afa-4ceb-4275-965d-421aa2444976
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -100,7 +101,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = pablo
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -114,7 +115,7 @@ MAKECMDGOALS := all
 # makefile (from 'Makefile', line 20)
 SRCS := main.cpp utils/utils.cpp tests/vector_tests.cpp tests/stack_tests.cpp tests/map_tests.cpp
 # environment
-SHLVL = 0
+SHLVL = 1
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -122,7 +123,7 @@ USER = pablo
 # makefile
 .DEFAULT_GOAL := all
 # environment
-NAME = XPS2
+NAME = Code
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -147,6 +148,8 @@ MFLAGS = -pqrR
 NAMESTD := std_test
 # environment
 VSCODE_HANDLES_SIGPIPE = true
+# environment
+WT_PROFILE_ID = {2c4de342-38b7-51cf-b940-2309a097f518}
 # default
 MAKEFILES := 
 # automatic
@@ -176,7 +179,7 @@ VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
 # variable set hash-table stats:
-# Load=82/1024=8%, Rehash=0, Collisions=5/113=4%
+# Load=84/1024=8%, Rehash=0, Collisions=5/115=4%
 
 # Pattern-specific Variable Values
 
@@ -184,9 +187,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 66, inode 2251799813907548): 14 files, no impossibilities.
+# . (device 66, inode 2251799813907548): 12 files, no impossibilities.
 
-# 14 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -273,6 +276,7 @@ fclean: clean
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 60):
+ 
 		@rm -f $(NAMEFT)
 		@echo "[INFO] $(NAMEFT) removed!"
 		@rm -f $(NAMESTD)
@@ -325,7 +329,6 @@ tests/map_tests.cpp:
 #  Successfully updated.
 
 ft: main.cpp utils/utils.cpp tests/vector_tests.cpp tests/stack_tests.cpp tests/map_tests.cpp
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -348,12 +351,12 @@ tests/vector_tests.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 33 / storage = 285 B / avg = 8 B
-# current buf: size = 8162 B / used = 285 B / count = 33 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 268 B / avg = 8 B
+# current buf: size = 8162 B / used = 268 B / count = 31 / avg = 8 B
 
-# strcache performance: lookups = 59 / hit rate = 44%
+# strcache performance: lookups = 57 / hit rate = 45%
 # hash-table stats:
-# Load=33/8192=0%, Rehash=0, Collisions=1/59=2%
-# Finished Make data base on Wed Jun 22 10:36:25 2022
+# Load=31/8192=0%, Rehash=0, Collisions=1/57=2%
+# Finished Make data base on Wed Jun 22 20:24:14 2022
 
  
